@@ -27,6 +27,8 @@ class Colors {
      */
     static Color rainbow(int hue);
 
+    static const Color WHITE;
+
   private:
     static Color cached_rainbow[360];
 };

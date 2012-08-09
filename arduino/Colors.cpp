@@ -3,6 +3,8 @@
 
 Color Colors::cached_rainbow[360];
 
+const Color Colors::WHITE = 0x7f7f7f;
+
 void Colors::init() {
   // initialize rainbow
   for (int i = 0; i < 360; ++i) {

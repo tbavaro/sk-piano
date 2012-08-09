@@ -1,4 +1,3 @@
-#include "ParticleAgeHelper.h"
 #include "ParticleVisualizer.h"
 
 static unsigned long TIME_NONE = 0;
@@ -7,7 +6,7 @@ ParticleVisualizer::ParticleVisualizer(LPD8806* strip, int max_particles)
     : Visualizer(strip), 
       max_particles(max_particles),
       particles((Particle**)malloc(sizeof(Particle) * max_particles)),
-      age_helper(new ParticleAgeHelper(this, max_particles)) {
+      removed_particle_indexes((int*)malloc(sizeof(int) * max_particles)) {
   num_particles = 0;
   num_particles_after_last_frame = 0;
   prev_frame_time = TIME_NONE;
@@ -17,10 +16,9 @@ ParticleVisualizer::~ParticleVisualizer() {
   // clean up any remaining particles
   this->removeAllParticles();
   
-  // clean up array
+  // clean up arrays
   free(particles);
-
-  delete age_helper;
+  free(removed_particle_indexes);
 }
 
 void ParticleVisualizer::reset() {
@@ -40,16 +38,21 @@ void ParticleVisualizer::onPassFinished(bool something_changed) {
   }
   prev_frame_time = now;
 
+  int num_removed_particles = 0;
+
   // advance particles; don't advance new particles added this round
   for (int i = 0; i < num_particles_after_last_frame; ++i) {
-    age_helper->current_particle_index = i;
     Particle* particle = particles[i];
-    particle->age(age_helper, frame_duration);
+
+    bool alive = particle->age(this, frame_duration);
+    if (!alive) {
+      removed_particle_indexes[num_removed_particles++] = i;
+    }
   }
 
   // remove dead particles
-  for (int i = age_helper->num_removed_particles - 1; i >= 0; --i) {
-    int index = age_helper->removed_particle_indexes[i];
+  for (int i = num_removed_particles - 1; i >= 0; --i) {
+    int index = removed_particle_indexes[i];
     
     // delete the dead particle
     delete particles[index];
@@ -62,7 +65,6 @@ void ParticleVisualizer::onPassFinished(bool something_changed) {
 
     --num_particles;
   }
-  age_helper->num_removed_particles = 0;
   num_particles_after_last_frame = num_particles;
 
   // reset strip to black

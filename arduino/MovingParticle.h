@@ -7,11 +7,11 @@ class MovingParticle : public Particle {
   public:
     /**
      * @param start_pos starting position (location x 1000)
-     * @param speed per ms
+     * @param speed pos delta per ms
      */
     MovingParticle(int start_pos, int speed, int min_pos, int max_pos);
 
-    virtual void age(ParticleAgeHelper* helper, unsigned int millis);
+    virtual bool age(ParticleVisualizer* pv, unsigned int millis);
 
   protected:
     int pos;

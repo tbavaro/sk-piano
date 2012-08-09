@@ -5,15 +5,19 @@ class Particle;
 
 #include "LPD8806.h"
 
-class ParticleAgeHelper;
+class ParticleVisualizer;
 
 class Particle {
   public:
-    virtual void age(ParticleAgeHelper* helper, unsigned int millis)=0;
+    /**
+     * Age the particle by 'millis' milliseconds.
+     *
+     * @return TRUE iff the particle is still alive
+     */
+    virtual bool age(ParticleVisualizer* pv, unsigned int millis)=0;
+
     virtual void render(LPD8806* strip)=0;
 };
-
-#include "ParticleAgeHelper.h"
 
 #endif
 

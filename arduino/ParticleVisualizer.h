@@ -6,11 +6,7 @@ class ParticleVisualizer;
 #include "Visualizer.h"
 #include "Particle.h"
 
-class ParticleAgeHelper;
-
 class ParticleVisualizer : public Visualizer {
-  friend class ParticleAgeHelper;
-
   public:
     ParticleVisualizer(LPD8806* strip, int max_particles);
     ~ParticleVisualizer();
@@ -18,13 +14,10 @@ class ParticleVisualizer : public Visualizer {
     virtual void reset();
     virtual void onPassFinished(bool something_changed);
 
-  protected:
     void addParticle(Particle* p);
 
   private:
     void removeAllParticles();
-
-    ParticleAgeHelper* const age_helper;
 
     Particle** const particles;
     int num_particles;
@@ -32,6 +25,8 @@ class ParticleVisualizer : public Visualizer {
     const int max_particles;
 
     unsigned long prev_frame_time;
+    
+    int* const removed_particle_indexes;
 };
 
 #endif
