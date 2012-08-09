@@ -1,15 +1,16 @@
-#include "ParticleVisualizer.h"
 #include "ParticleAgeHelper.h"
+#include "ParticleVisualizer.h"
 
 static unsigned long TIME_NONE = 0;
 
-ParticleVisualizer::ParticleVisualizer(LPD8806* strip, int _max_particles) 
-    : Visualizer(strip) {
-  max_particles = _max_particles;
+ParticleVisualizer::ParticleVisualizer(LPD8806* strip, int max_particles) 
+    : Visualizer(strip), 
+      max_particles(max_particles),
+      particles((Particle**)malloc(sizeof(Particle) * max_particles)),
+      age_helper(new ParticleAgeHelper(this, max_particles)) {
   num_particles = 0;
-  particles = (Particle**)malloc(sizeof(Particle) * max_particles);
+  num_particles_after_last_frame = 0;
   prev_frame_time = TIME_NONE;
-  age_helper = new ParticleAgeHelper(this, max_particles);
 }
 
 ParticleVisualizer::~ParticleVisualizer() {
@@ -31,7 +32,7 @@ void ParticleVisualizer::reset() {
 void ParticleVisualizer::onPassFinished(bool something_changed) {
   // advance the clock and see how long it's been since the last frame
   unsigned long now = millis();
-  unsigned long frame_duration;
+  unsigned int frame_duration;
   if (prev_frame_time == TIME_NONE) {
     frame_duration = 0;
   } else {
@@ -39,8 +40,8 @@ void ParticleVisualizer::onPassFinished(bool something_changed) {
   }
   prev_frame_time = now;
 
-  // advance particles
-  for (int i = 0; i < num_particles; ++i) {
+  // advance particles; don't advance new particles added this round
+  for (int i = 0; i < num_particles_after_last_frame; ++i) {
     age_helper->current_particle_index = i;
     Particle* particle = particles[i];
     particle->age(age_helper, frame_duration);
@@ -62,6 +63,7 @@ void ParticleVisualizer::onPassFinished(bool something_changed) {
     --num_particles;
   }
   age_helper->num_removed_particles = 0;
+  num_particles_after_last_frame = num_particles;
 
   // reset strip to black
   strip->reset();

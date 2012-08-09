@@ -1,5 +1,6 @@
 #include "Piano.h"
 #include "SimpleVisualizer.h"
+#include "SimpleParticleVisualizer.h"
 #include "LPD8806.h"
 #include "SPI.h"
 #include "Colors.h"
@@ -22,9 +23,11 @@ void setup() {
   strip.begin();
   strip.show();
   
-  PianoDelegate* simple_viz = new SimpleVisualizer(&strip);
+  MasterVisualizer* master_viz = new MasterVisualizer(&strip);
+  master_viz->addVisualizer(new SimpleParticleVisualizer(&strip, 300));
+  master_viz->addVisualizer(new SimpleVisualizer(&strip));
   
-  piano = new Piano(simple_viz);
+  piano = new Piano(master_viz);
 }
 
 void loop() {

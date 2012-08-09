@@ -1,14 +1,23 @@
 #include "ParticleAgeHelper.h"
+#include "ParticleVisualizer.h"
 
 ParticleAgeHelper::ParticleAgeHelper(
-    ParticleVisualizer* _pv, int max_particles) {
+    ParticleVisualizer* pv, int max_particles) 
+        : pv(pv),
+          removed_particle_indexes((int*)malloc(sizeof(int) * max_particles)) {
   current_particle_index = 0;
-  pv = _pv;
-  removed_particle_indexes = new int[max_particles];
   num_removed_particles = 0;
 }
 
 ParticleAgeHelper::~ParticleAgeHelper() {
-  delete[] removed_particle_indexes;
+  free(removed_particle_indexes);
+}
+
+void ParticleAgeHelper::addParticle(Particle* p) {
+  pv->addParticle(p);
+}
+
+void ParticleAgeHelper::removeParticle() {
+  removed_particle_indexes[num_removed_particles++] = current_particle_index;
 }
 

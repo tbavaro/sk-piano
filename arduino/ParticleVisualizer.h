@@ -1,3 +1,5 @@
+class ParticleVisualizer;
+
 #ifndef __INCLUDED_PARTICLE_VISUALIZER_H
 #define __INCLUDED_PARTICLE_VISUALIZER_H
 
@@ -7,6 +9,8 @@
 class ParticleAgeHelper;
 
 class ParticleVisualizer : public Visualizer {
+  friend class ParticleAgeHelper;
+
   public:
     ParticleVisualizer(LPD8806* strip, int max_particles);
     ~ParticleVisualizer();
@@ -14,17 +18,18 @@ class ParticleVisualizer : public Visualizer {
     virtual void reset();
     virtual void onPassFinished(bool something_changed);
 
+  protected:
     void addParticle(Particle* p);
-    void removeParticle();
 
   private:
     void removeAllParticles();
 
-    ParticleAgeHelper* age_helper;
+    ParticleAgeHelper* const age_helper;
 
-    Particle** particles;
+    Particle** const particles;
     int num_particles;
-    int max_particles;
+    int num_particles_after_last_frame;
+    const int max_particles;
 
     unsigned long prev_frame_time;
 };
