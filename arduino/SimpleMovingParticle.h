@@ -7,7 +7,7 @@
 class SimpleMovingParticle : public MovingParticle {
   public:
     SimpleMovingParticle(
-        int start_pos, int speed, int min_pos, int max_pos, Color color);
+        uint32_t start_pos, uint32_t speed, uint32_t min_pos, uint32_t max_pos, Color color);
 
     virtual void render(LPD8806* strip);
 

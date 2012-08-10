@@ -1,7 +1,7 @@
 #include "SimpleMovingParticle.h"
 
 SimpleMovingParticle::SimpleMovingParticle(
-    int start_pos, int speed, int min_pos, int max_pos, Color color)
+    uint32_t start_pos, uint32_t speed, uint32_t min_pos, uint32_t max_pos, Color color)
         : MovingParticle(start_pos, speed, min_pos, max_pos), color(color) {
 }
 

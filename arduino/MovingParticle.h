@@ -9,15 +9,15 @@ class MovingParticle : public Particle {
      * @param start_pos starting position (location x 1000)
      * @param speed pos delta per ms
      */
-    MovingParticle(int start_pos, int speed, int min_pos, int max_pos);
+    MovingParticle(uint32_t start_pos, uint32_t speed, uint32_t min_pos, uint32_t max_pos);
 
     virtual bool age(ParticleVisualizer* pv, unsigned int millis);
 
   protected:
-    int pos;
-    int speed;
-    const int min_pos;
-    const int max_pos;
+    uint32_t pos;
+    uint32_t speed;
+    const uint32_t min_pos;
+    const uint32_t max_pos;
 };
 
 #endif

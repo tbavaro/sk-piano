@@ -8,12 +8,12 @@ static Color comet_tail_colors[num_comet_tail_colors];
 
 class CometParticle : public SimpleMovingParticle {
   public:
-    CometParticle(int start_pos, int speed, int min_pos, int max_pos);
+    CometParticle(uint32_t start_pos, uint32_t speed, uint32_t min_pos, uint32_t max_pos);
     virtual bool age(ParticleVisualizer* pv, unsigned int millis);
 };
 
 CometParticle::CometParticle(
-    int start_pos, int speed, int min_pos, int max_pos)
+    uint32_t start_pos, uint32_t speed, uint32_t min_pos, uint32_t max_pos)
         : SimpleMovingParticle(
               start_pos, speed, min_pos, max_pos, Colors::WHITE) {
 }

@@ -10,5 +10,5 @@ SimpleParticleVisualizer::SimpleParticleVisualizer(
 void SimpleParticleVisualizer::onKeyDown(int key) {
   Color color = Colors::rainbow(key * 4);
   addParticle(
-    new SimpleMovingParticle(0, 10000, 0, strip->numPixels() - 1, color));
+    new SimpleMovingParticle(0, 1, 0, ((uint32_t)(strip->numPixels() - 1)) * 1000, color));
 }

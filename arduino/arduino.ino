@@ -26,8 +26,8 @@ void setup() {
   
   MasterVisualizer* master_viz = new MasterVisualizer(&strip);
   master_viz->addVisualizer(new SimpleParticleVisualizer(&strip, 300));
-  master_viz->addVisualizer(new CometVisualizer(&strip, 2000));
-  master_viz->addVisualizer(new SimpleVisualizer(&strip));
+//  master_viz->addVisualizer(new CometVisualizer(&strip, 300));
+//  master_viz->addVisualizer(new SimpleVisualizer(&strip));
   
   piano = new Piano(master_viz);
 }

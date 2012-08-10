@@ -77,6 +77,8 @@ void ParticleVisualizer::onPassFinished(bool something_changed) {
 
   // update strip
   strip->show();
+
+  delay(1);
 }
 
 void ParticleVisualizer::addParticle(Particle* p) {

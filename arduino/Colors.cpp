@@ -16,7 +16,7 @@ Color Colors::hsv(float h, float s, float v) {
   float r, g, b;
   if( s == 0 ) {
     // achromatic (grey)
-    r = g = b = v * 127;
+    r = g = b = v;
   } else {
     h /= 60;                      // sector 0 to 5
     int i = floor(h);
@@ -56,6 +56,6 @@ Color Colors::hsv(float h, float s, float v) {
         b = q;
         break;
     }
-    return Colors::rgb(r * 127, g * 127, b * 127);
   }
+  return Colors::rgb(r * 127, g * 127, b * 127);
 }

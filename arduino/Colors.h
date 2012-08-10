@@ -3,7 +3,7 @@
 
 #include "stdint.h"
 
-typedef int Color;
+typedef int32_t Color;
 
 class Colors {
   public:
@@ -34,7 +34,7 @@ class Colors {
 };
 
 inline Color Colors::rgb(uint8_t r, uint8_t g, uint8_t b) {
-  return ((uint32_t)g << 16) | ((uint32_t)r << 8) | (uint32_t)b;
+  return 0x808080 | ((uint32_t)g << 16) | ((uint32_t)r << 8) | (uint32_t)b;
 }
 
 inline Color Colors::rainbow(int hue) {
