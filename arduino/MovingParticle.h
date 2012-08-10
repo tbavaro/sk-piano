@@ -2,6 +2,7 @@
 #define __DEFINED_MOVING_PARTICLE_H
 
 #include "Particle.h"
+#include "SKTypes.h"
 
 class MovingParticle : public Particle {
   public:
@@ -9,15 +10,23 @@ class MovingParticle : public Particle {
      * @param start_pos starting position (location x 1000)
      * @param speed pos delta per ms
      */
-    MovingParticle(uint32_t start_pos, uint32_t speed, uint32_t min_pos, uint32_t max_pos);
+    MovingParticle(Pixel start_pos, float speed, Pixel min_pos, Pixel max_pos);
 
-    virtual bool age(ParticleVisualizer* pv, unsigned int millis);
+    virtual bool age(ParticleVisualizer* pv, TimeInterval millis);
 
   protected:
-    uint32_t pos;
-    uint32_t speed;
-    const uint32_t min_pos;
-    const uint32_t max_pos;
+    static const int32_t PIXEL_MULTIPLIER;
+
+    Pixel pos() const;
+
+    int32_t pos_mult;
+    int32_t speed_mult_per_ms;
+    const int32_t min_pos_mult;
+    const int32_t max_pos_mult;
 };
+
+inline Pixel MovingParticle::pos() const {
+  return pos_mult / PIXEL_MULTIPLIER;
+}
 
 #endif

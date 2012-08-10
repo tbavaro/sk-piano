@@ -1,19 +1,19 @@
 #include "Arduino.h"
 #include "Piano.h"
+#include <avr/pgmspace.h>
 
-static const int num_keys = 88;
+static const uint8_t num_keys = 88;
 
-static const int note_pins[] = 
+static const uint8_t note_pins[] = 
     { 30, 28, 38, 36, 41, 39, 34, 32, 40, 33, 35, 37 };
-static const int num_note_pins = sizeof(note_pins) / sizeof(int);
+static const uint8_t num_note_pins = sizeof(note_pins) / sizeof(uint8_t);
 
-static const int octave_pins[] = { 27, 29, 31, 22, 24, 26, 25, 23 };
-static const int num_octave_pins = sizeof(octave_pins) / sizeof(int);
+static const uint8_t octave_pins[] = { 27, 29, 31, 22, 24, 26, 25, 23 };
+static const uint8_t num_octave_pins = sizeof(octave_pins) / sizeof(uint8_t);
 
 static const char key_names[] = 
     { 'a', 'A', 'b', 'c', 'C', 'd', 'D', 'e', 'f', 'F', 'g', 'G' };
 static const int num_key_names = sizeof(key_names) / sizeof(char);
-
 
 /**
  * Mappings from pins to keys.
@@ -22,7 +22,7 @@ static const int num_key_names = sizeof(key_names) / sizeof(char);
  *   i = octave_pin * num_note_pins + note_pin   ("unmapped key")
  *   note = note value from 0 to (num_keys - 1)
  **/
-static const int key_mappings[] = {
+static const Key PROGMEM key_mappings[] = {
      0,   1,   2,   3,   4,   5,   6,   7,   8,   9,  10,  11,
     13,  12,  16,  14,  23,  22,  18,  15,  17,  19,  21,  20,
     25,  24,  34,  35,  30,  28,  31,  32,  33,  26,  27,  29,
@@ -30,12 +30,11 @@ static const int key_mappings[] = {
     59,  58,  50,  56,  53,  48,  52,  57,  51,  55,  49,  54,
     71,  70,  63,  60,  66,  65,  64,  61,  62,  67,  68,  69,
     82,  83,  73,  74,  78,  81,  75,  76,  72,  80,  79,  77,
-    -1,  -1,  -1,  -1,  85,  86,  -1,  -1,  -1,  -1,  84,  87
+     0,   0,   0,   0,  85,  86,   0,   0,   0,   0,  84,  87
 };
 
-Piano::Piano(PianoDelegate* _delegate) {
-  delegate = _delegate;
-
+Piano::Piano(PianoDelegate* delegate) 
+    : delegate(delegate), key_values((uint8_t*)malloc(num_keys)) {
   // initialize current octave and note so the first pin will be next  
   current_octave = num_octave_pins - 1;
   current_note = num_note_pins - 1;
@@ -61,7 +60,6 @@ Piano::Piano(PianoDelegate* _delegate) {
   }
   
   // initialize all keys to be OFF
-  key_values = (int*)malloc(num_keys * sizeof(int));
   for (int i = 0; i < num_keys; ++i) {
     key_values[i] = LOW;
   }  
@@ -113,7 +111,7 @@ void Piano::checkOne() {
     delay(1);
   }
   
-  int key = key_mappings[current_unmapped_key];
+  Key key = pgm_read_byte_near(key_mappings + current_unmapped_key);
   int value = digitalRead(note_pins[current_note]);
   if (value != key_values[key]) {
     key_values[key] = value;

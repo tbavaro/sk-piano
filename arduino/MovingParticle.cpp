@@ -1,13 +1,18 @@
 #include "MovingParticle.h"
 
-MovingParticle::MovingParticle(
-    uint32_t start_pos, uint32_t speed, uint32_t min_pos, uint32_t max_pos)
-      : pos(start_pos), speed(speed), min_pos(min_pos), max_pos(max_pos) {
-}
+const int32_t MovingParticle::PIXEL_MULTIPLIER = 65536;
 
-bool MovingParticle::age(ParticleVisualizer* pv, unsigned int millis) {
-  pos = pos + 1000;//speed * millis;
+MovingParticle::MovingParticle(
+    Pixel start_pos, float speed, Pixel min_pos, Pixel max_pos)
+      : pos_mult(start_pos * PIXEL_MULTIPLIER),
+        speed_mult_per_ms(speed * PIXEL_MULTIPLIER / 1000),
+        min_pos_mult(min_pos * PIXEL_MULTIPLIER),
+        max_pos_mult(max_pos * PIXEL_MULTIPLIER) {
+};
+
+bool MovingParticle::age(ParticleVisualizer* pv, TimeInterval millis) {
+  pos_mult += speed_mult_per_ms * ((int32_t)millis);
 
   // if the particle has moved out of bounds, kill it
-  return (pos >= min_pos && pos <= max_pos);
+  return (pos_mult >= min_pos_mult && pos_mult <= max_pos_mult);
 }

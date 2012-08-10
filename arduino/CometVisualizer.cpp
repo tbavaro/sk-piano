@@ -3,30 +3,34 @@
 #include "SimpleMovingParticle.h"
 
 static bool initialized = false;
-static const int num_comet_tail_colors = 64;
+static const int num_comet_tail_colors = 16;
 static Color comet_tail_colors[num_comet_tail_colors];
 
 class CometParticle : public SimpleMovingParticle {
   public:
-    CometParticle(uint32_t start_pos, uint32_t speed, uint32_t min_pos, uint32_t max_pos);
-    virtual bool age(ParticleVisualizer* pv, unsigned int millis);
+    CometParticle(Pixel start_pos, float speed, Pixel min_pos, Pixel max_pos);
+    virtual bool age(ParticleVisualizer* pv, TimeInterval millis);
 };
 
 CometParticle::CometParticle(
-    uint32_t start_pos, uint32_t speed, uint32_t min_pos, uint32_t max_pos)
+    Pixel start_pos, float speed, Pixel min_pos, Pixel max_pos)
         : SimpleMovingParticle(
               start_pos, speed, min_pos, max_pos, Colors::WHITE) {
 }
 
-bool CometParticle::age(ParticleVisualizer* pv, unsigned int millis) {
+bool CometParticle::age(ParticleVisualizer* pv, TimeInterval millis) {
   // TODO this should actually add them uniformly over time/distance, not
   // just one per cycle
   pv->addParticle(
-      new ColorCycleParticle(pos, comet_tail_colors, num_comet_tail_colors, 1));
+      new ColorCycleParticle(
+        pos(), 
+        comet_tail_colors, 
+        num_comet_tail_colors, 
+        1));
   return SimpleMovingParticle::age(pv, millis);
 }
 
-CometVisualizer::CometVisualizer(LPD8806* strip, int max_particles)
+CometVisualizer::CometVisualizer(LPD8806* strip, uint16_t max_particles)
     : ParticleVisualizer(strip, max_particles) {
   if (!initialized) {
     for (int i = 0; i < num_comet_tail_colors; ++i) {
@@ -37,6 +41,6 @@ CometVisualizer::CometVisualizer(LPD8806* strip, int max_particles)
   }
 }
 
-void CometVisualizer::onKeyDown(int key) {
-  addParticle(new CometParticle(0, 10000, 0, strip->numPixels() - 1));
+void CometVisualizer::onKeyDown(Key key) {
+  addParticle(new CometParticle(0, 1.0, 0, strip->numPixels() - 1));
 }

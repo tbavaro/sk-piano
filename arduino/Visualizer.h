@@ -11,7 +11,7 @@ class Visualizer : public PianoDelegate {
     virtual void reset();
 
   protected:
-    LPD8806* strip;
+    LPD8806* const strip;
 };
 
 #endif

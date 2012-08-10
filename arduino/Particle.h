@@ -4,6 +4,7 @@ class Particle;
 #define __INCLUDED_PARTICLE_H
 
 #include "LPD8806.h"
+#include "SKTypes.h"
 
 class ParticleVisualizer;
 
@@ -14,7 +15,7 @@ class Particle {
      *
      * @return TRUE iff the particle is still alive
      */
-    virtual bool age(ParticleVisualizer* pv, unsigned int millis)=0;
+    virtual bool age(ParticleVisualizer* pv, TimeInterval millis)=0;
 
     virtual void render(LPD8806* strip)=0;
 };

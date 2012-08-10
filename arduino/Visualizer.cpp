@@ -1,7 +1,6 @@
 #include "Visualizer.h"
 
-Visualizer::Visualizer(LPD8806* _strip) {
-  strip = _strip;
+Visualizer::Visualizer(LPD8806* strip) : strip(strip) {
 }
 
 void Visualizer::reset() {

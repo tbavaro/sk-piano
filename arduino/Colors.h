@@ -7,8 +7,6 @@ typedef int32_t Color;
 
 class Colors {
   public:
-    static void init();
-
     /**
      * Calculate color value based on r, g, b values from 0-127
      */
@@ -25,20 +23,14 @@ class Colors {
      * Returns a full-brightness, full-saturation color with the given hue.
      * This is much faster than calling hsv above on every pixel.
      */
-    static Color rainbow(int hue);
+    static Color rainbow(uint16_t hue);
 
-    static const Color WHITE;
-
-  private:
-    static Color cached_rainbow[360];
+    static const Color BLACK = 0;
+    static const Color WHITE = 0x7f7f7f;
 };
 
 inline Color Colors::rgb(uint8_t r, uint8_t g, uint8_t b) {
   return 0x808080 | ((uint32_t)g << 16) | ((uint32_t)r << 8) | (uint32_t)b;
-}
-
-inline Color Colors::rainbow(int hue) {
-  return cached_rainbow[hue];
 }
 
 #endif

@@ -1,30 +1,32 @@
 #include "ColorCycleParticle.h"
 
+static const uint32_t INDEX_MULTIPLIER = 65536;
+
 ColorCycleParticle::ColorCycleParticle(
-        int pos, Color* colors, int num_colors, int color_rate)
+        Pixel pos, const Color* colors, uint16_t num_colors, float color_rate)
         : MovingParticle(pos, 0, pos, pos),
           colors(colors),
-          num_colors_x1000(num_colors * 1000), 
-          color_rate(color_rate),
-          index_x1000(0) {
+          num_colors_mult(((uint32_t)num_colors) * INDEX_MULTIPLIER),
+          color_rate_mult_per_ms(color_rate * INDEX_MULTIPLIER / 1000),
+          index_mult(0) {
 }
 
 ColorCycleParticle::ColorCycleParticle(
-    int start_pos, int speed, int min_pos, int max_pos,
-    Color* colors, int num_colors, int color_rate)
+    Pixel start_pos, float speed, Pixel min_pos, Pixel max_pos,
+    const Color* colors, uint16_t num_colors, float color_rate)
         : MovingParticle(start_pos, speed, min_pos, max_pos),
-          colors(colors), 
-          num_colors_x1000(num_colors * 1000), 
-          color_rate(color_rate),
-          index_x1000(0) {
+          colors(colors),
+          num_colors_mult(((uint32_t)num_colors) * INDEX_MULTIPLIER),
+          color_rate_mult_per_ms(color_rate * INDEX_MULTIPLIER / 1000),
+          index_mult(0) {
 }
 
-bool ColorCycleParticle::age(ParticleVisualizer* pv, unsigned int millis) {
+bool ColorCycleParticle::age(ParticleVisualizer* pv, TimeInterval millis) {
   bool alive = MovingParticle::age(pv, millis);
 
   if (alive) {
-    index_x1000 += color_rate * millis;
-    if (index_x1000 >= num_colors_x1000) {
+    index_mult += color_rate_mult_per_ms * ((uint32_t)millis);
+    if (index_mult >= num_colors_mult) {
       alive = false;
     }
   }
@@ -33,6 +35,6 @@ bool ColorCycleParticle::age(ParticleVisualizer* pv, unsigned int millis) {
 }
 
 void ColorCycleParticle::render(LPD8806* strip) {
-  strip->addPixelColor(pos, colors[index_x1000 / 1000]);
+  strip->addPixelColor(pos(), colors[index_mult / INDEX_MULTIPLIER]);
 }
 

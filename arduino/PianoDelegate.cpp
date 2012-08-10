@@ -1,9 +1,9 @@
   #include "PianoDelegate.h"
 
-void PianoDelegate::onKeyDown(int key) {
+void PianoDelegate::onKeyDown(Key key) {
 }
 
-void PianoDelegate::onKeyUp(int key) {
+void PianoDelegate::onKeyUp(Key key) {
 }
 
 void PianoDelegate::onPassFinished(bool something_changed) {

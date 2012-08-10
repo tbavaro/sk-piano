@@ -14,22 +14,29 @@
 class ColorCycleParticle : public MovingParticle {
   public:
     ColorCycleParticle(
-        int pos,
-        Color* colors, int num_colors, int color_rate);
+        Pixel pos,
+        const Color* colors, 
+        uint16_t num_colors,
+        float color_rate);
     ColorCycleParticle(
-        int start_pos, int speed, int min_pos, int max_pos,
-        Color* colors, int num_colors, int color_rate);
+        Pixel pos,
+        float speed,
+        Pixel min_pos,
+        Pixel max_pos,
+        const Color* colors,
+        uint16_t num_colors,
+        float color_rate);
 
-    virtual bool age(ParticleVisualizer* pv, unsigned int millis);
+    virtual bool age(ParticleVisualizer* pv, TimeInterval millis);
     virtual void render(LPD8806* strip);
 
   private:
     const Color* const colors;
-    const int num_colors_x1000;
-    const int color_rate;
+    const uint32_t num_colors_mult;
+    const uint32_t color_rate_mult_per_ms;
 
     // current color index x 1000
-    unsigned int index_x1000;
+    uint32_t index_mult;
 };
 
 #endif

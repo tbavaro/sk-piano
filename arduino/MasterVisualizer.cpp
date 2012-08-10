@@ -1,16 +1,14 @@
 #include "MasterVisualizer.h"
 
-static const int MAX_VISUALIZERS = 64;
+static const uint8_t MAX_VISUALIZERS = 64;
 
-MasterVisualizer::MasterVisualizer(LPD8806* strip) : Visualizer(strip) {
+MasterVisualizer::MasterVisualizer(LPD8806* strip)
+    : Visualizer(strip), 
+      visualizers((Visualizer**)malloc(MAX_VISUALIZERS * sizeof(Visualizer*))) {
   // start out with a dummy visualizer, but we'll kill this when we add the
   // first "real" visualizer
   current_viz = new Visualizer(strip);
   current_viz_index = -1;
-
-  // note: arduino c++ doesn't seem to support "new Visualizer*[64]" syntax..?
-  visualizers = (Visualizer**)malloc(MAX_VISUALIZERS * sizeof(Visualizer*));
-
   num_visualizers = 0;
 }
 
@@ -69,7 +67,7 @@ void MasterVisualizer::reset() {
   current_viz->reset();
 }
 
-void MasterVisualizer::onKeyDown(int key) {
+void MasterVisualizer::onKeyDown(Key key) {
   // if this is the first key (A0), go to the next visualizer
   if (key == 0) {
     this->nextVisualizer();
@@ -78,7 +76,7 @@ void MasterVisualizer::onKeyDown(int key) {
   current_viz->onKeyDown(key);
 }
 
-void MasterVisualizer::onKeyUp(int key) {
+void MasterVisualizer::onKeyUp(Key key) {
   current_viz->onKeyUp(key);
 }
 

@@ -190,12 +190,11 @@ static inline uint8_t addValues(uint8_t a, uint8_t b) {
 }
 
 void LPD8806::addPixelColor(uint16_t n, uint32_t c) {
-  this->setPixelColor(n, c);
-//  if (n < numLEDs) {
-//    c &= 0x7f7f7f;
-//    uint8_t *p = &pixels[n * 3];
-//    *p++ = 0x80 | addValues(*p, c >> 16);
-//    *p++ = 0x80 | addValues(*p, c >> 8);
-//    *p++ = 0x80 | addValues(*p, c);
-//  }
+  if (n < numLEDs) {
+    c &= 0x7f7f7f;
+    uint8_t *p = &pixels[n * 3];
+    *p++ = 0x80 | addValues(*p, c >> 16);
+    *p++ = 0x80 | addValues(*p, c >> 8);
+    *p++ = 0x80 | addValues(*p, c);
+  }
 }

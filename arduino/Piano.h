@@ -2,6 +2,7 @@
 #define __INCLUDED_PIANO_H
 
 #include "PianoDelegate.h"
+#include <stdint.h>
 
 class Piano {
   public:
@@ -12,12 +13,12 @@ class Piano {
     void checkOne();
 
   private:
-    PianoDelegate* delegate;
+    PianoDelegate* const delegate;
     int current_octave;
     int current_note;
     int current_unmapped_key;
     bool changed_since_last_pass;
-    int* key_values; 
+    uint8_t* const key_values; 
 };
 
 #endif

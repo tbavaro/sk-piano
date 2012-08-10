@@ -12,15 +12,15 @@ class MasterVisualizer : public Visualizer {
     void nextVisualizer();
 
     virtual void reset();
-    virtual void onKeyDown(int key);
-    virtual void onKeyUp(int key);
+    virtual void onKeyDown(Key key);
+    virtual void onKeyUp(Key key);
     virtual void onPassFinished(bool something_changed);
 
   private:
     Visualizer* current_viz;
-    int current_viz_index;
-    Visualizer** visualizers;
-    int num_visualizers;
+    uint8_t current_viz_index;
+    Visualizer** const visualizers;
+    uint8_t num_visualizers;
 };
 
 #endif

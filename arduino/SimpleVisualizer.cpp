@@ -1,14 +1,14 @@
 #include "SimpleVisualizer.h"
+#include "Colors.h"
 
-SimpleVisualizer::SimpleVisualizer(LPD8806* _strip) : Visualizer(_strip) {
-  strip = _strip;
+SimpleVisualizer::SimpleVisualizer(LPD8806* strip) : Visualizer(strip) {
 }
 
-void SimpleVisualizer::onKeyDown(int key) {
-  strip->setPixelColor(key, 0x7f7f7f);
+void SimpleVisualizer::onKeyDown(Key key) {
+  strip->setPixelColor(key, Colors::WHITE);
 }
 
-void SimpleVisualizer::onKeyUp(int key) {
+void SimpleVisualizer::onKeyUp(Key key) {
   strip->setPixelColor(key, 0x000000);
 }
   
