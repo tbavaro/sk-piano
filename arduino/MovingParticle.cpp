@@ -1,7 +1,5 @@
 #include "MovingParticle.h"
 
-const int32_t MovingParticle::PIXEL_MULTIPLIER = 65536;
-
 MovingParticle::MovingParticle(
     Pixel start_pos, float speed, Pixel min_pos, Pixel max_pos)
       : pos_mult(start_pos * PIXEL_MULTIPLIER),

@@ -1,12 +1,12 @@
 #include "ParticleVisualizer.h"
 
-static unsigned long TIME_NONE = 0;
+static const uint32_t TIME_NONE = 0;
 
-ParticleVisualizer::ParticleVisualizer(LPD8806* strip, int max_particles) 
+ParticleVisualizer::ParticleVisualizer(LPD8806* strip, uint16_t max_particles) 
     : Visualizer(strip), 
       max_particles(max_particles),
       particles((Particle**)malloc(sizeof(Particle) * max_particles)),
-      removed_particle_indexes((int*)malloc(sizeof(int) * max_particles)) {
+      removed_particle_indexes((uint16_t*)malloc(sizeof(uint16_t) * max_particles)) {
   num_particles = 0;
   num_particles_after_last_frame = 0;
   prev_frame_time = TIME_NONE;
@@ -29,8 +29,8 @@ void ParticleVisualizer::reset() {
 
 void ParticleVisualizer::onPassFinished(bool something_changed) {
   // advance the clock and see how long it's been since the last frame
-  unsigned long now = millis();
-  unsigned int frame_duration;
+  uint32_t now = millis();
+  TimeInterval frame_duration;
   if (prev_frame_time == TIME_NONE) {
     frame_duration = 0;
   } else {
@@ -38,7 +38,7 @@ void ParticleVisualizer::onPassFinished(bool something_changed) {
   }
   prev_frame_time = now;
 
-  int num_removed_particles = 0;
+  uint16_t num_removed_particles = 0;
 
   // advance particles; don't advance new particles added this round
   for (int i = 0; i < num_particles_after_last_frame; ++i) {
@@ -52,13 +52,13 @@ void ParticleVisualizer::onPassFinished(bool something_changed) {
 
   // remove dead particles
   for (int i = num_removed_particles - 1; i >= 0; --i) {
-    int index = removed_particle_indexes[i];
+    uint16_t index = removed_particle_indexes[i];
     
     // delete the dead particle
     delete particles[index];
 
     // if this wasn't the last particle, swap that one into this place
-    int last_index = num_particles - 1;
+    uint16_t last_index = num_particles - 1;
     if (index < last_index) {
       particles[index] = particles[last_index];
     }

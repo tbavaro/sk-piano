@@ -1,7 +1,5 @@
 #include "ColorCycleParticle.h"
 
-static const uint32_t INDEX_MULTIPLIER = 65536;
-
 ColorCycleParticle::ColorCycleParticle(
         Pixel pos, const Color* colors, uint16_t num_colors, float color_rate)
         : MovingParticle(pos, 0, pos, pos),
@@ -35,6 +33,6 @@ bool ColorCycleParticle::age(ParticleVisualizer* pv, TimeInterval millis) {
 }
 
 void ColorCycleParticle::render(LPD8806* strip) {
-  strip->addPixelColor(pos(), colors[index_mult / INDEX_MULTIPLIER]);
+  strip->addPixelColor(pos(), colors[index()]);
 }
 

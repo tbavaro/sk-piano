@@ -4,7 +4,7 @@ static const uint8_t MAX_VISUALIZERS = 64;
 
 MasterVisualizer::MasterVisualizer(LPD8806* strip)
     : Visualizer(strip), 
-      visualizers((Visualizer**)malloc(MAX_VISUALIZERS * sizeof(Visualizer*))) {
+      visualizer_factories((VisualizerFactory*)malloc(MAX_VISUALIZERS * sizeof(VisualizerFactory))) {
   // start out with a dummy visualizer, but we'll kill this when we add the
   // first "real" visualizer
   current_viz = new Visualizer(strip);
@@ -18,10 +18,10 @@ MasterVisualizer::~MasterVisualizer() {
     delete current_viz;
   }
 
-  free(visualizers);
+  free(visualizer_factories);
 }
 
-void MasterVisualizer::addVisualizer(Visualizer* viz) {
+void MasterVisualizer::addVisualizer(VisualizerFactory viz_factory) {
   // don't add too many visualizers
   if (num_visualizers >= MAX_VISUALIZERS) {
     return;
@@ -29,12 +29,11 @@ void MasterVisualizer::addVisualizer(Visualizer* viz) {
 
   bool is_first = (num_visualizers == 0);
 
-  visualizers[num_visualizers++] = viz;
+  visualizer_factories[num_visualizers++] = viz_factory;
   
   // if this is the first visualizer to be added, destroy our dummy visualizer
   // and enable the visualizer
   if (is_first) {
-    delete current_viz;
     this->nextVisualizer();
   }
 }
@@ -45,9 +44,12 @@ void MasterVisualizer::nextVisualizer() {
     return;
   }
 
+  // destroy the current visualizer
+  delete current_viz;
+
   // increment, wrapping around
   current_viz_index = (current_viz_index + 1) % num_visualizers;
-  current_viz = visualizers[current_viz_index];
+  current_viz = visualizer_factories[current_viz_index]();
   
   // reset the visualizer
   current_viz->reset();
@@ -55,9 +57,13 @@ void MasterVisualizer::nextVisualizer() {
 
 void MasterVisualizer::reset() {
   // if we have a visualizer, reset to the first one
+  delete current_viz;
   if (num_visualizers > 0) {
     current_viz_index = 0;
-    current_viz = visualizers[0];
+    current_viz = visualizer_factories[current_viz_index]();
+  } else {
+    current_viz_index = -1;
+    current_viz = new Visualizer(strip);
   }
 
   // do the visualizer base class reset (reset the strip to black)

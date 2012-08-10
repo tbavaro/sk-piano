@@ -15,7 +15,7 @@ class MovingParticle : public Particle {
     virtual bool age(ParticleVisualizer* pv, TimeInterval millis);
 
   protected:
-    static const int32_t PIXEL_MULTIPLIER;
+    static const int32_t PIXEL_MULTIPLIER = 65536;
 
     Pixel pos() const;
 

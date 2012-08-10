@@ -31,12 +31,18 @@ class ColorCycleParticle : public MovingParticle {
     virtual void render(LPD8806* strip);
 
   private:
+    static const uint32_t INDEX_MULTIPLIER = 65536;
+
+    uint16_t index() const;
+
     const Color* const colors;
     const uint32_t num_colors_mult;
     const uint32_t color_rate_mult_per_ms;
-
-    // current color index x 1000
     uint32_t index_mult;
 };
+
+inline uint16_t ColorCycleParticle::index() const {
+  return index_mult / INDEX_MULTIPLIER;
+}
 
 #endif

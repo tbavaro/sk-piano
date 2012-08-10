@@ -7,6 +7,7 @@
 class CometVisualizer : public ParticleVisualizer {
   public:
     CometVisualizer(LPD8806* strip, uint16_t max_particles);
+    ~CometVisualizer();
     virtual void onKeyDown(Key key);
 };
 

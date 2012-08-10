@@ -9,13 +9,25 @@
 #include "Utils.h"
 #include <avr/pgmspace.h>
 
-static Piano* piano;
 
 // Number of RGB LEDs in strand:
-PROGMEM static int nLEDs = 160;
+static int nLEDs = 160;
 
 static LPD8806 strip(nLEDs);
 static MasterVisualizer master_viz(&strip);
+static Piano piano(&master_viz);
+
+static Visualizer* makeSimpleParticleVisualizer() {
+  return new SimpleParticleVisualizer(&strip, 300);
+}
+
+static Visualizer* makeCometVisualizer() {
+  return new CometVisualizer(&strip, 300);
+}
+
+static Visualizer* makeSimpleVisualizer() {
+  return new SimpleVisualizer(&strip);
+}
 
 void setup() {
   Serial.begin(9600);
@@ -23,20 +35,18 @@ void setup() {
   // initialize LED strip
   strip.begin();
   strip.show();
-  
-  MasterVisualizer* master_viz = new MasterVisualizer(&strip);
-  master_viz->addVisualizer(new SimpleParticleVisualizer(&strip, 300));
-//  master_viz->addVisualizer(new CometVisualizer(&strip, 300));
-//  master_viz->addVisualizer(new SimpleVisualizer(&strip));
-  
-  piano = new Piano(master_viz);
+
+  // add visualizers
+  master_viz.addVisualizer(makeSimpleParticleVisualizer);
+  master_viz.addVisualizer(makeCometVisualizer);
+  master_viz.addVisualizer(makeSimpleVisualizer);
 }
 
 static uint8_t counter = 0;
 
 void loop() {
   ++counter;
-  piano->checkOne();
+  piano.checkOne();
 
   if (counter == 0) {
     Serial.print("free memory: ");

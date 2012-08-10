@@ -2,9 +2,8 @@
 #include "ColorCycleParticle.h"
 #include "SimpleMovingParticle.h"
 
-static bool initialized = false;
-static const int num_comet_tail_colors = 16;
-static Color comet_tail_colors[num_comet_tail_colors];
+static const uint16_t NUM_COMET_TAIL_COLORS = 16;
+static Color* comet_tail_colors;
 
 class CometParticle : public SimpleMovingParticle {
   public:
@@ -25,20 +24,23 @@ bool CometParticle::age(ParticleVisualizer* pv, TimeInterval millis) {
       new ColorCycleParticle(
         pos(), 
         comet_tail_colors, 
-        num_comet_tail_colors, 
+        NUM_COMET_TAIL_COLORS, 
         1));
   return SimpleMovingParticle::age(pv, millis);
 }
 
 CometVisualizer::CometVisualizer(LPD8806* strip, uint16_t max_particles)
     : ParticleVisualizer(strip, max_particles) {
-  if (!initialized) {
-    for (int i = 0; i < num_comet_tail_colors; ++i) {
-      float v = ((float)i / (float)num_comet_tail_colors);
-      comet_tail_colors[i] = Colors::hsv(270.0, pow(v, 2), pow(1.0 - v, 0.5));
-    }
-    initialized = true;
+  Color* comet_tail_colors = 
+    (Color*)malloc(NUM_COMET_TAIL_COLORS * sizeof(Color));
+  for (int i = 0; i < NUM_COMET_TAIL_COLORS; ++i) {
+    float v = ((float)i / (float)NUM_COMET_TAIL_COLORS);
+    comet_tail_colors[i] = Colors::hsv(270.0, pow(v, 2), pow(1.0 - v, 0.5));
   }
+}
+
+CometVisualizer::~CometVisualizer() {
+  free(comet_tail_colors);
 }
 
 void CometVisualizer::onKeyDown(Key key) {

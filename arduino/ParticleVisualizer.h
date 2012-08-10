@@ -8,7 +8,7 @@ class ParticleVisualizer;
 
 class ParticleVisualizer : public Visualizer {
   public:
-    ParticleVisualizer(LPD8806* strip, int max_particles);
+    ParticleVisualizer(LPD8806* strip, uint16_t max_particles);
     ~ParticleVisualizer();
 
     virtual void reset();
@@ -20,13 +20,13 @@ class ParticleVisualizer : public Visualizer {
     void removeAllParticles();
 
     Particle** const particles;
-    int num_particles;
-    int num_particles_after_last_frame;
-    const int max_particles;
+    uint16_t num_particles;
+    uint16_t num_particles_after_last_frame;
+    const uint16_t max_particles;
 
-    unsigned long prev_frame_time;
+    uint32_t prev_frame_time;
     
-    int* const removed_particle_indexes;
+    uint16_t* const removed_particle_indexes;
 };
 
 #endif
