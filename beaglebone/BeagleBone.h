@@ -39,5 +39,17 @@ class Pin {
     const char* direction_file_name;
 };
 
+class SPI {
+  public:
+    SPI(uint32_t max_speed_hz);
+    ~SPI();
+
+    void send(void* buf, int num_bytes);
+
+  private:
+    int fd;
+    uint32_t max_speed_hz;
+};
+
 #endif
 

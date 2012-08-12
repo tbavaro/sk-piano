@@ -5,9 +5,9 @@
 #include <stdio.h>
 #include <unistd.h>
 
-static void showRainbow() {
+static void showRainbow(SPI& spi) {
   int num_pins = 1000;
-  LightStrip strip(num_pins, Pin::P8_3, Pin::P8_4);
+  LightStrip strip(spi, num_pins); //, Pin::P8_3, Pin::P8_4);
 
   int offset = 0;
 
@@ -18,7 +18,7 @@ static void showRainbow() {
   while(true) {
     for (int i = 0; i < num_pins; ++i) {
       if (i % 10 == x) {
-        strip.setPixelColor(i, Colors::rainbow(((i + offset) * 12) % 360));
+        strip.setPixelColor(i, Colors::rainbow((i * 6 + offset / 100) % 360));
       } else {
         strip.setPixelColor(i, 0);
       }
@@ -49,6 +49,7 @@ static void blinkForever(Pin& pin) {
 }
 
 int main(int argc, char** argv) {
-  showRainbow();
 //  blinkForever(Pin::P8_4);
+  SPI spi(8e6);
+  showRainbow(spi);
 }
