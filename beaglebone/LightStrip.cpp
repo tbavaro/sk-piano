@@ -37,7 +37,7 @@ void LightStrip::show() {
   for (int i = 0; i < num_bytes; ++i) {
     uint8_t byte = frame_buffer[i];
     for (uint8_t bit = 0x80; bit; bit >>= 1) {
-      data_pin.digitalWrite(byte && bit);
+      data_pin.digitalWrite(byte & bit);
       clock_pin.digitalWrite(ON);
       clock_pin.digitalWrite(OFF);
     }

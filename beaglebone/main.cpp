@@ -6,14 +6,34 @@
 #include <unistd.h>
 
 static void showRainbow() {
-  int num_pins = 160;
-  LightStrip strip(num_pins, Pin::USER_LED_3, Pin::USER_LED_3);
+  int num_pins = 1000;
+  LightStrip strip(num_pins, Pin::P8_3, Pin::P8_4);
 
-  for (int i = 0; i < num_pins; ++i) {
-    strip.setPixelColor(i, Colors::rainbow((i * 12) % 360));
+  int offset = 0;
+
+  uint32_t last_time = Util::millis();
+
+  int x = 0;
+
+  while(true) {
+    for (int i = 0; i < num_pins; ++i) {
+      if (i % 10 == x) {
+        strip.setPixelColor(i, Colors::rainbow(((i + offset) * 12) % 360));
+      } else {
+        strip.setPixelColor(i, 0);
+      }
+    }
+
+    strip.show();
+
+    uint32_t millis = Util::millis();
+    printf("frame %d\n", millis - last_time);
+    last_time = millis;
+
+    ++offset;
+    x = (x + 1) % 10;
+
   }
-
-  strip.show();
 }
 
 static void blinkForever(Pin& pin) {
@@ -29,6 +49,6 @@ static void blinkForever(Pin& pin) {
 }
 
 int main(int argc, char** argv) {
-//  showRainbow();
-  blinkForever(Pin::P8_4);
+  showRainbow();
+//  blinkForever(Pin::P8_4);
 }
