@@ -25,8 +25,8 @@ class Colors {
      */
     static Color rainbow(uint16_t hue);
 
-    static const Color BLACK = 0;
-    static const Color WHITE = 0x7f7f7f;
+    static const Color BLACK;
+    static const Color WHITE;
 };
 
 inline Color Colors::rgb(uint8_t r, uint8_t g, uint8_t b) {

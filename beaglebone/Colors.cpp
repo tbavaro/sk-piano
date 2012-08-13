@@ -1,6 +1,9 @@
 #include "Colors.h"
 #include <math.h>
 
+const Color Colors::BLACK = 0;
+const Color Colors::WHITE = 0x7f7f7f;
+
 Color Colors::hsv(float h, float s, float v) {
   float r, g, b;
   if( s == 0 ) {
