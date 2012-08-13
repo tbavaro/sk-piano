@@ -24,7 +24,7 @@ static void showRainbow(SPI& spi) {
 
     strip.show();
 
-    Util::delay(10);
+//    Util::delay(10);
 
     if ((++counter % 30) == 0) {
       uint32_t millis = Util::millis();
@@ -71,6 +71,6 @@ static void blinkForever(Pin& pin) {
 int main(int argc, char** argv) {
 //  blinkForever(Pin::P8_4);
   SPI spi(8e6);
-//  showRainbow(spi);
-  backAndForth(spi);
+  showRainbow(spi);
+//  backAndForth(spi);
 }
