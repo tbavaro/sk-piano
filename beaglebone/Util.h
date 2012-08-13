@@ -10,6 +10,7 @@ class Util {
     static uint32_t millis();
     static void delay(uint32_t millis);
     static void delay_until(uint32_t millis);
+    static uint32_t random(uint32_t max);
 };
 
 #endif

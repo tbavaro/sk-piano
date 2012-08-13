@@ -1,14 +1,16 @@
 #include "BeagleBone.h"
+#include "Colors.h"
 #include "LightStrip.h"
 #include "Util.h"
 
 #include <stdio.h>
 #include <unistd.h>
 
-static void showRainbow(SPI& spi) {
-  int num_pins = 1000;
-  LightStrip strip(spi, num_pins); //, Pin::P8_3, Pin::P8_4);
+static int num_pins = 160;
+static SPI spi(8e6);
+static LightStrip strip(spi, num_pins);
 
+static void showRainbow() {
   int offset = 0;
 
   uint32_t last_time = Util::millis();
@@ -38,10 +40,7 @@ static void showRainbow(SPI& spi) {
   }
 }
 
-static void backAndForth(SPI& spi) {
-  int num_pins = 160;
-  LightStrip strip(spi, num_pins);
-
+static void backAndForth() {
   int pos = 0;
   int direction = 1;
   while(true) {
@@ -53,6 +52,26 @@ static void backAndForth(SPI& spi) {
     }
     strip.setPixelColor(pos, 0x7f7f7f);
     strip.show();
+  }
+}
+
+static void glow() {
+  int brightness = 0;
+  int direction = 1;
+  while(true) {
+    brightness += direction;
+    if (brightness < 1 || brightness > 127) {
+      direction *= -1;
+      brightness += 2 * direction;
+    }
+
+    Color color = Colors::hsv(0, 0.0, brightness / 127.0);
+    for(int i = 0; i < num_pins; ++i) {
+      strip.setPixelColor(i, color);
+    }
+    strip.show();
+
+//    Util::delay(10);
   }
 }
 
@@ -70,7 +89,7 @@ static void blinkForever(Pin& pin) {
 
 int main(int argc, char** argv) {
 //  blinkForever(Pin::P8_4);
-  SPI spi(8e6);
-  showRainbow(spi);
-//  backAndForth(spi);
+//  showRainbow();
+//  backAndForth();
+  glow();
 }

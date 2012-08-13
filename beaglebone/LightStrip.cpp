@@ -13,6 +13,19 @@ LightStrip::~LightStrip() {
   delete[] frame_buffer;
 }
 
+void LightStrip::reset() {
+  memset(frame_buffer, 0x80, num_leds * 3);
+}
+
+int LightStrip::numPixels() {
+  return num_leds;
+}
+
+void LightStrip::addPixelColor(int n, Color c) {
+  // TODO add
+  this->setPixelColor(n, c);
+}
+
 void LightStrip::setPixelColor(int n, Color c) {
   if (n < num_leds) {
     uint8_t* p = &frame_buffer[n * 3];

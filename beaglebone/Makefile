@@ -2,11 +2,23 @@ CC=g++
 CPPFLAGS=-I.
 DEPS = 
 OBJ = \
-      main.o \
       BeagleBone.o \
+      ColorCycleParticle.o \
       Colors.o \
+      CometVisualizer.o \
       LightStrip.o \
-      Util.o
+      MasterVisualizer.o \
+      MovingParticle.o \
+      ParticleVisualizer.o \
+      PianoDelegate.o \
+      SimpleMovingParticle.o \
+      SimpleParticleVisualizer.o \
+      SimpleVisualizer.o \
+      Util.o \
+      Visualizer.o \
+      main.o
+
+#      Piano.o \
 
 all: $(OBJ)
 	$(CC) -o piano $^ $(CPPFLAGS)

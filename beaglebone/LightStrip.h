@@ -10,6 +10,10 @@ class LightStrip {
 //    LightStrip(int num_leds, Pin& data_pin, Pin& clock_pin);
     ~LightStrip();
 
+    int numPixels();
+
+    void reset();
+    void addPixelColor(int n, Color color);
     void setPixelColor(int n, Color color);
     void show();
 
