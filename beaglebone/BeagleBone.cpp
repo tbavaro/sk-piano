@@ -26,21 +26,59 @@ const char* Pin::name() const {
   return value_file_name;
 }
 
-Pin Pin::P8_3(
-    "/sys/class/gpio/gpio38/value",
-    "/sys/kernel/debug/omap_mux/gpmc_ad6",
-    "38",
-    "/sys/class/gpio/gpio38/direction");
-
-Pin Pin::P8_4(
-    "/sys/class/gpio/gpio39/value",
-    "/sys/kernel/debug/omap_mux/gpmc_ad7",
-    "39",
-    "/sys/class/gpio/gpio39/direction");
+// Pin Pin::P8_3(
+//     "/sys/class/gpio/gpio38/value",NUM
+//     "/sys/kernel/debug/omap_mux/gpmc_ad6",
+//     "38",
+//     "/sys/class/gpio/gpio38/direction");
+// 
+// Pin Pin::P8_4(
+//     "/sys/class/gpio/gpio39/value",
+//     "/sys/kernel/debug/omap_mux/gpmc_ad7",
+//     "39",
+//     "/sys/class/gpio/gpio39/direction");
 
 Pin Pin::USER_LED_3(
     "/sys/devices/platform/leds-gpio/leds/beaglebone::usr3/brightness",
     NULL, NULL, NULL);
+
+static Pin* HEADER_8_PINS[] = {
+  NULL,
+  NULL,
+  new Pin(
+     "/sys/class/gpio/gpio38/value",
+     "/sys/kernel/debug/omap_mux/gpmc_ad6",
+     "38",
+     "/sys/class/gpio/gpio38/direction"),
+  new Pin(
+     "/sys/class/gpio/gpio39/value",
+     "/sys/kernel/debug/omap_mux/gpmc_ad7",
+     "39",
+     "/sys/class/gpio/gpio39/direction")
+};
+static int NUM_HEADER_8_PINS = sizeof(HEADER_8_PINS) / sizeof(HEADER_8_PINS[0]);
+    
+Pin& Pin::pin(int header, int pin_num) {
+  Pin** pins;
+  int num_pins;
+  if (header == 8) {
+    pins = HEADER_8_PINS;
+    num_pins = NUM_HEADER_8_PINS;
+  } else {
+    Util::fatal("illegal pin: %d:%d", header, pin_num);
+  }
+
+  if (pin_num < 1 || pin_num > num_pins) {
+    Util::fatal("illegal pin: %d:%d", header, pin_num);
+  }
+
+  Pin* pin = pins[pin_num - 1];
+  if (pin == NULL) {
+    Util::fatal("illegal pin: %d:%d", header, pin_num);
+  }
+
+  return *pin;
+}
 
 static void writeValue(const char* filename, const char* value) {
   FILE* f = fopen(filename, "w");
@@ -49,6 +87,17 @@ static void writeValue(const char* filename, const char* value) {
   }
   fputs(value, f);
   fclose(f);
+}
+
+static bool readValue(const char* filename) {
+  FILE* f = fopen(filename, "r");
+  if (!f) {
+    Util::fatal("can't open file: %s", filename);
+  }
+  char c = fgetc(f);
+//  fprintf(stderr, "%c", c);
+  fclose(f);
+  return (c == '0');
 }
 
 void Pin::setPinMode(PinMode pin_mode) {
@@ -63,25 +112,34 @@ void Pin::setPinMode(PinMode pin_mode) {
     }
   }
 
-  // set mux mode 7
-  writeValue(mode_file_name, "7");
-
   // export the pin
   writeValue("/sys/class/gpio/export", export_key);
 
   // set it to output
-  writeValue(direction_file_name, "out");
+  writeValue(direction_file_name, pin_mode == INPUT ? "in" : "out");
+
+  // set mux mode 7
+  writeValue(mode_file_name, pin_mode == INPUT ? "27" : "7");
 }
 
-void Pin::digitalWrite(bool value) {
+inline FILE* Pin::getOrOpenValueFile() {
   if (value_file == NULL) {
-    value_file = fopen(value_file_name, "w");
+    value_file = fopen(value_file_name, "w"); //xcxc
     if (value_file == NULL) {
       Util::fatal("unable to open pin file: %s", value_file_name);
     }
   }
-  fputc(value ? '1' : '0', value_file);
-  fflush(value_file);
+  return value_file;
+}
+
+bool Pin::digitalRead() {
+  return readValue(value_file_name);
+}
+
+void Pin::digitalWrite(bool value) {
+  FILE* f = getOrOpenValueFile();
+  fputc(value ? '1' : '0', f);
+  fflush(f);
 }
 
 SPI::SPI(uint32_t _max_speed_hz) : max_speed_hz(_max_speed_hz) {

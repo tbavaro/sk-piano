@@ -6,8 +6,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
-static int num_pins = 160;
-static SPI spi(8e6);
+static int num_pins = 162;
+static SPI spi(4e6);
 static LightStrip strip(spi, num_pins);
 
 static void showRainbow() {
@@ -87,9 +87,34 @@ static void blinkForever(Pin& pin) {
   }
 }
 
+static void readTest(Pin& pin) {
+  pin.setPinMode(INPUT);
+  bool prev_value = false;
+  int counter = 0;
+  while(true) {
+    bool value = pin.digitalRead();
+    if (value != prev_value) {
+      Util::log("new value: %d", value);
+      prev_value = value;
+    }
+    if(++counter % 1000 == 0) {
+      fprintf(stderr, ".");
+    }
+  }
+}
+
 int main(int argc, char** argv) {
+  strip.reset();
+  strip.show();
+  strip.show();
+
 //  blinkForever(Pin::P8_4);
 //  showRainbow();
 //  backAndForth();
-  glow();
+//  glow();
+  Pin& out_pin = Pin::pin(8, 4);
+  out_pin.setPinMode(OUTPUT);
+  out_pin.digitalWrite(ON);
+
+  readTest(Pin::pin(8, 3));
 }

@@ -12,24 +12,22 @@ typedef enum {
   OUTPUT
 } PinMode;
 
-class BeagleBone;
-
 class Pin {
-  friend class BeagleBone;
-
   public:
-    static Pin P8_3;
-    static Pin P8_4;
+    static Pin& pin(int header, int pin);
     static Pin USER_LED_3;
 
     const char* name() const;
     void setPinMode(PinMode pin_mode);
+    bool digitalRead();
     void digitalWrite(bool value);
 
-  private:
     Pin(const char* value_file_name, const char* mode_file_name, 
         const char* export_key, const char* direction_file_name);
     ~Pin();
+
+  private:
+    FILE* getOrOpenValueFile();
     FILE* value_file;
     const char* value_file_name;
 

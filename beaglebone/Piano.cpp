@@ -1,15 +1,38 @@
-#include "Arduino.h"
+#include "BeagleBone.h"
 #include "Piano.h"
-#include <avr/pgmspace.h>
+#include "Util.h"
+
+#include <string.h>
 
 static const uint8_t num_keys = 88;
 
-static const uint8_t note_pins[] = 
-    { 30, 28, 38, 36, 41, 39, 34, 32, 40, 33, 35, 37 };
-static const uint8_t num_note_pins = sizeof(note_pins) / sizeof(uint8_t);
+static Pin* note_pins[] = {
+  &Pin::pin(8, 11),
+  &Pin::pin(8, 9),
+  &Pin::pin(8, 19),
+  &Pin::pin(8, 17),
+  &Pin::pin(8, 22),
+  &Pin::pin(8, 20),
+  &Pin::pin(8, 15),
+  &Pin::pin(8, 13),
+  &Pin::pin(8, 21),
+  &Pin::pin(8, 14),
+  &Pin::pin(8, 16),
+  &Pin::pin(8, 18)
+};
+static const uint8_t num_note_pins = sizeof(note_pins) / sizeof(note_pins[0]);
 
-static const uint8_t octave_pins[] = { 27, 29, 31, 22, 24, 26, 25, 23 };
-static const uint8_t num_octave_pins = sizeof(octave_pins) / sizeof(uint8_t);
+static Pin* octave_pins[] = { 
+  &Pin::pin(8, 8),
+  &Pin::pin(8, 10),
+  &Pin::pin(8, 12),
+  &Pin::pin(8, 3),
+  &Pin::pin(8, 5),
+  &Pin::pin(8, 7),
+  &Pin::pin(8, 6),
+  &Pin::pin(8, 4)
+};
+static const uint8_t num_octave_pins = sizeof(octave_pins) / sizeof(octave_pins[0]);
 
 static const char key_names[] = 
     { 'a', 'A', 'b', 'c', 'C', 'd', 'D', 'e', 'f', 'F', 'g', 'G' };
@@ -22,7 +45,7 @@ static const int num_key_names = sizeof(key_names) / sizeof(char);
  *   i = octave_pin * num_note_pins + note_pin   ("unmapped key")
  *   note = note value from 0 to (num_keys - 1)
  **/
-static const Key PROGMEM key_mappings[] = {
+static const Key key_mappings[] = {
      0,   1,   2,   3,   4,   5,   6,   7,   8,   9,  10,  11,
     13,  12,  16,  14,  23,  22,  18,  15,  17,  19,  21,  20,
     25,  24,  34,  35,  30,  28,  31,  32,  33,  26,  27,  29,
@@ -34,7 +57,7 @@ static const Key PROGMEM key_mappings[] = {
 };
 
 Piano::Piano(PianoDelegate* delegate) 
-    : delegate(delegate), key_values((uint8_t*)malloc(num_keys)) {
+    : delegate(delegate), key_values(new uint8_t[num_keys]) {
   // initialize current octave and note so the first pin will be next  
   current_octave = num_octave_pins - 1;
   current_note = num_note_pins - 1;
@@ -50,38 +73,41 @@ Piano::Piano(PianoDelegate* delegate)
 
   // set up note pins as INPUT pins
   for (int i = 0; i < num_note_pins; ++i) {
-    pinMode(note_pins[i], INPUT);
+    note_pins[i]->setPinMode(INPUT);
   }
   
   // set up octave pins as OUTPUT pins and set them to LOW
   for (int i = 0; i < num_octave_pins; ++i) {
-    pinMode(octave_pins[i], OUTPUT);
-    digitalWrite(octave_pins[i], LOW);
+    octave_pins[i]->setPinMode(OUTPUT);
+    octave_pins[i]->digitalWrite(OFF);
   }
   
   // initialize all keys to be OFF
   for (int i = 0; i < num_keys; ++i) {
-    key_values[i] = LOW;
+    key_values[i] = OFF;
   }  
 }
 
 Piano::~Piano() {
-  free(key_values);
+  delete[] key_values;
 }
 
 void Piano::printKeys() {
   static int counter = 0;
   ++counter;
-  Serial.print(counter);
-  Serial.print(':');
+
+  char buf[256] = { 0 };
+  char* ptr = buf;
+  sprintf(ptr, "%d:", counter);
+  ptr += strlen(ptr);
   for (int i = 0; i < num_keys; ++i) {
     if (key_values[i]) {
-      Serial.print(key_names[i % num_key_names]);
+      *ptr++ = key_names[i % num_key_names];
     } else {
-      Serial.print(' ');
+      *ptr++ = ' ';
     }
   }
-  Serial.println();
+  Util::log("%s", buf);
 }
 
 void Piano::checkOne() {
@@ -92,7 +118,7 @@ void Piano::checkOne() {
   current_unmapped_key++;
   if (current_note == num_note_pins) {    
     // turn off the previous octave
-    digitalWrite(octave_pins[current_octave], LOW);
+    octave_pins[current_octave]->digitalWrite(OFF);
     
     // go to the first note of the next octave
     current_note = 0;
@@ -105,14 +131,14 @@ void Piano::checkOne() {
     }
     
     // turn on the new octave
-    digitalWrite(octave_pins[current_octave], HIGH);
+    octave_pins[current_octave]->digitalWrite(ON);
     
     // TODO maybe we don't need this delay, or maybe it should be longer
-    delay(1);
+    Util::delay(1);
   }
   
-  Key key = pgm_read_byte_near(key_mappings + current_unmapped_key);
-  int value = digitalRead(note_pins[current_note]);
+  Key key = key_mappings[current_unmapped_key];
+  int value = note_pins[current_note]->digitalRead();
   if (value != key_values[key]) {
     key_values[key] = value;
     changed_since_last_pass = true;

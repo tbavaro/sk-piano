@@ -5,6 +5,7 @@
 
 class Util {
   public:
+    static void log(const char* fmt, ...);
     static void fatal(const char* fmt, ...);
 
     static uint32_t millis();

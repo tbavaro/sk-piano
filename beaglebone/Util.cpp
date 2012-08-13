@@ -6,6 +6,14 @@
 #include <sys/time.h>
 #include <time.h>
 
+void Util::log(const char* fmt, ...) {
+  va_list argptr;
+  va_start(argptr, fmt);
+  vfprintf(stderr, fmt, argptr);
+  fprintf(stderr, "\n");
+  va_end(argptr);
+}
+
 void Util::fatal(const char* fmt, ...) {
   va_list argptr;
   va_start(argptr, fmt);
