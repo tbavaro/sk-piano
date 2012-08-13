@@ -8,12 +8,11 @@
 #include <sys/ioctl.h>
 #include <linux/spi/spidev.h>
 
-Pin::Pin(const char* value_file_name, const char* mode_file_name, 
-         const char* export_key, const char* direction_file_name)
-    : value_file_name(value_file_name),
-      mode_file_name(mode_file_name),
-      export_key(export_key),
-      direction_file_name(direction_file_name) {
+Pin::Pin(const char* pin_name, int pin_number) {
+  sprintf(value_file_name, "/sys/class/gpio/gpio%d/value", pin_number);
+  sprintf(mode_file_name, "/sys/kernel/debug/omap_mux/%s", pin_name);
+  sprintf(export_key, "%d", pin_number);
+  sprintf(direction_file_name, "/sys/class/gpio/gpio%d/direction", pin_number);
 }
 
 Pin::~Pin() {
@@ -26,35 +25,44 @@ const char* Pin::name() const {
   return value_file_name;
 }
 
-// Pin Pin::P8_3(
-//     "/sys/class/gpio/gpio38/value",NUM
-//     "/sys/kernel/debug/omap_mux/gpmc_ad6",
-//     "38",
-//     "/sys/class/gpio/gpio38/direction");
-// 
-// Pin Pin::P8_4(
-//     "/sys/class/gpio/gpio39/value",
-//     "/sys/kernel/debug/omap_mux/gpmc_ad7",
-//     "39",
-//     "/sys/class/gpio/gpio39/direction");
-
-Pin Pin::USER_LED_3(
-    "/sys/devices/platform/leds-gpio/leds/beaglebone::usr3/brightness",
-    NULL, NULL, NULL);
-
 static Pin* HEADER_8_PINS[] = {
+  // 1:
   NULL,
   NULL,
-  new Pin(
-     "/sys/class/gpio/gpio38/value",
-     "/sys/kernel/debug/omap_mux/gpmc_ad6",
-     "38",
-     "/sys/class/gpio/gpio38/direction"),
-  new Pin(
-     "/sys/class/gpio/gpio39/value",
-     "/sys/kernel/debug/omap_mux/gpmc_ad7",
-     "39",
-     "/sys/class/gpio/gpio39/direction")
+  new Pin("gpmc_ad6", 38),
+  new Pin("gpmc_ad7", 39),
+  new Pin("gpmc_ad2", 34),
+
+  // 6:
+  NULL, //  new Pin("gpmc_ad3", 35), // something's wrong here, maybe reserved?
+  new Pin("gpmc_advn_ale", 66),
+  new Pin("gpmc_oen_ren", 67),
+  new Pin("gpmc_ben0_cle", 69),
+  new Pin("gpmc_wen", 68),
+
+  // 11:
+  new Pin("gpmc_ad13", 45),
+  new Pin("gpmc_ad12", 44),
+  new Pin("gpmc_ad9", 23),
+  new Pin("gpmc_ad10", 26),
+  new Pin("gpmc_ad15", 47),
+
+  // 16:
+  new Pin("gpmc_ad14", 46),
+  new Pin("gpmc_ad11", 27),
+  new Pin("gpmc_clk", 65),
+  new Pin("gpmc_ad8", 22),
+  new Pin("gpmc_csn2", 63),
+
+  // 21:
+  new Pin("gpmc_csn1", 62),
+  new Pin("gpmc_ad5", 37),
+  new Pin("gpmc_ad4", 36),
+  new Pin("gpmc_ad1", 33),
+  new Pin("gpmc_ad0", 32),
+
+  // 26:
+  new Pin("gpmc_csn0", 61)
 };
 static int NUM_HEADER_8_PINS = sizeof(HEADER_8_PINS) / sizeof(HEADER_8_PINS[0]);
     

@@ -22,19 +22,17 @@ class Pin {
     bool digitalRead();
     void digitalWrite(bool value);
 
-    Pin(const char* value_file_name, const char* mode_file_name, 
-        const char* export_key, const char* direction_file_name);
+    Pin(const char* pin_name, int pin_number);
     ~Pin();
 
   private:
     FILE* getOrOpenValueFile();
     FILE* value_file;
-    const char* value_file_name;
 
-    // gpio pins only
-    const char* mode_file_name;
-    const char* export_key;
-    const char* direction_file_name;
+    char value_file_name[64];
+    char mode_file_name[64];
+    char export_key[64];
+    char direction_file_name[64];
 };
 
 class SPI {

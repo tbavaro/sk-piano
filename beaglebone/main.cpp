@@ -1,6 +1,11 @@
 #include "BeagleBone.h"
 #include "Colors.h"
+#include "CometVisualizer.h"
 #include "LightStrip.h"
+#include "MasterVisualizer.h"
+#include "SimpleParticleVisualizer.h"
+#include "SimpleVisualizer.h"
+#include "Piano.h"
 #include "Util.h"
 
 #include <stdio.h>
@@ -87,19 +92,50 @@ static void blinkForever(Pin& pin) {
   }
 }
 
-static void readTest(Pin& pin) {
-  pin.setPinMode(INPUT);
+static void readTest(Pin& out_pin, Pin& in_pin) {
+  out_pin.setPinMode(OUTPUT);
+  out_pin.digitalWrite(ON);
+  in_pin.setPinMode(INPUT);
   bool prev_value = false;
   int counter = 0;
+  bool out_pin_value = true;
   while(true) {
-    bool value = pin.digitalRead();
+    bool value = in_pin.digitalRead();
     if (value != prev_value) {
       Util::log("new value: %d", value);
       prev_value = value;
     }
     if(++counter % 1000 == 0) {
       fprintf(stderr, ".");
+      out_pin_value ^= true;
+      out_pin.digitalWrite(out_pin_value);
     }
+  }
+}
+
+static Visualizer* makeSimpleParticleVisualizer() {
+  return new SimpleParticleVisualizer(strip, 300);
+}
+
+static Visualizer* makeCometVisualizer() {
+  return new CometVisualizer(strip, 300);
+}
+
+static Visualizer* makeSimpleVisualizer() {
+  return new SimpleVisualizer(strip);
+}
+
+static void piano() {
+  MasterVisualizer master_viz(strip);
+
+  // add visualizers
+  master_viz.addVisualizer(makeSimpleParticleVisualizer);
+  master_viz.addVisualizer(makeCometVisualizer);
+  master_viz.addVisualizer(makeSimpleVisualizer);
+
+  Piano piano(&master_viz);
+  while(true) {
+    piano.checkOne();
   }
 }
 
@@ -112,9 +148,7 @@ int main(int argc, char** argv) {
 //  showRainbow();
 //  backAndForth();
 //  glow();
-  Pin& out_pin = Pin::pin(8, 4);
-  out_pin.setPinMode(OUTPUT);
-  out_pin.digitalWrite(ON);
 
-  readTest(Pin::pin(8, 3));
+//  readTest(Pin::pin(8, 4), Pin::pin(8, 26));
+  piano();
 }

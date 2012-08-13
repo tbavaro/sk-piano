@@ -10,6 +10,7 @@ OBJ = \
       MasterVisualizer.o \
       MovingParticle.o \
       ParticleVisualizer.o \
+      Piano.o \
       PianoDelegate.o \
       SimpleMovingParticle.o \
       SimpleParticleVisualizer.o \
@@ -18,7 +19,6 @@ OBJ = \
       Visualizer.o \
       main.o
 
-#      Piano.o \
 
 all: $(OBJ)
 	$(CC) -o piano $^ $(CPPFLAGS)

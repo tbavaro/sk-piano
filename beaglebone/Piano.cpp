@@ -7,30 +7,30 @@
 static const uint8_t num_keys = 88;
 
 static Pin* note_pins[] = {
-  &Pin::pin(8, 11),
-  &Pin::pin(8, 9),
-  &Pin::pin(8, 19),
-  &Pin::pin(8, 17),
-  &Pin::pin(8, 22),
-  &Pin::pin(8, 20),
   &Pin::pin(8, 15),
   &Pin::pin(8, 13),
+  &Pin::pin(8, 23),
   &Pin::pin(8, 21),
-  &Pin::pin(8, 14),
-  &Pin::pin(8, 16),
-  &Pin::pin(8, 18)
+  &Pin::pin(8, 26),
+  &Pin::pin(8, 24),
+  &Pin::pin(8, 19),
+  &Pin::pin(8, 17),
+  &Pin::pin(8, 25),
+  &Pin::pin(8, 18),
+  &Pin::pin(8, 20),
+  &Pin::pin(8, 22)
 };
 static const uint8_t num_note_pins = sizeof(note_pins) / sizeof(note_pins[0]);
 
 static Pin* octave_pins[] = { 
-  &Pin::pin(8, 8),
-  &Pin::pin(8, 10),
   &Pin::pin(8, 12),
-  &Pin::pin(8, 3),
-  &Pin::pin(8, 5),
+  &Pin::pin(8, 14),
+  &Pin::pin(8, 16),
   &Pin::pin(8, 7),
-  &Pin::pin(8, 6),
-  &Pin::pin(8, 4)
+  &Pin::pin(8, 9),
+  &Pin::pin(8, 11),
+  &Pin::pin(8, 10),
+  &Pin::pin(8, 8)
 };
 static const uint8_t num_octave_pins = sizeof(octave_pins) / sizeof(octave_pins[0]);
 
