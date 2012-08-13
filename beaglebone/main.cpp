@@ -15,24 +15,44 @@ static void showRainbow(SPI& spi) {
 
   int x = 0;
 
+  int counter = 0;
+
   while(true) {
     for (int i = 0; i < num_pins; ++i) {
-      if (i % 10 == x) {
-        strip.setPixelColor(i, Colors::rainbow((i * 6 + offset / 100) % 360));
-      } else {
-        strip.setPixelColor(i, 0);
-      }
+      strip.setPixelColor(i, Colors::rainbow((i + offset) % 360));
     }
 
     strip.show();
 
-    uint32_t millis = Util::millis();
-    printf("frame %d\n", millis - last_time);
-    last_time = millis;
+    Util::delay(10);
+
+    if ((++counter % 30) == 0) {
+      uint32_t millis = Util::millis();
+      printf("frame %d fps\n", 30000 / (millis - last_time));
+      last_time = millis;
+    }
 
     ++offset;
     x = (x + 1) % 10;
 
+  }
+}
+
+static void backAndForth(SPI& spi) {
+  int num_pins = 160;
+  LightStrip strip(spi, num_pins);
+
+  int pos = 0;
+  int direction = 1;
+  while(true) {
+    strip.setPixelColor(pos, 0);
+    pos += direction;
+    if (pos < 0 || pos >= num_pins) {
+      direction *= -1;
+      pos += 2 * direction;
+    }
+    strip.setPixelColor(pos, 0x7f7f7f);
+    strip.show();
   }
 }
 
@@ -51,5 +71,6 @@ static void blinkForever(Pin& pin) {
 int main(int argc, char** argv) {
 //  blinkForever(Pin::P8_4);
   SPI spi(8e6);
-  showRainbow(spi);
+//  showRainbow(spi);
+  backAndForth(spi);
 }

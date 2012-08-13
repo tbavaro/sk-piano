@@ -8,6 +8,8 @@ class Util {
     static void fatal(const char* fmt, ...);
 
     static uint32_t millis();
+    static void delay(uint32_t millis);
+    static void delay_until(uint32_t millis);
 };
 
 #endif

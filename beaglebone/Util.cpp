@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
+#include <time.h>
 
 void Util::fatal(const char* fmt, ...) {
   va_list argptr;
@@ -33,6 +34,20 @@ uint32_t Util::millis() {
   return 
     (tv.tv_sec - TV_START.tv_sec) * 1000 + 
     (tv.tv_usec - TV_START.tv_usec) / 1000;
+}
+
+void Util::delay(uint32_t millis) {
+  timespec ts;
+  ts.tv_sec = millis / 1000;
+  ts.tv_nsec = (millis % 1000) * 1000000;
+  nanosleep(&ts, NULL);
+}
+
+void Util::delay_until(uint32_t millis) {
+  uint32_t now = Util::millis();
+  if (now < millis) {
+    Util::delay(millis - now);
+  }
 }
 
 static uint32_t __init_millis = Util::millis();

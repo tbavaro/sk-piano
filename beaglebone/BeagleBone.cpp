@@ -121,6 +121,8 @@ SPI::~SPI() {
   close(fd);
 }
 
+// SPI pins: 31 CLK, 30 DATA
+
 void SPI::send(void* buf, int num_bytes) {
   uint8_t rx_buf[num_bytes];
   struct spi_ioc_transfer tr;
