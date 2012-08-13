@@ -11,6 +11,8 @@ class DaveeyVisualizer : public Visualizer {
     virtual void onPassFinished(bool something_changed);
 
   private:
+    int pixelForKey(Key key);
+
     Color* pixels;
     Color* old_pixels;
     uint32_t prev_frame_time;

@@ -1,7 +1,7 @@
 #include "DaveeyVisualizer.h"
 #include "Colors.h"
 #include "Util.h"
-#include <strings.h>
+#include <string.h>
 
 DaveeyVisualizer::DaveeyVisualizer(LightStrip& strip) : Visualizer(strip) {
   pixels = new Color[strip.numPixels()];
@@ -14,8 +14,12 @@ DaveeyVisualizer::~DaveeyVisualizer() {
   delete[] old_pixels;
 }
 
+int DaveeyVisualizer::pixelForKey(Key key) {
+  return ((int)key / 88.0 * strip.numPixels());
+}
+
 void DaveeyVisualizer::onKeyDown(Key key) {
-  old_pixels[key] = Colors::hsv(Util::random(360), 1.0, 1.0);
+  old_pixels[pixelForKey(key)] = Colors::hsv(Util::random(360), 1.0, 1.0);
 }
 
 void DaveeyVisualizer::onKeyUp(Key key) {
@@ -34,7 +38,7 @@ void DaveeyVisualizer::onPassFinished(bool something_changed) {
       if (i < (strip.numPixels() - 1)) {
         pixels_to_average[num_pixels++] = old_pixels[i + 1];
       }
-      pixels[i] = Colors::multiply(Colors::average(pixels_to_average, num_pixels), 0.9);
+      pixels[i] = Colors::multiply(Colors::average(pixels_to_average, num_pixels), 0.95);
       strip.setPixel(i, pixels[i]);
     }
   }
