@@ -5,19 +5,20 @@
 #include "Colors.h"
 #include "CometVisualizer.h"
 #include "DebugVisualizer.h"
-#include "LightStrip.h"
+#include "LogicalLightStrip.h"
+#include "PhysicalLightStrip.h"
 #include "MasterVisualizer.h"
 #include "SimpleParticleVisualizer.h"
 #include "SimpleVisualizer.h"
-#include "Piano.h"
+#include "PhysicalPiano.h"
 #include "Util.h"
 
 #include <stdio.h>
 #include <unistd.h>
 
-static int num_pins = 88;
+static int num_pins = 1000;
 static SPI spi(4e6);
-static LightStrip strip(spi, num_pins);
+static PhysicalLightStrip strip(spi, num_pins);
 
 static void showRainbow() {
   int offset = 0;
@@ -30,7 +31,7 @@ static void showRainbow() {
 
   while(true) {
     for (int i = 0; i < num_pins; ++i) {
-      strip.setPixelColor(i, Colors::rainbow((i + offset) % 360));
+      strip.setPixel(i, Colors::rainbow((i + offset) % 360));
     }
 
     strip.show();
@@ -53,13 +54,13 @@ static void backAndForth() {
   int pos = 0;
   int direction = 1;
   while(true) {
-    strip.setPixelColor(pos, 0);
+    strip.setPixel(pos, 0);
     pos += direction;
     if (pos < 0 || pos >= num_pins) {
       direction *= -1;
       pos += 2 * direction;
     }
-    strip.setPixelColor(pos, 0x7f7f7f);
+    strip.setPixel(pos, 0x7f7f7f);
     strip.show();
   }
 }
@@ -68,9 +69,9 @@ static void christmas() {
   while(1) {
     for (int i = 0; i < num_pins; ++i) {
       if ((i / 10) % 2 == 0) {
-        strip.setPixelColor(i, Colors::rgb(127, 0, 0));
+        strip.setPixel(i, Colors::rgb(127, 0, 0));
       } else {
-        strip.setPixelColor(i, Colors::rgb(0, 127, 0));
+        strip.setPixel(i, Colors::rgb(0, 127, 0));
       }
     }
     strip.show();
@@ -133,7 +134,7 @@ static void ranges() {
       } else {
         c = Colors::rgb(0, 0, 0);
       }
-      strip.setPixelColor(i, c);
+      strip.setPixel(i, c);
     }
     strip.show();
     Util::delay(100);
@@ -152,7 +153,7 @@ static void glow() {
 
     Color color = Colors::hsv(0, 0.0, brightness / 127.0);
     for(int i = 0; i < num_pins; ++i) {
-      strip.setPixelColor(i, color);
+      strip.setPixel(i, color);
     }
     strip.show();
 
@@ -206,7 +207,8 @@ static Visualizer* makeCometVisualizer() {
 }
 
 static Visualizer* makeSimpleVisualizer() {
-  return new SimpleVisualizer(strip);
+  LogicalLightStrip* above_keyboard = LogicalLightStrip::fromRange(strip, 163, 203);
+  return new SimpleVisualizer(*above_keyboard);
 }
 
 static void piano() {
@@ -218,9 +220,10 @@ static void piano() {
 //  master_viz.addVisualizer(makeCometVisualizer);
 //  master_viz.addVisualizer(makeDebugVisualizer);
 
-  Piano piano(&master_viz);
+  PhysicalPiano piano(&master_viz);
   while(true) {
-    piano.checkOne();
+    piano.scan();
+    strip.show();
   }
 }
 
@@ -230,12 +233,12 @@ int main(int argc, char** argv) {
   strip.show();
 
 //  blinkForever(Pin::P8_4);
-//  showRainbow();
+  showRainbow();
 //  backAndForth();
 //  glow();
 
 //  readTest(Pin::pin(8, 7), Pin::pin(8, 22));
-  piano();
+//  piano();
 //  ranges();
 // getc(stdin);
 //  christmas();

@@ -1,28 +1,16 @@
 #ifndef __INCLUDED_LIGHT_STRIP_H
 #define __INCLUDED_LIGHT_STRIP_H
 
-#include "BeagleBone.h"
 #include "Colors.h"
+#include "SKTypes.h"
 
 class LightStrip {
   public:
-    LightStrip(SPI& spi, int num_leds);
-//    LightStrip(int num_leds, Pin& data_pin, Pin& clock_pin);
-    ~LightStrip();
-
-    int numPixels();
-
-    void reset();
-    void addPixelColor(int n, Color color);
-    void setPixelColor(int n, Color color);
-    void show();
-
-  private:
-    SPI& spi;
-    int num_leds;
-//    Pin& data_pin;
-//    Pin& clock_pin;
-    uint8_t* frame_buffer;
+    virtual int numPixels() = 0;
+    virtual void reset() = 0;
+    virtual void addPixel(Pixel n, Color color) = 0;
+    virtual void setPixel(Pixel n, Color color) = 0;
+    virtual void show() = 0;
 };
 
 #endif

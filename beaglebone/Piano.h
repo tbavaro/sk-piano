@@ -10,14 +10,12 @@ class Piano {
     ~Piano();
 
     void printKeys();
-    void checkOne();
+    virtual bool scan()=0;
 
-  private:
+  protected:
+    static const int NUM_KEYS = 88;
+
     PianoDelegate* const delegate;
-    int current_octave;
-    int current_note;
-    int current_unmapped_key;
-    bool changed_since_last_pass;
     uint8_t* const key_values; 
 };
 

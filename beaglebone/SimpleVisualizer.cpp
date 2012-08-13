@@ -19,15 +19,15 @@ Color SimpleVisualizer::colorForCount(int count) {
 
 void SimpleVisualizer::onKeyDown(Key key) {
   int pixel = pixelForKey(key);
-  strip.setPixelColor(pixel, colorForCount(++pixel_counts[pixel]));
+  strip.setPixel(pixel, colorForCount(++pixel_counts[pixel]));
 }
 
 void SimpleVisualizer::onKeyUp(Key key) {
   int pixel = pixelForKey(key);
-  strip.setPixelColor(pixel, colorForCount(--pixel_counts[pixel]));
+  strip.setPixel(pixel, colorForCount(--pixel_counts[pixel]));
 }
   
 void SimpleVisualizer::onPassFinished(bool something_changed) {
-  strip.show();
+//  strip.show();
 }
 
