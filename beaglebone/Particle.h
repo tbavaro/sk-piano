@@ -18,7 +18,22 @@ class Particle {
     virtual bool age(ParticleVisualizer* pv, TimeInterval millis)=0;
 
     virtual void render(LightStrip& strip)=0;
+
+    void kill();
+
+    bool isDead();
+
+  private:
+    bool is_dead;
 };
+
+inline void Particle::kill() {
+  is_dead = true;
+}
+
+inline bool Particle::isDead() {
+  return is_dead;
+}
 
 #endif
 

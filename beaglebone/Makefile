@@ -1,30 +1,22 @@
 CC=g++
 CPPFLAGS=-I.
-DEPS = 
-OBJ = \
-      BeagleBone.o \
-      ColorCycleParticle.o \
-      Colors.o \
-      CometVisualizer.o \
-      LightStrip.o \
-      MasterVisualizer.o \
-      MovingParticle.o \
-      ParticleVisualizer.o \
-      Piano.o \
-      PianoDelegate.o \
-      SimpleMovingParticle.o \
-      SimpleParticleVisualizer.o \
-      SimpleVisualizer.o \
-      Util.o \
-      Visualizer.o \
-      main.o
 
+# add stubs for non-beaglebone env
+ifeq ($(shell uname -m),x86_64)
+  CPPFLAGS+= -I./stubs
+endif
+
+# right now a change to any header file will cause everything to get rebuilt
+DEPS = $(shell ls *.h)
+
+# assume all *.cpp files should be included
+OBJ = $(shell ls *.cpp | sed "s/cpp$$/o/")
 
 all: $(OBJ)
 	$(CC) -o piano $^ $(CPPFLAGS)
 
 %.o: %.cpp $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+	$(CC) -c -o $@ $(CPPFLAGS) $<
 
 .PHONY: clean
 
