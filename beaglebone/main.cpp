@@ -1,6 +1,10 @@
+// ranges
+// 0-79 back half of top of piano
+
 #include "BeagleBone.h"
 #include "Colors.h"
 #include "CometVisualizer.h"
+#include "DebugVisualizer.h"
 #include "LightStrip.h"
 #include "MasterVisualizer.h"
 #include "SimpleParticleVisualizer.h"
@@ -11,8 +15,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
-static int num_pins = 162;
-static SPI spi(4e6);
+static int num_pins = 600;
+static SPI spi(8e6);
 static LightStrip strip(spi, num_pins);
 
 static void showRainbow() {
@@ -58,6 +62,70 @@ static void backAndForth() {
     strip.setPixelColor(pos, 0x7f7f7f);
     strip.show();
   }
+}
+
+static void christmas() {
+  for (int i = 0; i < num_pins; ++i) {
+    if ((i / 10) % 2 == 0) {
+      strip.setPixelColor(i, Colors::rgb(127, 0, 0));
+    } else {
+      strip.setPixelColor(i, Colors::rgb(0, 127, 0));
+    }
+  }
+  strip.show();
+}
+
+static void ranges() {
+  for (int i = 0; i < num_pins; ++i) {
+    Color c;
+    if (i < 80) {
+      // back half of top
+      c = Colors::rgb(127, 0, 0);
+    } else if (i < 92) {
+      // front right half of top
+      c = Colors::rgb(127, 0, 0);
+    } else if (i < 136) {
+      // front of top row
+      c = Colors::rgb(0, 127, 0);
+    } else if (i < 148) {
+      // front half of top
+      c = Colors::rgb(127, 0, 0);
+    } else if (i < 163) {
+      // front left 2nd row from top
+      c = Colors::rgb(0, 0, 127);
+    } else if (i < 204) {
+      // directly above keys
+      c = Colors::rgb(127, 127, 127);
+    } else if (i < 219) {
+      // front right 2nd row from top
+      c = Colors::rgb(127, 127, 0);
+    } else if (i < 298) {
+      // back 2nd row from top
+      c = Colors::rgb(127, 0, 127);
+    } else if (i < 320) {
+      // right 2nd row from bottom
+      c = Colors::rgb(0, 127, 127);
+    } else if (i < 364) {
+      // front 2nd row from bottom
+      c = Colors::rgb(127, 0, 0);
+    } else if (i < 458) {
+      // back 2nd row from bottom
+      c = Colors::rgb(0, 127, 0);
+    } else if (i < 478) {
+      // front left bottom row
+      c = Colors::rgb(0, 0, 127);
+    } else if (i < 522) {
+      // front bottom row
+      c = Colors::rgb(127, 0, 127);
+    } else if (i < 542) {
+      // front right bottom row
+      c = Colors::rgb(0, 127, 127);
+    } else {
+      c = Colors::rgb(0, 0, 0);
+    }
+    strip.setPixelColor(i, c);
+  }
+  strip.show();
 }
 
 static void glow() {
@@ -107,10 +175,14 @@ static void readTest(Pin& out_pin, Pin& in_pin) {
     }
     if(++counter % 1000 == 0) {
       fprintf(stderr, ".");
-      out_pin_value ^= true;
-      out_pin.digitalWrite(out_pin_value);
+//      out_pin_value ^= true;
+//      out_pin.digitalWrite(out_pin_value);
     }
   }
+}
+
+static Visualizer* makeDebugVisualizer() {
+  return new DebugVisualizer(strip);
 }
 
 static Visualizer* makeSimpleParticleVisualizer() {
@@ -129,9 +201,10 @@ static void piano() {
   MasterVisualizer master_viz(strip);
 
   // add visualizers
+//  master_viz.addVisualizer(makeSimpleVisualizer);
   master_viz.addVisualizer(makeSimpleParticleVisualizer);
-  master_viz.addVisualizer(makeCometVisualizer);
-  master_viz.addVisualizer(makeSimpleVisualizer);
+//  master_viz.addVisualizer(makeCometVisualizer);
+//  master_viz.addVisualizer(makeDebugVisualizer);
 
   Piano piano(&master_viz);
   while(true) {
@@ -149,6 +222,9 @@ int main(int argc, char** argv) {
 //  backAndForth();
 //  glow();
 
-//  readTest(Pin::pin(8, 4), Pin::pin(8, 26));
-  piano();
+//  readTest(Pin::pin(8, 7), Pin::pin(8, 22));
+//  piano();
+  ranges();
+  getc(stdin);
+  christmas();
 }

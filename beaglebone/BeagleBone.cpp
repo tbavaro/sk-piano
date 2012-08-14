@@ -105,7 +105,7 @@ static bool readValue(const char* filename) {
   char c = fgetc(f);
 //  fprintf(stderr, "%c", c);
   fclose(f);
-  return (c == '0');
+  return (c == '1');
 }
 
 void Pin::setPinMode(PinMode pin_mode) {
@@ -132,7 +132,7 @@ void Pin::setPinMode(PinMode pin_mode) {
 
 inline FILE* Pin::getOrOpenValueFile() {
   if (value_file == NULL) {
-    value_file = fopen(value_file_name, "w"); //xcxc
+    value_file = fopen(value_file_name, "w");
     if (value_file == NULL) {
       Util::fatal("unable to open pin file: %s", value_file_name);
     }
