@@ -1,19 +1,20 @@
 CC=g++
-CPPFLAGS=-I.
+LDFLAGS=
+CPPFLAGS=$(shell find . -type d | sed "s/^/-I/")
 
 # add stubs for non-beaglebone env
 ifeq ($(shell uname -m),x86_64)
-  CPPFLAGS+= -I./stubs
+  CPPFLAGS+= -I./stubs -DPIANO_SIMULATOR
 endif
 
 # right now a change to any header file will cause everything to get rebuilt
-DEPS = $(shell ls *.h)
+DEPS = $(shell find . -name "*.h")
 
 # assume all *.cpp files should be included
-OBJ = $(shell ls *.cpp | sed "s/cpp$$/o/")
+OBJ = $(shell find . -name "*.cpp" | sed "s/cpp$$/o/")
 
 all: $(OBJ)
-	$(CC) -o piano $^ $(CPPFLAGS)
+	$(CC) -o piano $^ $(LDFLAGS)
 
 %.o: %.cpp $(DEPS)
 	$(CC) -c -o $@ $(CPPFLAGS) $<
@@ -21,6 +22,6 @@ all: $(OBJ)
 .PHONY: clean
 
 clean:
-	rm -f *.o piano
+	rm -f $(shell find . -name "*.o") piano
 
 

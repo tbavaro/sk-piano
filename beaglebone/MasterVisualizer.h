@@ -3,14 +3,12 @@
 
 #include "Visualizer.h"
 
-typedef Visualizer*(*VisualizerFactory)(void);
-
 class MasterVisualizer : public Visualizer {
   public:
-    MasterVisualizer(LightStrip& strip);
+    MasterVisualizer();
     ~MasterVisualizer();
 
-    void addVisualizer(VisualizerFactory viz_factory);
+    void addVisualizer(Visualizer* visualizer);
     void nextVisualizer();
 
     virtual void reset();
@@ -21,7 +19,7 @@ class MasterVisualizer : public Visualizer {
   private:
     Visualizer* current_viz;
     int8_t current_viz_index;
-    VisualizerFactory* const visualizer_factories;
+    Visualizer** const visualizers;
     uint8_t num_visualizers;
 };
 

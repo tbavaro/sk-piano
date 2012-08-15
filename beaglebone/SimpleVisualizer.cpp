@@ -1,18 +1,15 @@
 #include "SimpleVisualizer.h"
 #include "Colors.h"
 
-SimpleVisualizer::SimpleVisualizer(LightStrip& strip) : Visualizer(strip) {
+SimpleVisualizer::SimpleVisualizer(LightStrip& strip) 
+    : LightStripVisualizer(strip) {
 }
 
 void SimpleVisualizer::onKeyDown(Key key) {
-  strip.setPixelColor(key, Colors::WHITE);
+  strip.setPixel(key, Colors::WHITE);
 }
 
 void SimpleVisualizer::onKeyUp(Key key) {
-  strip.setPixelColor(key, 0x000000);
+  strip.setPixel(key, 0x000000);
 }
   
-void SimpleVisualizer::onPassFinished(bool something_changed) {
-  strip.show();
-}
-

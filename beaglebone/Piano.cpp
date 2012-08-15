@@ -85,7 +85,7 @@ Piano::Piano(PianoDelegate* delegate)
   // initialize all keys to be OFF
   for (int i = 0; i < num_keys; ++i) {
     key_values[i] = OFF;
-  }  
+  }
 }
 
 Piano::~Piano() {
@@ -108,6 +108,37 @@ void Piano::printKeys() {
     }
   }
   Util::log("%s", buf);
+}
+
+bool Piano::scan() {
+  changed_since_last_pass = false;  
+  current_unmapped_key = 0;
+  for(current_octave = 0; current_octave < num_octave_pins; ++current_octave) {
+    octave_pins[current_octave]->digitalWrite(ON);
+    Util::delay(1); // do we need this?
+    for(current_note = 0; current_note < num_note_pins; ++current_note) {
+      current_unmapped_key++;
+  
+      Key key = key_mappings[current_unmapped_key];
+      int value = note_pins[current_note]->digitalRead();
+      
+      if (value != key_values[key]) {
+        key_values[key] = value;
+        changed_since_last_pass = true;
+        
+        if (value) {
+          delegate->onKeyDown(key);
+        } else {
+          delegate->onKeyUp(key);
+        }
+      }
+    }
+    octave_pins[current_octave]->digitalWrite(OFF);
+  }
+
+  delegate->onPassFinished(changed_since_last_pass);
+
+  return changed_since_last_pass;
 }
 
 void Piano::checkOne() {

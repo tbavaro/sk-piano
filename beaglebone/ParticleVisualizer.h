@@ -3,10 +3,10 @@ class ParticleVisualizer;
 #ifndef __INCLUDED_PARTICLE_VISUALIZER_H
 #define __INCLUDED_PARTICLE_VISUALIZER_H
 
-#include "Visualizer.h"
+#include "LightStripVisualizer.h"
 #include "Particle.h"
 
-class ParticleVisualizer : public Visualizer {
+class ParticleVisualizer : public LightStripVisualizer {
   public:
     ParticleVisualizer(LightStrip& strip, uint16_t max_particles);
     ~ParticleVisualizer();

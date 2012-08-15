@@ -6,5 +6,5 @@ SimpleMovingParticle::SimpleMovingParticle(
 }
 
 void SimpleMovingParticle::render(LightStrip& strip) {
-  strip.addPixelColor(pos(), color);
+  strip.addPixel(pos(), color);
 }

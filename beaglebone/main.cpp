@@ -1,11 +1,10 @@
-// ranges
-// 0-79 back half of top of piano
-
 #include "BeagleBone.h"
 #include "Colors.h"
 #include "CometVisualizer.h"
 #include "DebugVisualizer.h"
-#include "LightStrip.h"
+#include "LogicalLightStrip.h"
+#include "PhysicalLightStrip.h"
+#include "SimulatorLightStrip.h"
 #include "MasterVisualizer.h"
 #include "SimpleParticleVisualizer.h"
 #include "SimpleVisualizer.h"
@@ -15,11 +14,9 @@
 #include <stdio.h>
 #include <unistd.h>
 
-static int num_pins = 600;
-static SPI spi(8e6);
-static LightStrip strip(spi, num_pins);
+static int num_pixels = 80;
 
-static void showRainbow() {
+static void showRainbow(LightStrip& strip) {
   int offset = 0;
 
   uint32_t last_time = Util::millis();
@@ -29,8 +26,8 @@ static void showRainbow() {
   int counter = 0;
 
   while(true) {
-    for (int i = 0; i < num_pins; ++i) {
-      strip.setPixelColor(i, Colors::rainbow((i + offset) % 360));
+    for (int i = 0; i < num_pixels; ++i) {
+      strip.setPixel(i, Colors::rainbow((i + offset) % 360));
     }
 
     strip.show();
@@ -49,34 +46,36 @@ static void showRainbow() {
   }
 }
 
-static void backAndForth() {
+static void backAndForth(LightStrip& strip) {
   int pos = 0;
   int direction = 1;
   while(true) {
-    strip.setPixelColor(pos, 0);
+    strip.setPixel(pos, 0);
     pos += direction;
-    if (pos < 0 || pos >= num_pins) {
+    if (pos < 0 || pos >= num_pixels) {
       direction *= -1;
       pos += 2 * direction;
     }
-    strip.setPixelColor(pos, 0x7f7f7f);
+    strip.setPixel(pos, 0x7f7f7f);
     strip.show();
+    
+    Util::delay(30);
   }
 }
 
-static void christmas() {
-  for (int i = 0; i < num_pins; ++i) {
+static void christmas(LightStrip& strip) {
+  for (int i = 0; i < num_pixels; ++i) {
     if ((i / 10) % 2 == 0) {
-      strip.setPixelColor(i, Colors::rgb(127, 0, 0));
+      strip.setPixel(i, Colors::rgb(127, 0, 0));
     } else {
-      strip.setPixelColor(i, Colors::rgb(0, 127, 0));
+      strip.setPixel(i, Colors::rgb(0, 127, 0));
     }
   }
   strip.show();
 }
 
-static void ranges() {
-  for (int i = 0; i < num_pins; ++i) {
+static void ranges(LightStrip& strip) {
+  for (int i = 0; i < num_pixels; ++i) {
     Color c;
     if (i < 80) {
       // back half of top
@@ -123,12 +122,12 @@ static void ranges() {
     } else {
       c = Colors::rgb(0, 0, 0);
     }
-    strip.setPixelColor(i, c);
+    strip.setPixel(i, c);
   }
   strip.show();
 }
 
-static void glow() {
+static void glow(LightStrip& strip) {
   int brightness = 0;
   int direction = 1;
   while(true) {
@@ -139,8 +138,8 @@ static void glow() {
     }
 
     Color color = Colors::hsv(0, 0.0, brightness / 127.0);
-    for(int i = 0; i < num_pins; ++i) {
-      strip.setPixelColor(i, color);
+    for(int i = 0; i < num_pixels; ++i) {
+      strip.setPixel(i, color);
     }
     strip.show();
 
@@ -181,50 +180,49 @@ static void readTest(Pin& out_pin, Pin& in_pin) {
   }
 }
 
-static Visualizer* makeDebugVisualizer() {
-  return new DebugVisualizer(strip);
-}
-
-static Visualizer* makeSimpleParticleVisualizer() {
-  return new SimpleParticleVisualizer(strip, 300);
-}
-
-static Visualizer* makeCometVisualizer() {
-  return new CometVisualizer(strip, 300);
-}
-
-static Visualizer* makeSimpleVisualizer() {
-  return new SimpleVisualizer(strip);
-}
-
-static void piano() {
-  MasterVisualizer master_viz(strip);
+static void piano(LightStrip& strip) {
+  MasterVisualizer master_viz;
 
   // add visualizers
-//  master_viz.addVisualizer(makeSimpleVisualizer);
-  master_viz.addVisualizer(makeSimpleParticleVisualizer);
-//  master_viz.addVisualizer(makeCometVisualizer);
-//  master_viz.addVisualizer(makeDebugVisualizer);
+  master_viz.addVisualizer(new SimpleVisualizer(strip));
+  master_viz.addVisualizer(new SimpleParticleVisualizer(strip, 300));
+  master_viz.addVisualizer(new CometVisualizer(strip, 300));
+  master_viz.addVisualizer(new DebugVisualizer());
 
   Piano piano(&master_viz);
   while(true) {
-    piano.checkOne();
+    uint32_t frame_start = Util::millis();
+
+    // read piano and fire key up/down and passFinished events
+    piano.scan();
+
+    // update LED strip
+    strip.show();
+
+    // throttle
+    Util::delay_until(frame_start + 20);
   }
 }
 
 int main(int argc, char** argv) {
+#ifdef PIANO_SIMULATOR
+  SimulatorLightStrip strip(num_pixels);
+#else
+  PhysicalLightStrip strip(SPI(8e6), num_pixels);
+#endif
+
   strip.reset();
   strip.show();
   strip.show();
 
 //  blinkForever(Pin::P8_4);
-//  showRainbow();
-//  backAndForth();
-//  glow();
+//  showRainbow(strip);
+  backAndForth(strip);
+//  glow(strip);
 
 //  readTest(Pin::pin(8, 7), Pin::pin(8, 22));
-//  piano();
-  ranges();
-  getc(stdin);
-  christmas();
+//  piano(strip);
+//  ranges(strip);
+//  getc(stdin);
+//  christmas(strip);
 }

@@ -11,6 +11,7 @@ class Piano {
 
     void printKeys();
     void checkOne();
+    bool scan();
 
   private:
     PianoDelegate* const delegate;
