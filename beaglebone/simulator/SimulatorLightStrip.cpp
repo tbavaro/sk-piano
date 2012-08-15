@@ -9,29 +9,19 @@ template<typename T> static inline T max(T a, T b) {
   return a > b ? a : b;
 }
 
+static inline uint8_t fix(uint8_t raw_value) {
+  return (raw_value & 0x7f) * 2;
+}
+
 void SimulatorLightStrip::show() {
-  char line[num_pixels + 1];
-  line[num_pixels] = '\0';
+  printf("SHOW:[");
   for (int i = 0; i < num_pixels; ++i) {
-    uint8_t brightest = pixels[i * 3];
-    brightest = max(brightest, pixels[i * 3 + 1]);
-    brightest = max(brightest, pixels[i * 3 + 2]);
-    brightest &= 0x7f;
-    char c;
-    if (brightest == 0) {
-      c = ' ';
-    } else if (brightest < 0x20) {
-      c = '.';
-    } else if (brightest < 0x40) {
-      c = ',';
-    } else if (brightest < 0x60) {
-      c = 'x';
-    } else {
-      c = '#';
+    if (i > 0) {
+      printf(",");
     }
-    line[i] = c;
+    printf("'#%02x%02x%02x'", fix(pixels[i * 3 + 1]), fix(pixels[i * 3]), fix(pixels[i * 3 + 2]));
   }
-  printf("\r%s", line);
+  printf("]\n");
   fflush(stdout);
 }
 

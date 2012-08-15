@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-static int num_pixels = 80;
+static int num_pixels = 1000;
 
 static void showRainbow(LightStrip& strip) {
   int offset = 0;
@@ -216,8 +216,8 @@ int main(int argc, char** argv) {
   strip.show();
 
 //  blinkForever(Pin::P8_4);
-//  showRainbow(strip);
-  backAndForth(strip);
+  showRainbow(strip);
+//  backAndForth(strip);
 //  glow(strip);
 
 //  readTest(Pin::pin(8, 7), Pin::pin(8, 22));
