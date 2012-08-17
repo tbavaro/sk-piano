@@ -11,11 +11,11 @@ canvas {
   position: absolute;
   top: 33%;
   left: 50%;
-  margin-left: -500px;
+  margin-left: -45%;
   margin-top: -40px;
   background-color: black;
-  width: 1000px;
-  height: 80px;
+  width: 90%;
+  height: 40px;
   box-shadow: 0px 0px 30px #333;
   border: 1px solid #232;
 }

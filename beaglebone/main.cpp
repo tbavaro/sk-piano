@@ -9,6 +9,8 @@
 #include "SimpleParticleVisualizer.h"
 #include "SimpleVisualizer.h"
 #include "Piano.h"
+#include "PhysicalPiano.h"
+#include "SimulatorPiano.h"
 #include "Util.h"
 
 #include <stdio.h>
@@ -27,12 +29,16 @@ static void showRainbow(LightStrip& strip) {
 
   while(true) {
     for (int i = 0; i < num_pixels; ++i) {
-      strip.setPixel(i, Colors::rainbow((i + offset) % 360));
+      if ((counter % num_pixels) == i) {
+        strip.setPixel(i, Colors::rainbow((i* 6  + offset) % 360));
+      } else {
+        strip.setPixel(i, Colors::BLACK);
+      }
     }
 
     strip.show();
 
-//    Util::delay(10);
+    Util::delay(30);
 
     if ((++counter % 30) == 0) {
       uint32_t millis = Util::millis();
@@ -186,10 +192,14 @@ static void piano(LightStrip& strip) {
   // add visualizers
   master_viz.addVisualizer(new SimpleVisualizer(strip));
   master_viz.addVisualizer(new SimpleParticleVisualizer(strip, 300));
-  master_viz.addVisualizer(new CometVisualizer(strip, 300));
-  master_viz.addVisualizer(new DebugVisualizer());
+//  master_viz.addVisualizer(new CometVisualizer(strip, 300));
+//  master_viz.addVisualizer(new DebugVisualizer());
 
-  Piano piano(&master_viz);
+#ifdef PIANO_SIMULATOR
+  SimulatorPiano piano(&master_viz);
+#else
+  PhysicalPiano piano(&master_viz);
+#endif
   while(true) {
     uint32_t frame_start = Util::millis();
 
@@ -200,7 +210,7 @@ static void piano(LightStrip& strip) {
     strip.show();
 
     // throttle
-    Util::delay_until(frame_start + 20);
+    Util::delay_until(frame_start + 5);
   }
 }
 
@@ -216,13 +226,13 @@ int main(int argc, char** argv) {
   strip.show();
 
 //  blinkForever(Pin::P8_4);
-  showRainbow(strip);
+//  showRainbow(strip);
 //  backAndForth(strip);
 //  glow(strip);
 
 //  readTest(Pin::pin(8, 7), Pin::pin(8, 22));
 //  piano(strip);
-//  ranges(strip);
+  ranges(strip);
 //  getc(stdin);
 //  christmas(strip);
 }

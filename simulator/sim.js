@@ -1,22 +1,42 @@
 var WEBSOCKETS_URL = "ws://localhost:8001/piano";
 
-var console;
+var console_div;
+var ws;
+var keys = [];
+
+var lowest_mapped_key = 39; //C3
+var key_mapping_reverse_dvorak = [186,79,81,69,74,75,73,88,68,66,72,77,87,78,86,83,90,222,50,188,51,190,52,80,89,54,70,55,71,67,57,82,48,76,219,191,187];
+var key_mapping = (function(key_mapping_reverse) {
+  var map = [];
+  var i;
+  for (i = 0; i < 256; ++i) {
+    map.push(null);
+  }
+  for (i = 0; i < key_mapping_reverse.length; ++i) {
+    map[key_mapping_reverse[i]] = i + lowest_mapped_key;
+  }
+
+  // others
+  map[13] = 0;
+
+  return map;
+})(key_mapping_reverse_dvorak);
 
 var log = function(text) {
-  console.appendChild(document.createTextNode(text));
-  console.appendChild(document.createElement("BR"));
-  console.scrollTop = console.scrollHeight;
+  console_div.appendChild(document.createTextNode(text));
+  console_div.appendChild(document.createElement("BR"));
+  console_div.scrollTop = console_div.scrollHeight;
 };
 
 var onLoad = function() {
   Canvas.init();
-  console = document.getElementById("console");
+  console_div = document.getElementById("console");
 
   log("Connecting to " + WEBSOCKETS_URL + " ...");
   Canvas.clear();
   Canvas.drawBoxes([ "red", "green", "blue" ]);
 
-  var ws = new WebSocket(WEBSOCKETS_URL);
+  ws = new WebSocket(WEBSOCKETS_URL);
      ws.onopen = function()
      {
      };
@@ -33,8 +53,33 @@ var onLoad = function() {
      ws.onclose = function()
      { 
         // websocket is closed.
-        log("Connection is closed..."); 
+        log("Connection is closed...");
+        ws = null;
      };
+};
+
+var noteFromKeyCode = function(key_code) {
+  if (key_code >= 0 && key_code < key_mapping.length) {
+    return key_mapping[key_code];
+  } else {
+    return null;
+  }
+};
+
+var onKeyDown = function(event) {
+  var note = noteFromKeyCode(event.keyCode);
+  if (note !== null && ws !== null && !keys[note]) {
+    ws.send("KEY_DOWN:" + note);
+    keys[note] = 1;
+  }
+};
+
+var onKeyUp = function(event) {
+  var note = noteFromKeyCode(event.keyCode);
+  if (note !== null && ws !== null && keys[note]) {
+    ws.send("KEY_UP:" + note);
+    keys[note] = 0;
+  }
 };
 
 var Canvas = {
