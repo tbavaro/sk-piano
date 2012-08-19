@@ -1,6 +1,9 @@
 #include "Colors.h"
 #include <math.h>
 
+const Color Colors::BLACK = 0;
+const Color Colors::WHITE = 0x7f7f7f;
+
 Color Colors::hsv(float h, float s, float v) {
   float r, g, b;
   if( s == 0 ) {
@@ -54,5 +57,36 @@ static uint32_t _cached_rainbow[] = { 0x80ff80, 0x82ff80, 0x84ff80, 0x86ff80, 0x
 
 Color Colors::rainbow(uint16_t hue) {
   return _cached_rainbow[hue];
+}
+    
+uint8_t Colors::red(Color color) {
+  return 0x7f & (color >> 8);
+}
+
+uint8_t Colors::green(Color color) {
+  return 0x7f & (color >> 16);
+}
+
+uint8_t Colors::blue(Color color) {
+  return 0x7f & (color);
+}
+
+Color Colors::average(Color* colors, int num_colors) {
+  int red_accum = 0;
+  int green_accum = 0;
+  int blue_accum = 0;
+  for (int i = 0; i < num_colors; ++i) {
+    Color color = colors[i];
+    red_accum += Colors::red(color);
+    green_accum += Colors::green(color);
+    blue_accum += Colors::blue(color);
+  }
+
+  return Colors::rgb(red_accum / num_colors, green_accum / num_colors, blue_accum / num_colors);
+}
+    
+Color Colors::multiply(Color color, float multiplier) {
+  return Colors::rgb(Colors::red(color) * multiplier,
+      Colors::green(color) * multiplier, Colors::blue(color) * multiplier);
 }
 
