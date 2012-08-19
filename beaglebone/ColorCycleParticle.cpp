@@ -33,6 +33,6 @@ bool ColorCycleParticle::age(ParticleVisualizer* pv, TimeInterval millis) {
 }
 
 void ColorCycleParticle::render(LightStrip& strip) {
-  strip.addPixelColor(pos(), colors[index()]);
+  strip.addPixel(pos(), colors[index()]);
 }
 

@@ -35,7 +35,7 @@ void DaveeyVisualizer::onPassFinished(bool something_changed) {
         pixels_to_average[num_pixels++] = old_pixels[i + 1];
       }
       pixels[i] = Colors::multiply(Colors::average(pixels_to_average, num_pixels), 0.9);
-      strip.setPixelColor(i, pixels[i]);
+      strip.setPixel(i, pixels[i]);
     }
   }
 
