@@ -14,10 +14,8 @@
 #include <unistd.h>
 
 static int num_pins = 1000;
-static SPI spi(4e6);
-static PhysicalLightStrip strip(spi, num_pins);
 
-static void showRainbow() {
+static void showRainbow(LightStrip& strip) {
   int offset = 0;
 
   uint32_t last_time = Util::millis();
@@ -47,7 +45,7 @@ static void showRainbow() {
   }
 }
 
-static void backAndForth() {
+static void backAndForth(LightStrip& strip) {
   int pos = 0;
   int direction = 1;
   while(true) {
@@ -62,7 +60,7 @@ static void backAndForth() {
   }
 }
 
-static void christmas() {
+static void christmas(LightStrip& strip) {
   while(1) {
     for (int i = 0; i < num_pins; ++i) {
       if ((i / 10) % 2 == 0) {
@@ -76,7 +74,7 @@ static void christmas() {
   }
 }
 
-static void ranges() {
+static void ranges(LightStrip& strip) {
   while(true) {
     for (int i = 0; i < num_pins; ++i) {
       Color c;
@@ -138,7 +136,7 @@ static void ranges() {
   }
 }
 
-static void glow() {
+static void glow(LightStrip& strip) {
   int brightness = 0;
   int direction = 1;
   while(true) {
@@ -191,19 +189,7 @@ static void readTest(Pin& out_pin, Pin& in_pin) {
   }
 }
 
-static Visualizer* makeDebugVisualizer() {
-  return new DebugVisualizer();
-}
-
-static Visualizer* makeSimpleParticleVisualizer() {
-  return new SimpleParticleVisualizer(strip, 300);
-}
-
-static Visualizer* makeCometVisualizer() {
-  return new CometVisualizer(strip, 300);
-}
-
-static void piano() {
+static void piano(LightStrip& strip) {
   MasterVisualizer master_viz;
 
   // add visualizers
@@ -211,9 +197,9 @@ static void piano() {
   Visualizer* simple_viz = new SimpleVisualizer(*above_keyboard);
 
   master_viz.addVisualizer(simple_viz);
-//  master_viz.addVisualizer(makeSimpleParticleVisualizer);
-//  master_viz.addVisualizer(makeCometVisualizer);
-//  master_viz.addVisualizer(makeDebugVisualizer);
+//  master_viz.addVisualizer(new SimpleParticleVisualizer(strip, 300));
+//  master_viz.addVisualizer(new CometVisualizer(strip, 300));
+//  master_viz.addVisualizer(new DebugVisualizer());
 
   PhysicalPiano piano(&master_viz);
   while(true) {
@@ -223,18 +209,21 @@ static void piano() {
 }
 
 int main(int argc, char** argv) {
+  SPI spi(4e6);
+  PhysicalLightStrip strip(spi, num_pins);
+
   strip.reset();
   strip.show();
   strip.show();
 
 //  blinkForever(Pin::P8_4);
-  showRainbow();
-//  backAndForth();
-//  glow();
+//  showRainbow(strip);
+//  backAndForth(strip);
+//  glow(strip);
 
 //  readTest(Pin::pin(8, 7), Pin::pin(8, 22));
-//  piano();
-//  ranges();
+  piano(strip);
+//  ranges(strip);
 // getc(stdin);
-//  christmas();
+//  christmas(strip);
 }
