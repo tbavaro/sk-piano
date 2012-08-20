@@ -90,3 +90,10 @@ Color Colors::multiply(Color color, float multiplier) {
       Colors::green(color) * multiplier, Colors::blue(color) * multiplier);
 }
 
+Color Colors::gammaCorrect(Color color, float gamma) {
+  float gc = 1 / gamma;
+  uint8_t red = 127.0f * pow((float)Colors::red(color) / 127.0f, gc);
+  uint8_t green = 127.0f * pow((float)Colors::green(color) / 127.0f, gc);
+  uint8_t blue = 127.0f * pow((float)Colors::blue(color) / 127.0f, gc);
+  return Colors::rgb(red, green, blue);
+}

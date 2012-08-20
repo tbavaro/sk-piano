@@ -16,7 +16,7 @@ LogicalLightStrip* LogicalLightStrip::fromRange(
   Pixel* pixel_mapping = new Pixel[num_pixels];
   for (int i = 0; i < num_pixels; ++i) {
     pixel_mapping[i] = first_pixel + i * direction;
-    Util::log("%d -> %d", i, pixel_mapping[i]);
+//    Util::log("%d -> %d", i, pixel_mapping[i]);
   }
 
   return new LogicalLightStrip(delegate, pixel_mapping, num_pixels); 

@@ -2,6 +2,7 @@
 #include "Colors.h"
 #include "CometVisualizer.h"
 #include "DebugVisualizer.h"
+#include "DaveeyVisualizer.h"
 #include "LogicalLightStrip.h"
 #include "PhysicalLightStrip.h"
 #include "MasterVisualizer.h"
@@ -16,7 +17,15 @@
 #include <stdio.h>
 #include <unistd.h>
 
-static int num_pixels = 1000;
+static int num_pixels = 88;
+static const int MAX_FPS = 30;
+
+static void throttleFrameRate() {
+  static const uint32_t millis_per_frame = 1000 / MAX_FPS;
+  static uint32_t prev_frame_time = 0;
+  Util::delay_until(prev_frame_time + millis_per_frame);
+  prev_frame_time = Util::millis();
+}
 
 static void showRainbow(LightStrip& strip) {
   int offset = 0;
@@ -34,7 +43,7 @@ static void showRainbow(LightStrip& strip) {
 
     strip.show();
 
-//    Util::delay(10);
+    throttleFrameRate();
 
     if ((++counter % 30) == 0) {
       uint32_t millis = Util::millis();
@@ -60,6 +69,8 @@ static void backAndForth(LightStrip& strip) {
     }
     strip.setPixel(pos, 0x7f7f7f);
     strip.show();
+
+    throttleFrameRate();
   }
 }
 
@@ -73,7 +84,8 @@ static void christmas(LightStrip& strip) {
       }
     }
     strip.show();
-    Util::delay(100);
+
+    throttleFrameRate();
   }
 }
 
@@ -135,7 +147,8 @@ static void ranges(LightStrip& strip) {
       strip.setPixel(i, c);
     }
     strip.show();
-    Util::delay(100);
+
+    throttleFrameRate();
   }
 }
 
@@ -155,7 +168,7 @@ static void glow(LightStrip& strip) {
     }
     strip.show();
 
-//    Util::delay(10);
+    throttleFrameRate();
   }
 }
 
@@ -201,6 +214,7 @@ static void piano(LightStrip& strip) {
 
 //  master_viz.addVisualizer(simple_viz);
 //  master_viz.addVisualizer(new SimpleParticleVisualizer(strip, 300));
+  master_viz.addVisualizer(new DaveeyVisualizer(strip));
 //  master_viz.addVisualizer(new CometVisualizer(strip, 300));
 //  master_viz.addVisualizer(new DebugVisualizer());
 
@@ -209,9 +223,24 @@ static void piano(LightStrip& strip) {
 #else
   PhysicalPiano piano(&master_viz);
 #endif
+
+  static const int SHOW_FPS_EVERY_N_FRAMES = MAX_FPS;
+  int counter = 0;
+  uint32_t last_fps_time = 0;
   while(true) {
     piano.scan();
     strip.show();
+
+    throttleFrameRate();
+
+    if ((counter++ % SHOW_FPS_EVERY_N_FRAMES) == 0) {
+      uint32_t now = Util::millis();
+      if (last_fps_time != 0) {
+        uint32_t duration = now - last_fps_time;
+        printf("fps: %d\n", (SHOW_FPS_EVERY_N_FRAMES * 1000) / duration);
+      }
+      last_fps_time = now;
+    }
   }
 }
 

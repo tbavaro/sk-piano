@@ -43,7 +43,7 @@ EventMachine::WebSocket.start(:host => "0.0.0.0", :port => 8001) do |ws|
   }
 
   ws.onmessage do |msg|
-    puts "got #{msg}"
+#    puts "got #{msg}"
     p.send_data "#{msg}\n"
   end
 

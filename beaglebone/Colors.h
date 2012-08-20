@@ -27,6 +27,7 @@ class Colors {
 
     static Color average(Color* colors, int num_colors);
     static Color multiply(Color color, float multiplier);
+    static Color gammaCorrect(Color color, float gamma);
 
     static uint8_t red(Color color);
     static uint8_t green(Color color);

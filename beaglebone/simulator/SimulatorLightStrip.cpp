@@ -7,17 +7,10 @@ SimulatorLightStrip::SimulatorLightStrip(int num_pixels)
 }
 
 SimulatorLightStrip::~SimulatorLightStrip() {
-  fprintf(stderr, "bye\n");
-  fflush(stderr);
-  exit(1);
 }
 
 template<typename T> static inline T max(T a, T b) {
   return a > b ? a : b;
-}
-
-static inline uint8_t fix(uint8_t raw_value) {
-  return (raw_value & 0x7f) * 2;
 }
 
 void SimulatorLightStrip::show() {
@@ -26,7 +19,9 @@ void SimulatorLightStrip::show() {
     if (i > 0) {
       printf(",");
     }
-    printf("'#%02x%02x%02x'", fix(pixels[i * 3 + 1]), fix(pixels[i * 3]), fix(pixels[i * 3 + 2]));
+    Color adj_color = Colors::rgb(pixels[i * 3 + 1], pixels[i * 3], pixels[i * 3 + 2]);
+    adj_color = Colors::gammaCorrect(adj_color, 2.0);
+    printf("'#%02x%02x%02x'", Colors::red(adj_color) * 2, Colors::green(adj_color) * 2, Colors::blue(adj_color) * 2);
   }
   printf("]\n");
   fflush(stdout);
