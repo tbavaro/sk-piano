@@ -6,6 +6,7 @@ var keys = [];
 
 var lowest_mapped_key = 39; //C3
 var key_mapping_reverse_dvorak = [186,79,81,69,74,75,73,88,68,66,72,77,87,78,86,83,90,222,50,188,51,190,52,80,89,54,70,55,71,67,57,82,48,76,219,191,187];
+var key_mapping_reverse_qwerty = [90,83,88,68,67,86,71,66,72,78,74,77,188,76,190,186,191,81,50,50,87,51,69,52,82,84,54,89,55,85,73,57,79,48,80,189,219,221];
 var key_mapping = (function(key_mapping_reverse) {
   var map = [];
   var i;
@@ -20,7 +21,7 @@ var key_mapping = (function(key_mapping_reverse) {
   map[13] = 0;
 
   return map;
-})(key_mapping_reverse_dvorak);
+})(key_mapping_reverse_qwerty);
 
 var log = function(text) {
   console_div.appendChild(document.createTextNode(text));
@@ -58,6 +59,8 @@ var onLoad = function() {
      };
 };
 
+var kc_history = [];
+
 var noteFromKeyCode = function(key_code) {
   if (key_code >= 0 && key_code < key_mapping.length) {
     return key_mapping[key_code];
@@ -67,6 +70,9 @@ var noteFromKeyCode = function(key_code) {
 };
 
 var onKeyDown = function(event) {
+  kc_history.push(event.keyCode);
+  console.log(JSON.stringify(kc_history));
+
   var note = noteFromKeyCode(event.keyCode);
   if (note !== null && ws !== null && !keys[note]) {
     ws.send("KEY_DOWN:" + note);
