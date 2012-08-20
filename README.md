@@ -53,6 +53,10 @@ Compiling
 * Even though the websockets_server.rb script will run a new instance of the
   piano executable every time a page is loaded, don't forget you still have to
   compile your code when you change something :)
+* See PianoLocations.h for information about what lights are where.  We got the
+  majority of them mapped but not all; if you need other positions then maybe
+  add a guess in there (with a comment saying to check it) and we can fix it
+  up when we get to the playa.
 
 Upcoming
 --------
