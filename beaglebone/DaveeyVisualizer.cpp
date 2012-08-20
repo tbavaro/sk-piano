@@ -3,7 +3,7 @@
 #include "Util.h"
 #include <string.h>
 
-DaveeyVisualizer::DaveeyVisualizer(LightStrip& strip) : Visualizer(strip) {
+DaveeyVisualizer::DaveeyVisualizer(LightStrip& strip) : LightStripVisualizer(strip) {
   pixels = new Color[strip.numPixels()];
   old_pixels = new Color[strip.numPixels()];
   prev_frame_time = 0;

@@ -4,7 +4,7 @@
 static const uint32_t TIME_NONE = 0;
 
 ParticleVisualizer::ParticleVisualizer(LightStrip& strip, uint16_t max_particles) 
-    : Visualizer(strip), 
+    : LightStripVisualizer(strip), 
       max_particles(max_particles),
       particles(new Particle*[max_particles]),
       removed_particle_indexes(new uint16_t[max_particles]) {

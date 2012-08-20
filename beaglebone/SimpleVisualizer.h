@@ -1,7 +1,7 @@
 #include "LightStrip.h"
-#include "Visualizer.h"
+#include "LightStripVisualizer.h"
 
-class SimpleVisualizer : public Visualizer {
+class SimpleVisualizer : public LightStripVisualizer {
   public:
     SimpleVisualizer(LightStrip& strip);
     ~SimpleVisualizer();

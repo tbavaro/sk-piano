@@ -1,7 +1,7 @@
 #include "DebugVisualizer.h"
 #include "Util.h"
 
-DebugVisualizer::DebugVisualizer(LightStrip& strip) : Visualizer(strip) {
+DebugVisualizer::DebugVisualizer() : Visualizer() {
 }
 
 void DebugVisualizer::onKeyDown(Key key) {

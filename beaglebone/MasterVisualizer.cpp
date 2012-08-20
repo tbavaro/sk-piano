@@ -2,12 +2,11 @@
 
 static const uint8_t MAX_VISUALIZERS = 64;
 
-MasterVisualizer::MasterVisualizer(LightStrip& strip)
-    : Visualizer(strip), 
-      visualizer_factories(new VisualizerFactory[MAX_VISUALIZERS]) {
+MasterVisualizer::MasterVisualizer()
+    : visualizers(new Visualizer*[MAX_VISUALIZERS]) {
   // start out with a dummy visualizer, but we'll kill this when we add the
   // first "real" visualizer
-  current_viz = new Visualizer(strip);
+  current_viz = new Visualizer();
   current_viz_index = -1;
   num_visualizers = 0;
 }
@@ -18,10 +17,10 @@ MasterVisualizer::~MasterVisualizer() {
     delete current_viz;
   }
 
-  delete[] visualizer_factories;
+  delete[] visualizers;
 }
 
-void MasterVisualizer::addVisualizer(VisualizerFactory viz_factory) {
+void MasterVisualizer::addVisualizer(Visualizer* visualizer) {
   // don't add too many visualizers
   if (num_visualizers >= MAX_VISUALIZERS) {
     return;
@@ -29,11 +28,12 @@ void MasterVisualizer::addVisualizer(VisualizerFactory viz_factory) {
 
   bool is_first = (num_visualizers == 0);
 
-  visualizer_factories[num_visualizers++] = viz_factory;
+  visualizers[num_visualizers++] = visualizer;
   
   // if this is the first visualizer to be added, destroy our dummy visualizer
   // and enable the visualizer
   if (is_first) {
+    delete current_viz;
     this->nextVisualizer();
   }
 }
@@ -44,30 +44,22 @@ void MasterVisualizer::nextVisualizer() {
     return;
   }
 
-  // destroy the current visualizer
-  delete current_viz;
-
   // increment, wrapping around
   current_viz_index = (current_viz_index + 1) % num_visualizers;
-  current_viz = visualizer_factories[current_viz_index]();
+  current_viz = visualizers[current_viz_index];
   
   // reset the visualizer
   current_viz->reset();
 }
 
 void MasterVisualizer::reset() {
+  Visualizer::reset();
+
   // if we have a visualizer, reset to the first one
-  delete current_viz;
   if (num_visualizers > 0) {
     current_viz_index = 0;
-    current_viz = visualizer_factories[current_viz_index]();
-  } else {
-    current_viz_index = -1;
-    current_viz = new Visualizer(strip);
+    current_viz = visualizers[current_viz_index];
   }
-
-  // do the visualizer base class reset (reset the strip to black)
-  Visualizer::reset();
 
   // reset the current visualizer
   current_viz->reset();
@@ -87,6 +79,7 @@ void MasterVisualizer::onKeyUp(Key key) {
 }
 
 void MasterVisualizer::onPassFinished(bool something_changed) {
+  Visualizer::onPassFinished(something_changed);
   current_viz->onPassFinished(something_changed);
 }
 

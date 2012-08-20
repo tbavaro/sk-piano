@@ -1,7 +1,7 @@
 #include "SimpleVisualizer.h"
 #include "Colors.h"
 
-SimpleVisualizer::SimpleVisualizer(LightStrip& strip) : Visualizer(strip) {
+SimpleVisualizer::SimpleVisualizer(LightStrip& strip) : LightStripVisualizer(strip) {
   pixel_counts = new int[strip.numPixels()];
 }
 
