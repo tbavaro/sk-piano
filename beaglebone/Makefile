@@ -2,7 +2,7 @@ CC=g++
 CPPFLAGS=-g -I.
 
 # add stubs for non-beaglebone env
-ifeq ($(shell uname -m),x86_64)
+ifneq ($(shell uname -m),armv71)
   CPPFLAGS+= -I./stubs -DPIANO_SIMULATOR
 endif
 
