@@ -10,10 +10,13 @@
 #include "PhysicalPiano.h"
 #include "Util.h"
 
+#include "simulator/SimulatorLightStrip.h"
+#include "simulator/SimulatorPiano.h"
+
 #include <stdio.h>
 #include <unistd.h>
 
-static int num_pins = 1000;
+static int num_pixels = 1000;
 
 static void showRainbow(LightStrip& strip) {
   int offset = 0;
@@ -25,7 +28,7 @@ static void showRainbow(LightStrip& strip) {
   int counter = 0;
 
   while(true) {
-    for (int i = 0; i < num_pins; ++i) {
+    for (int i = 0; i < num_pixels; ++i) {
       strip.setPixel(i, Colors::rainbow((i + offset) % 360));
     }
 
@@ -51,7 +54,7 @@ static void backAndForth(LightStrip& strip) {
   while(true) {
     strip.setPixel(pos, 0);
     pos += direction;
-    if (pos < 0 || pos >= num_pins) {
+    if (pos < 0 || pos >= num_pixels) {
       direction *= -1;
       pos += 2 * direction;
     }
@@ -62,7 +65,7 @@ static void backAndForth(LightStrip& strip) {
 
 static void christmas(LightStrip& strip) {
   while(1) {
-    for (int i = 0; i < num_pins; ++i) {
+    for (int i = 0; i < num_pixels; ++i) {
       if ((i / 10) % 2 == 0) {
         strip.setPixel(i, Colors::rgb(127, 0, 0));
       } else {
@@ -76,7 +79,7 @@ static void christmas(LightStrip& strip) {
 
 static void ranges(LightStrip& strip) {
   while(true) {
-    for (int i = 0; i < num_pins; ++i) {
+    for (int i = 0; i < num_pixels; ++i) {
       Color c;
       if (i < 80) {
         // back half of top
@@ -147,7 +150,7 @@ static void glow(LightStrip& strip) {
     }
 
     Color color = Colors::hsv(0, 0.0, brightness / 127.0);
-    for(int i = 0; i < num_pins; ++i) {
+    for(int i = 0; i < num_pixels; ++i) {
       strip.setPixel(i, color);
     }
     strip.show();
@@ -196,12 +199,16 @@ static void piano(LightStrip& strip) {
   LogicalLightStrip* above_keyboard = LogicalLightStrip::fromRange(strip, 163, 203);
   Visualizer* simple_viz = new SimpleVisualizer(*above_keyboard);
 
-  master_viz.addVisualizer(simple_viz);
+//  master_viz.addVisualizer(simple_viz);
 //  master_viz.addVisualizer(new SimpleParticleVisualizer(strip, 300));
 //  master_viz.addVisualizer(new CometVisualizer(strip, 300));
 //  master_viz.addVisualizer(new DebugVisualizer());
 
+#ifdef PIANO_SIMULATOR
+  SimulatorPiano piano(&master_viz);
+#else
   PhysicalPiano piano(&master_viz);
+#endif
   while(true) {
     piano.scan();
     strip.show();
@@ -209,8 +216,12 @@ static void piano(LightStrip& strip) {
 }
 
 int main(int argc, char** argv) {
+#ifdef PIANO_SIMULATOR
+  SimulatorLightStrip strip(num_pixels);
+#else
   SPI spi(4e6);
-  PhysicalLightStrip strip(spi, num_pins);
+  PhysicalLightStrip strip(spi, num_pixels);
+#endif
 
   strip.reset();
   strip.show();

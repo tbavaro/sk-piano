@@ -1,16 +1,16 @@
 CC=g++
-CPPFLAGS=-I.
+CPPFLAGS=-g -I.
 
 # add stubs for non-beaglebone env
 ifeq ($(shell uname -m),x86_64)
-  CPPFLAGS+= -I./stubs
+  CPPFLAGS+= -I./stubs -DPIANO_SIMULATOR
 endif
 
 # right now a change to any header file will cause everything to get rebuilt
 DEPS = $(shell ls *.h)
 
 # assume all *.cpp files should be included
-OBJ = $(shell ls *.cpp | sed "s/cpp$$/o/")
+OBJ = $(shell ls *.cpp simulator/*.cpp | sed "s/cpp$$/o/")
 
 all: $(OBJ)
 	$(CC) -o piano $^ $(CPPFLAGS)
@@ -21,6 +21,6 @@ all: $(OBJ)
 .PHONY: clean
 
 clean:
-	rm -f *.o piano
+	rm -f $(OBJ) piano
 
 
