@@ -14,3 +14,17 @@ LogicalLightStrip* PianoLocations::directlyAboveKeys(LightStrip& delegate) {
       PianoLocations::SECOND_ROW_RIGHTMOST_ABOVE_KEYS);
 }
 
+LogicalLightStrip* PianoLocations::upRightLegFront(LightStrip& delegate) {
+  return LogicalLightStrip::fromRange(
+      delegate, 
+      PianoLocations::RIGHT_LEG_FRONT_BOTTOM,
+      PianoLocations::RIGHT_LEG_FRONT_TOP);
+}
+
+LogicalLightStrip* PianoLocations::upRightLegRear(LightStrip& delegate) {
+  return LogicalLightStrip::fromRange(
+      delegate, 
+      PianoLocations::RIGHT_LEG_REAR_BOTTOM,
+      PianoLocations::RIGHT_LEG_REAR_TOP);
+}
+

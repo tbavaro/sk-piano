@@ -37,5 +37,6 @@ void RainbowVisualizer::onPassFinished(bool something_changed) {
 
 void RainbowVisualizer::reset() {
   LightStripVisualizer::reset();
+  prev_frame_time = 0;
   phase = 0;
 }

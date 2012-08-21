@@ -1,3 +1,4 @@
+#include "AmplitudeMeterVisualizer.h"
 #include "BeagleBone.h"
 #include "Colors.h"
 #include "CometVisualizer.h"
@@ -28,36 +29,6 @@ static void throttleFrameRate() {
   static uint32_t prev_frame_time = 0;
   Util::delay_until(prev_frame_time + millis_per_frame);
   prev_frame_time = Util::millis();
-}
-
-static void showRainbow(LightStrip& strip) {
-  int offset = 0;
-
-  uint32_t last_time = Util::millis();
-
-  int x = 0;
-
-  int counter = 0;
-
-  while(true) {
-    for (int i = 0; i < NUM_PIXELS; ++i) {
-      strip.setPixel(i, Colors::rainbow((i + offset) % 360));
-    }
-
-    strip.show();
-
-    throttleFrameRate();
-
-    if ((++counter % 30) == 0) {
-      uint32_t millis = Util::millis();
-      printf("frame %d fps\n", 30000 / (millis - last_time));
-      last_time = millis;
-    }
-
-    ++offset;
-    x = (x + 1) % 10;
-
-  }
 }
 
 static void backAndForth(LightStrip& strip) {
@@ -208,6 +179,20 @@ static void readTest(Pin& out_pin, Pin& in_pin) {
   }
 }
 
+static void addLegAmplitudeMeters(
+    CompositeVisualizer* vis, LightStrip& strip, float note_increase, 
+    float decrease_rate, float max_value) {
+  LogicalLightStrip* up_right_leg_front = 
+      PianoLocations::upRightLegFront(strip);
+  LogicalLightStrip* up_right_leg_rear = PianoLocations::upRightLegRear(strip);
+  vis->addVisualizer(
+      new AmplitudeMeterVisualizer(
+        *up_right_leg_front, note_increase, decrease_rate, max_value));
+  vis->addVisualizer(
+      new AmplitudeMeterVisualizer(
+        *up_right_leg_rear, note_increase, decrease_rate, max_value));
+}
+
 static Visualizer* makeVisualizerOne(LightStrip& strip) {
   LogicalLightStrip* top_front_row = PianoLocations::topFrontRow(strip);
   LogicalLightStrip* above_keyboard = PianoLocations::directlyAboveKeys(strip);
@@ -216,6 +201,7 @@ static Visualizer* makeVisualizerOne(LightStrip& strip) {
   vis->addVisualizer(new RainbowVisualizer(strip, 80, -100));
   vis->addVisualizer(new DaveeyVisualizer(*top_front_row));
   vis->addVisualizer(new DaveeyVisualizer(*above_keyboard));
+  addLegAmplitudeMeters(vis, strip, 0.25, 1.0, 1.5);
   return vis;
 }
 
@@ -271,7 +257,6 @@ int main(int argc, char** argv) {
   strip.show();
 
 //  blinkForever(Pin::P8_4);
-//  showRainbow(strip);
 //  backAndForth(strip);
 //  glow(strip);
 
