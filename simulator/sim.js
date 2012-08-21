@@ -21,7 +21,8 @@ var key_mapping = (function(key_mapping_reverse) {
   map[13] = 0;
 
   return map;
-})(key_mapping_reverse_qwerty);
+//})(key_mapping_reverse_qwerty);
+})(key_mapping_reverse_dvorak);
 
 var log = function(text) {
   console_div.appendChild(document.createTextNode(text));

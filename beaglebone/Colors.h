@@ -25,6 +25,7 @@ class Colors {
      */
     static Color rainbow(uint16_t hue);
 
+    static Color add(Color a, Color b);
     static Color average(Color* colors, int num_colors);
     static Color multiply(Color color, float multiplier);
     static Color gammaCorrect(Color color, float gamma);

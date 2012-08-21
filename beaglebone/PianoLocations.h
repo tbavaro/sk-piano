@@ -60,7 +60,8 @@ class PianoLocations {
 
   public:
     /*** Light Strip Regions ***/
-    static LogicalLightStrip* directlyAbovePixels(LightStrip& delegate);
+    static LogicalLightStrip* topFrontRow(LightStrip& delegate);
+    static LogicalLightStrip* directlyAboveKeys(LightStrip& delegate);
 };
 
 #endif

@@ -15,6 +15,7 @@ class FrameBufferLightStrip : public LightStrip {
     virtual void setPixel(Pixel n, Color color);
 
   protected:
+    Color getPixel(Pixel n);
     uint8_t* pixels;
     int num_pixels;
 };

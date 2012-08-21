@@ -71,6 +71,22 @@ uint8_t Colors::blue(Color color) {
   return 0x7f & (color);
 }
 
+static inline uint8_t addComponent(uint8_t a, uint8_t b) {
+  // this works because the colors are only 0-127
+  uint8_t c = (a + b);
+  if (c > 0x7f) {
+    c = 0x7f;
+  }
+  return c;
+}
+
+Color Colors::add(Color a, Color b) {
+  return Colors::rgb(
+      addComponent(Colors::red(a), Colors::red(b)),
+      addComponent(Colors::green(a), Colors::green(b)),
+      addComponent(Colors::blue(a), Colors::blue(b)));
+}
+
 Color Colors::average(Color* colors, int num_colors) {
   int red_accum = 0;
   int green_accum = 0;

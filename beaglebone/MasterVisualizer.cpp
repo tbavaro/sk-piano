@@ -2,8 +2,8 @@
 
 static const uint8_t MAX_VISUALIZERS = 64;
 
-MasterVisualizer::MasterVisualizer()
-    : visualizers(new Visualizer*[MAX_VISUALIZERS]) {
+MasterVisualizer::MasterVisualizer(LightStrip& strip)
+    : visualizers(new Visualizer*[MAX_VISUALIZERS]), strip(strip) {
   // start out with a dummy visualizer, but we'll kill this when we add the
   // first "real" visualizer
   current_viz = new Visualizer();
@@ -48,7 +48,8 @@ void MasterVisualizer::nextVisualizer() {
   current_viz_index = (current_viz_index + 1) % num_visualizers;
   current_viz = visualizers[current_viz_index];
   
-  // reset the visualizer
+  // reset the strip and the visualizer
+  strip.reset();
   current_viz->reset();
 }
 
@@ -61,7 +62,8 @@ void MasterVisualizer::reset() {
     current_viz = visualizers[current_viz_index];
   }
 
-  // reset the current visualizer
+  // reset the strip and the current visualizer
+  strip.reset();
   current_viz->reset();
 }
 

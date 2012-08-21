@@ -1,6 +1,7 @@
 #include "BeagleBone.h"
 #include "Colors.h"
 #include "CometVisualizer.h"
+#include "CompositeVisualizer.h"
 #include "DebugVisualizer.h"
 #include "DaveeyVisualizer.h"
 #include "LogicalLightStrip.h"
@@ -206,12 +207,23 @@ static void readTest(Pin& out_pin, Pin& in_pin) {
   }
 }
 
+static Visualizer* makeVisualizerOne(LightStrip& strip) {
+  LogicalLightStrip* top_front_row = PianoLocations::topFrontRow(strip);
+  LogicalLightStrip* above_keyboard = PianoLocations::directlyAboveKeys(strip);
+  
+  CompositeVisualizer* vis = new CompositeVisualizer();
+  vis->addVisualizer(new DaveeyVisualizer(*top_front_row));
+  vis->addVisualizer(new DaveeyVisualizer(*above_keyboard));
+  return vis;
+}
+
 static void piano(LightStrip& strip) {
-  MasterVisualizer master_viz;
+  MasterVisualizer master_viz(strip);
 
   // add visualizers
   LogicalLightStrip* above_keyboard = LogicalLightStrip::fromRange(strip, 163, 203);
 
+  master_viz.addVisualizer(makeVisualizerOne(strip));
   master_viz.addVisualizer(new DaveeyVisualizer(*above_keyboard));
   master_viz.addVisualizer(new SimpleParticleVisualizer(strip, 1000));
   master_viz.addVisualizer(new SimpleVisualizer(*above_keyboard));

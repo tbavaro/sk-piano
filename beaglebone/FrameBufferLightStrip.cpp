@@ -21,9 +21,19 @@ int FrameBufferLightStrip::numPixels() {
   return num_pixels;
 }
 
+Color FrameBufferLightStrip::getPixel(Pixel n) {
+  if (n >= num_pixels) {
+    return Colors::BLACK;
+  } else {
+    return Colors::rgb(
+        0x7f & pixels[n * 3 + 1], 
+        0x7f & pixels[n * 3], 
+        0x7f & pixels[n * 3 + 2]);
+  }
+}
+
 void FrameBufferLightStrip::addPixel(Pixel n, Color c) {
-  // TODO add
-  this->setPixel(n, c);
+  this->setPixel(n, Colors::add(this->getPixel(n), c));
 }
 
 void FrameBufferLightStrip::setPixel(Pixel n, Color c) {

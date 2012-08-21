@@ -2,10 +2,11 @@
 #define __INCLUDED_MASTER_VISUALIZER_H
 
 #include "Visualizer.h"
+#include "LightStrip.h"
 
 class MasterVisualizer : public Visualizer {
   public:
-    MasterVisualizer();
+    MasterVisualizer(LightStrip& strip);
     ~MasterVisualizer();
 
     void addVisualizer(Visualizer* visualizer);
@@ -17,6 +18,7 @@ class MasterVisualizer : public Visualizer {
     virtual void onPassFinished(bool something_changed);
 
   private:
+    LightStrip& strip;
     Visualizer* current_viz;
     int8_t current_viz_index;
     Visualizer** const visualizers;
