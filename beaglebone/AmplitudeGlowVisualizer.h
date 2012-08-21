@@ -1,11 +1,11 @@
-#ifndef __INCLUDED_AMPLITUDE_METER_VISUALIZER_H
-#define __INCLUDED_AMPLITUDE_METER_VISUALIZER_H
+#ifndef __INCLUDED_AMPLITUDE_GLOW_VISUALIZER_H
+#define __INCLUDED_AMPLITUDE_GLOW_VISUALIZER_H
 
 #include "AbstractAmplitudeVisualizer.h"
 
-class AmplitudeMeterVisualizer : public AbstractAmplitudeVisualizer {
+class AmplitudeGlowVisualizer : public AbstractAmplitudeVisualizer {
   public:
-    AmplitudeMeterVisualizer(
+    AmplitudeGlowVisualizer(
         LightStrip& strip,
         float note_increase,
         float decrease_rate,

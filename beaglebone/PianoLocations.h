@@ -64,6 +64,7 @@ class PianoLocations {
     static LogicalLightStrip* directlyAboveKeys(LightStrip& delegate);
     static LogicalLightStrip* upRightLegFront(LightStrip& delegate);
     static LogicalLightStrip* upRightLegRear(LightStrip& delegate);
+    static LogicalLightStrip* entireTop(LightStrip& delegate);
 };
 
 #endif

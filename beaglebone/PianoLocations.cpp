@@ -28,3 +28,10 @@ LogicalLightStrip* PianoLocations::upRightLegRear(LightStrip& delegate) {
       PianoLocations::RIGHT_LEG_REAR_TOP);
 }
 
+LogicalLightStrip* PianoLocations::entireTop(LightStrip& delegate) {
+  return LogicalLightStrip::fromRange(
+      delegate, 
+      PianoLocations::TOP_LEFT_JUST_BEHIND_HINGE,
+      PianoLocations::TOP_LEFT_JUST_IN_FRONT_OF_HINGE);
+}
+
