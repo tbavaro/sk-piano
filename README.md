@@ -57,14 +57,13 @@ Compiling
   majority of them mapped but not all; if you need other positions then maybe
   add a guess in there (with a comment saying to check it) and we can fix it
   up when we get to the playa.
-
-Upcoming
---------
-
-* I'm going to (soon) make a CompositeVisualizer class that runs multiple
-  visualizers at the same time, most usefully with each of them only operating
-  on different subsets of the strip.  So you can have DaveeyVisualizer running
-  right above the keyboard while other things happen elsewhere.
+* LogicalLightStrip lets you take a subset of the full light strip and
+  use it like it's just a smaller light strip, to make it easier to work
+  with different regions of the piano.
+* CompositeVisualizer combines a handful of other visualizers and passes
+  all events through to each of them in order.  Used in combination with
+  the LogicalLightStrip abstraction, you can have combine different 
+  visualizations over different regions of the piano.
 
 Useful Utility Classes
 ----------------------
