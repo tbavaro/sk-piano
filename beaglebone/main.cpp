@@ -7,6 +7,7 @@
 #include "LogicalLightStrip.h"
 #include "PhysicalLightStrip.h"
 #include "MasterVisualizer.h"
+#include "RainbowVisualizer.h"
 #include "SimpleParticleVisualizer.h"
 #include "SimpleVisualizer.h"
 #include "PhysicalPiano.h"
@@ -212,6 +213,7 @@ static Visualizer* makeVisualizerOne(LightStrip& strip) {
   LogicalLightStrip* above_keyboard = PianoLocations::directlyAboveKeys(strip);
   
   CompositeVisualizer* vis = new CompositeVisualizer();
+  vis->addVisualizer(new RainbowVisualizer(strip, 80, -100));
   vis->addVisualizer(new DaveeyVisualizer(*top_front_row));
   vis->addVisualizer(new DaveeyVisualizer(*above_keyboard));
   return vis;
