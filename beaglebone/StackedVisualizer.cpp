@@ -21,7 +21,7 @@ void StackedVisualizer::onKeyUp(Key key) {
 }
   
 void StackedVisualizer::onPassFinished(bool something_changed) {
-  for (int fps = 0; fps < 10; ++fps) {
+  for (int fps = 0; fps < 5; ++fps) {
     if (Colors::BLACK != pixels[strip.numPixels() - 1]) {
       age--;
     }
