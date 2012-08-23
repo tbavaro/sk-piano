@@ -4,12 +4,20 @@
 #include "LightStrip.h"
 #include "SKTypes.h"
 
+#include <utility>
+#include <vector>
+
+typedef std::pair<Pixel, Pixel> PixelRange;
+
 class LogicalLightStrip : public LightStrip {
   public:
     static LogicalLightStrip* fromRange(
         LightStrip& delegate, 
         Pixel first_pixel, 
         Pixel last_pixel);
+    static LogicalLightStrip* fromRanges(
+        LightStrip& delegate,
+        const std::vector<PixelRange>& ranges);
     
   public:
     virtual int numPixels();

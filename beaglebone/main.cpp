@@ -12,6 +12,7 @@
 #include "RainbowVisualizer.h"
 #include "SimpleParticleVisualizer.h"
 #include "SimpleVisualizer.h"
+#include "StackedVisualizer.h"
 #include "PhysicalPiano.h"
 #include "PianoLocations.h"
 #include "Util.h"
@@ -194,7 +195,7 @@ static void addLegAmplitudeMeters(
         *up_right_leg_rear, note_increase, decrease_rate, max_value));
 }
 
-static Visualizer* makeVisualizerOne(LightStrip& strip) {
+static Visualizer* makeSceneOne(LightStrip& strip) {
   LogicalLightStrip* entire_top = PianoLocations::entireTop(strip);
   LogicalLightStrip* top_front_row = PianoLocations::topFrontRow(strip);
   LogicalLightStrip* above_keyboard = PianoLocations::directlyAboveKeys(strip);
@@ -208,16 +209,34 @@ static Visualizer* makeVisualizerOne(LightStrip& strip) {
   return vis;
 }
 
+static Visualizer* makeSceneTwo(LightStrip& strip) {
+  CompositeVisualizer* vis = new CompositeVisualizer();
+  
+  LogicalLightStrip* entire_top = PianoLocations::aroundTopExcludingFrontRow(strip);
+  vis->addVisualizer(new StackedVisualizer(*entire_top));
+  
+  LogicalLightStrip* entire_second_row = PianoLocations::aroundSecondRowExcludingFrontRow(strip);
+  vis->addVisualizer(new StackedVisualizer(*entire_second_row));
+  
+  LogicalLightStrip* top_front_row = PianoLocations::topFrontRow(strip);
+  vis->addVisualizer(new DaveeyVisualizer(*top_front_row));
+  
+  LogicalLightStrip* above_keyboard = PianoLocations::directlyAboveKeys(strip);
+  vis->addVisualizer(new DaveeyVisualizer(*above_keyboard));
+
+  return vis;
+}
+
 static void piano(LightStrip& strip) {
   MasterVisualizer master_viz(strip);
 
   // add visualizers
   LogicalLightStrip* above_keyboard = LogicalLightStrip::fromRange(strip, 163, 203);
 
-  master_viz.addVisualizer(makeVisualizerOne(strip));
-  master_viz.addVisualizer(new DaveeyVisualizer(*above_keyboard));
+  master_viz.addVisualizer(makeSceneOne(strip));
+  master_viz.addVisualizer(makeSceneTwo(strip));
   master_viz.addVisualizer(new SimpleParticleVisualizer(strip, 1000));
-  master_viz.addVisualizer(new SimpleVisualizer(*above_keyboard));
+//  master_viz.addVisualizer(new SimpleVisualizer(*above_keyboard));
 //  master_viz.addVisualizer(new CometVisualizer(strip, 300));
 //  master_viz.addVisualizer(new DebugVisualizer());
 

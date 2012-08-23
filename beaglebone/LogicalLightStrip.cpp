@@ -1,25 +1,52 @@
 #include "LogicalLightStrip.h"
 #include "Util.h"
 
+using namespace std;
+
+static int numPixelsInRange(Pixel first_pixel, Pixel last_pixel) {
+  if (first_pixel < last_pixel) {
+    return (last_pixel - first_pixel) + 1;
+  } else {
+    return (first_pixel - last_pixel) + 1;
+  }
+}
+
+// returns the # of pixels added
+static int addPixelRange(Pixel* pixels_out, Pixel first_pixel, Pixel last_pixel) {
+  int direction = (first_pixel < last_pixel) ? 1 : -1;
+  int num_pixels = 0;
+  for (int i = first_pixel; i != last_pixel + direction; i += direction) {
+    pixels_out[num_pixels++] = i;
+  }
+  return num_pixels;
+}
+
 LogicalLightStrip* LogicalLightStrip::fromRange(
     LightStrip& delegate,
     Pixel first_pixel,
     Pixel last_pixel) {
-  int direction = (first_pixel < last_pixel) ? 1 : -1;
-  int num_pixels;
-  if (direction == 1) {
-    num_pixels = (last_pixel - first_pixel) + 1;
-  } else {
-    num_pixels = (first_pixel - last_pixel) + 1;
+  vector<PixelRange> ranges(1, PixelRange(first_pixel, last_pixel));
+  return LogicalLightStrip::fromRanges(delegate, ranges);
+}
+
+LogicalLightStrip* LogicalLightStrip::fromRanges(
+    LightStrip& delegate,
+    const vector<PixelRange>& ranges) {
+  int num_pixels = 0;
+  for (vector<PixelRange>::const_iterator i = ranges.begin();
+       i != ranges.end(); ++i) {
+    num_pixels += numPixelsInRange(i->first, i->second);
   }
 
-  Pixel* pixel_mapping = new Pixel[num_pixels];
-  for (int i = 0; i < num_pixels; ++i) {
-    pixel_mapping[i] = first_pixel + i * direction;
-//    Util::log("%d -> %d", i, pixel_mapping[i]);
+  Pixel* pixels = new Pixel[num_pixels];
+  Pixel* ptr = pixels;
+  for (vector<PixelRange>::const_iterator i = ranges.begin();
+       i != ranges.end(); ++i) {
+    int num_added = addPixelRange(ptr, i->first, i->second);
+    ptr += num_added;
   }
 
-  return new LogicalLightStrip(delegate, pixel_mapping, num_pixels); 
+  return new LogicalLightStrip(delegate, pixels, num_pixels); 
 }
 
 LogicalLightStrip::LogicalLightStrip(

@@ -13,7 +13,7 @@ StackedVisualizer::~StackedVisualizer() {
 }
 
 void StackedVisualizer::onKeyDown(Key key) {
-  Color c = Colors::hsv(360/88*key, 1.0, 1.0);
+  Color c = Colors::hsv(360/12*(key%12), 1.0, (key / 12.0));
   pixels[0] = Colors::add(pixels[0], c); 
 }
 

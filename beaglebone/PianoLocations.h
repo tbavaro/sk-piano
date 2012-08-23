@@ -18,45 +18,53 @@ class PianoLocations {
   public:
     /*** Individual LED numbers: ***/
 
-    static const Pixel TOP_LEFT_JUST_BEHIND_HINGE = 0;
-    static const Pixel TOP_RIGHT_JUST_BEHIND_HINGE = 79;
-    static const Pixel TOP_RIGHT_JUST_IN_FRONT_OF_HINGE = 80;
-    static const Pixel TOP_FRONT_ROW_RIGHT = 92;
-    static const Pixel TOP_FRONT_ROW_LEFT = 135;
-    static const Pixel TOP_LEFT_JUST_IN_FRONT_OF_HINGE = 147;
-    static const Pixel SECOND_ROW_LEFT_JUST_IN_FRONT_OF_HINGE = 148;
-    static const Pixel SECOND_ROW_LEFTMOST_ABOVE_KEYS = 163;
-    static const Pixel SECOND_ROW_RIGHTMOST_ABOVE_KEYS = 203;
-    static const Pixel SECOND_ROW_RIGHT_JUST_IN_FRONT_OF_HINGE = 218;
-    static const Pixel SECOND_ROW_RIGHT_JUST_BEHIND_HINGE = 219;
-    static const Pixel SECOND_ROW_LEFT_JUST_BEHIND_HINGE = 297;
-    // CHECK THIS: notes said "right" not "left" but that doesnt make sense
-    static const Pixel THIRD_ROW_LEFT_JUST_IN_FRONT_OF_HINGE = 298;
-    static const Pixel THIRD_ROW_FRONT_LEFT = 320;
-    static const Pixel THIRD_ROW_FRONT_RIGHT = 363;
-    // missing THIRD_ROW_RIGHT_JUST_IN_FRONT_OF_HINGE
-    // missing THIRD_ROW_RIGHT_JUST_BEHIND_HINGE
-    static const Pixel THIRD_ROW_LEFT_JUST_BEHIND_HINGE = 457;
-    static const Pixel BOTTOM_ROW_LEFT_JUST_IN_FRONT_OF_HINGE = 458;
-    static const Pixel BOTTOM_ROW_FRONT_LEFT = 478;
-    static const Pixel BOTTOM_ROW_FRONT_RIGHT = 521;
-    static const Pixel BOTTOM_ROW_RIGHT_JUST_IN_FRONT_OF_HINGE = 541;
-    static const Pixel RIGHT_LEG_REAR_BOTTOM = 542;
-    static const Pixel RIGHT_LEG_REAR_TOP = 559;
-    static const Pixel RIGHT_LEG_FRONT_TOP = 560;
-    static const Pixel RIGHT_LEG_FRONT_BOTTOM = 577;
-    // missing BACK_LEG_RIGHT_FRONT_TOP
-    // missing BACK_LEG_RIGHT_FRONT_BOTTOM
-    // missing BACK_LEG_RIGHT_REAR_BOTTOM
-    // missing BACK_LEG_RIGHT_REAR_TOP
-    // missing BACK_LEG_LEFT_REAR_TOP
-    // missing BACK_LEG_LEFT_REAR_BOTTOM
-    // missing BACK_LEG_LEFT_FRONT_BOTTOM
-    // missing BACK_LEG_LEFT_FRONT_TOP
-    // missing LEFT_LEG_REAR_BOTTOM
-    // missing LEFT_LEG_REAR_TOP
-    // missing LEFT_LEG_FRONT_TOP
-    // missing LEFT_LEG_FRONT_BOTTOM
+    enum {
+      TOP_LEFT_JUST_BEHIND_HINGE = 0,
+      TOP_RIGHT_JUST_BEHIND_HINGE = 79,
+      TOP_RIGHT_JUST_IN_FRONT_OF_HINGE = 80,
+      TOP_FRONT_ROW_RIGHT_SIDE = 91,
+      TOP_FRONT_ROW_RIGHT = 92,
+      TOP_FRONT_ROW_LEFT = 135,
+      TOP_FRONT_ROW_LEFT_SIDE = 136,
+      TOP_LEFT_JUST_IN_FRONT_OF_HINGE = 147,
+      SECOND_ROW_LEFT_JUST_IN_FRONT_OF_HINGE = 148,
+      SECOND_ROW_FRONT_ROW_LEFT_SIDE = 158,  // check this
+      SECOND_ROW_FRONT_ROW_LEFT = 159,  // check this
+      SECOND_ROW_LEFTMOST_ABOVE_KEYS = 163,
+      SECOND_ROW_RIGHTMOST_ABOVE_KEYS = 203,
+      SECOND_ROW_FRONT_ROW_RIGHT = 207,  // check this
+      SECOND_ROW_FRONT_ROW_RIGHT_SIDE = 208,  // check this
+      SECOND_ROW_RIGHT_JUST_IN_FRONT_OF_HINGE = 218,
+      SECOND_ROW_RIGHT_JUST_BEHIND_HINGE = 219,
+      SECOND_ROW_LEFT_JUST_BEHIND_HINGE = 297,
+      // CHECK THIS: notes said "right" not "left" but that doesnt make sense
+      THIRD_ROW_LEFT_JUST_IN_FRONT_OF_HINGE = 298,
+      THIRD_ROW_FRONT_LEFT = 320,
+      THIRD_ROW_FRONT_RIGHT = 363,
+      // missing THIRD_ROW_RIGHT_JUST_IN_FRONT_OF_HINGE
+      // missing THIRD_ROW_RIGHT_JUST_BEHIND_HINGE
+      THIRD_ROW_LEFT_JUST_BEHIND_HINGE = 457,
+      BOTTOM_ROW_LEFT_JUST_IN_FRONT_OF_HINGE = 458,
+      BOTTOM_ROW_FRONT_LEFT = 478,
+      BOTTOM_ROW_FRONT_RIGHT = 521,
+      BOTTOM_ROW_RIGHT_JUST_IN_FRONT_OF_HINGE = 541,
+      RIGHT_LEG_REAR_BOTTOM = 542,
+      RIGHT_LEG_REAR_TOP = 559,
+      RIGHT_LEG_FRONT_TOP = 560,
+      RIGHT_LEG_FRONT_BOTTOM = 577
+      // missing BACK_LEG_RIGHT_FRONT_TOP
+      // missing BACK_LEG_RIGHT_FRONT_BOTTOM
+      // missing BACK_LEG_RIGHT_REAR_BOTTOM
+      // missing BACK_LEG_RIGHT_REAR_TOP
+      // missing BACK_LEG_LEFT_REAR_TOP
+      // missing BACK_LEG_LEFT_REAR_BOTTOM
+      // missing BACK_LEG_LEFT_FRONT_BOTTOM
+      // missing BACK_LEG_LEFT_FRONT_TOP
+      // missing LEFT_LEG_REAR_BOTTOM
+      // missing LEFT_LEG_REAR_TOP
+      // missing LEFT_LEG_FRONT_TOP
+      // missing LEFT_LEG_FRONT_BOTTOM
+    };
 
   public:
     /*** Light Strip Regions ***/
@@ -64,7 +72,29 @@ class PianoLocations {
     static LogicalLightStrip* directlyAboveKeys(LightStrip& delegate);
     static LogicalLightStrip* upRightLegFront(LightStrip& delegate);
     static LogicalLightStrip* upRightLegRear(LightStrip& delegate);
+
+    /**
+     * Entire top, starting at left front and going around the back all the way
+     * back to left front.
+     */
     static LogicalLightStrip* entireTop(LightStrip& delegate);
+
+    /**
+     * Same as entireTop but excludes the front row
+     */
+    static LogicalLightStrip* aroundTopExcludingFrontRow(LightStrip& delegate);
+    
+    /**
+     * Entire second row, starting at left front and going around the back all 
+     * the way back to left front.
+     */
+    static LogicalLightStrip* entireSecondRow(LightStrip& delegate);
+
+    /**
+     * Same as entireTop but excludes the front row
+     */
+    static LogicalLightStrip* aroundSecondRowExcludingFrontRow(LightStrip& delegate);
+    
 };
 
 #endif
