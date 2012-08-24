@@ -9,17 +9,17 @@
 void Util::log(const char* fmt, ...) {
   va_list argptr;
   va_start(argptr, fmt);
-  vfprintf(stderr, fmt, argptr);
-  fprintf(stderr, "\n");
+  vfprintf(stdout, fmt, argptr);
+  fprintf(stdout, "\n");
   va_end(argptr);
 }
 
 void Util::fatal(const char* fmt, ...) {
   va_list argptr;
   va_start(argptr, fmt);
-  fprintf(stderr, "FATAL: ");
-  vfprintf(stderr, fmt, argptr);
-  fprintf(stderr, "\n");
+  fprintf(stdout, "FATAL: ");
+  vfprintf(stdout, fmt, argptr);
+  fprintf(stdout, "\n");
   va_end(argptr);
   exit(-1);
 }
