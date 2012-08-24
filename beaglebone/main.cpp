@@ -11,6 +11,7 @@
 #include "PhysicalLightStrip.h"
 #include "MasterVisualizer.h"
 #include "RainbowVisualizer.h"
+#include "RaindropsVisualizer.h"
 #include "SimpleParticleVisualizer.h"
 #include "SimpleVisualizer.h"
 #include "StackedVisualizer.h"
@@ -273,12 +274,17 @@ static Visualizer* makeSceneTwo(LightStrip& strip) {
   return new IdleVisualizerWrapper(*vis, 15.0, 0.02);
 }
 
+static Visualizer* makeRaindropsScene(LightStrip& strip) {
+  return new RaindropsVisualizer(strip);
+}
+
 static void piano(LightStrip& strip) {
   MasterVisualizer master_viz(strip);
 
   // add visualizers
   LogicalLightStrip* above_keyboard = LogicalLightStrip::fromRange(strip, 163, 203);
 
+//  master_viz.addVisualizer(makeRaindropsScene(strip));
   master_viz.addVisualizer(makeSceneOne(strip));
   master_viz.addVisualizer(makeSceneTwo(strip));
   master_viz.addVisualizer(new SimpleParticleVisualizer(strip, 1000));

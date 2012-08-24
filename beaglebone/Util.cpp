@@ -64,4 +64,7 @@ uint32_t Util::random(uint32_t max) {
   return ::random() % max;
 }
 
-
+bool Util::randomTest(float p) {
+  uint32_t threshold = p * RAND_MAX;
+  return (::random() < threshold);
+}
