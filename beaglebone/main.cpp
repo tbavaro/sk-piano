@@ -285,9 +285,7 @@ static void piano(LightStrip& strip) {
   // add visualizers
   LogicalLightStrip* above_keyboard = LogicalLightStrip::fromRange(strip, 163, 203);
 
-  master_viz.addVisualizer(new LifeVisualizer(strip));
-
-//  master_viz.addVisualizer(makeRaindropsScene(strip));
+  master_viz.addVisualizer(makeRaindropsScene(strip));
   master_viz.addVisualizer(makeSceneOne(strip));
   master_viz.addVisualizer(makeSceneTwo(strip));
   master_viz.addVisualizer(new SimpleParticleVisualizer(strip, 1000));

@@ -61,6 +61,9 @@ void Util::delay_until(uint32_t millis) {
 static uint32_t __init_millis = Util::millis();
 
 uint32_t Util::random(uint32_t max) {
+  if (max == 0) {
+    return max;
+  }
   return ::random() % max;
 }
 
