@@ -1,4 +1,5 @@
 #include "MasterVisualizer.h"
+#include "Util.h"
 
 static const uint8_t MAX_VISUALIZERS = 64;
 

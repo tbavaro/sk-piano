@@ -18,7 +18,6 @@ class FooConnection < EventMachine::Connection
   def receive_data data
     while data.index("\n") != nil
       line, data = data.split("\n", 2)
-#      puts "#{@remaining}#{line}"
       ws.send("#{@remaining}#{line}")
       @remaining = ""
     end
@@ -43,7 +42,6 @@ EventMachine::WebSocket.start(:host => "0.0.0.0", :port => 8001) do |ws|
   }
 
   ws.onmessage do |msg|
-#    puts "got #{msg}"
     p.send_data "#{msg}\n"
   end
 

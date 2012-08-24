@@ -6,10 +6,12 @@
 #include "CompositeVisualizer.h"
 #include "DebugVisualizer.h"
 #include "DaveeyVisualizer.h"
+#include "IdleVisualizerWrapper.h"
 #include "LogicalLightStrip.h"
 #include "PhysicalLightStrip.h"
 #include "MasterVisualizer.h"
 #include "RainbowVisualizer.h"
+#include "RaindropsVisualizer.h"
 #include "SimpleParticleVisualizer.h"
 #include "SimpleVisualizer.h"
 #include "StackedVisualizer.h"
@@ -269,8 +271,12 @@ static Visualizer* makeSceneTwo(LightStrip& strip) {
   
   LogicalLightStrip* bottom_front_row = PianoLocations::bottomFrontRow(strip);
   vis->addVisualizer(new DaveeyVisualizer(*bottom_front_row));
-  
-  return vis;
+
+  return new IdleVisualizerWrapper(*vis, 15.0, 0.02);
+}
+
+static Visualizer* makeRaindropsScene(LightStrip& strip) {
+  return new RaindropsVisualizer(strip);
 }
 
 static void piano(LightStrip& strip) {
@@ -278,6 +284,8 @@ static void piano(LightStrip& strip) {
 
   // add visualizers
   LogicalLightStrip* above_keyboard = LogicalLightStrip::fromRange(strip, 163, 203);
+
+//  master_viz.addVisualizer(makeRaindropsScene(strip));
   master_viz.addVisualizer(makeSceneOne(strip));
   master_viz.addVisualizer(makeSceneTwo(strip));
   master_viz.addVisualizer(new SimpleParticleVisualizer(strip, 1000));

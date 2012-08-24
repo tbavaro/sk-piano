@@ -23,22 +23,25 @@ static bool isKeypressAvailable() {
 bool SimulatorPiano::scan() {
   bool changes = false;
   while (isKeypressAvailable()) {
-    char c = getchar();
-    if (read_buffer_pos == SimulatorPiano::READ_BUFFER_SIZE) {
-      Util::fatal("ran out of read buffer space");
-    }
-
-    if (c == '\n') {
-      read_buffer[read_buffer_pos] = '\0';
-      if (this->processMessage(read_buffer)) {
-        changes = true;
+    while(true) {
+      char c = getchar();
+      if (read_buffer_pos == SimulatorPiano::READ_BUFFER_SIZE) {
+        Util::fatal("ran out of read buffer space");
       }
-      read_buffer_pos = 0;
-    } else {
-      read_buffer[read_buffer_pos++] = c;
+
+      if (c == '\n') {
+        read_buffer[read_buffer_pos] = '\0';
+        if (this->processMessage(read_buffer)) {
+          changes = true;
+        }
+        read_buffer_pos = 0;
+        break;
+      } else {
+        read_buffer[read_buffer_pos++] = c;
+      }
     }
   }
-  
+
   delegate->onPassFinished(changes);
 
   return changes;
