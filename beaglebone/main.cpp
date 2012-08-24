@@ -227,13 +227,15 @@ static void addLegAmplitudeMeters(
 }
 
 static Visualizer* makeSceneOne(LightStrip& strip) {
-  LogicalLightStrip* entire_top = PianoLocations::entireTop(strip);
+  LogicalLightStrip* around_top = PianoLocations::aroundTopExcludingFrontRow(strip);
+  LogicalLightStrip* around_second_row = PianoLocations::aroundSecondRowExcludingFrontRow(strip);
   LogicalLightStrip* top_front_row = PianoLocations::topFrontRow(strip);
   LogicalLightStrip* above_keyboard = PianoLocations::directlyAboveKeys(strip);
   
   CompositeVisualizer* vis = new CompositeVisualizer();
   vis->addVisualizer(new RainbowVisualizer(strip, 80, -100));
-  vis->addVisualizer(new AmplitudeGlowVisualizer(*entire_top, 0.1, 0.5, 3.0));
+  vis->addVisualizer(new AmplitudeGlowVisualizer(*around_top, 0.1, 0.5, 3.0));
+  vis->addVisualizer(new AmplitudeGlowVisualizer(*around_second_row, 0.1, 0.5, 3.0));
   vis->addVisualizer(new DaveeyVisualizer(*top_front_row));
   vis->addVisualizer(new DaveeyVisualizer(*above_keyboard));
   addLegAmplitudeMeters(vis, strip, 0.25, 1.0, 1.5);
