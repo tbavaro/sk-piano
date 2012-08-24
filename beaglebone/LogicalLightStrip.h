@@ -11,6 +11,8 @@ typedef std::pair<Pixel, Pixel> PixelRange;
 
 class LogicalLightStrip : public LightStrip {
   public:
+    ~LogicalLightStrip();
+
     static LogicalLightStrip* fromRange(
         LightStrip& delegate, 
         Pixel first_pixel, 
@@ -18,6 +20,13 @@ class LogicalLightStrip : public LightStrip {
     static LogicalLightStrip* fromRanges(
         LightStrip& delegate,
         const std::vector<PixelRange>& ranges);
+
+    static LogicalLightStrip* noopStrip(
+        LightStrip& delegate, int length);
+    
+    static LogicalLightStrip* joinLogicalStrips(
+        LightStrip& delegate, 
+        const std::vector<LogicalLightStrip*> strips);
     
   public:
     virtual int numPixels();
@@ -29,9 +38,8 @@ class LogicalLightStrip : public LightStrip {
   protected:
     LogicalLightStrip(
         LightStrip& delegate, Pixel* pixel_mapping, int num_pixels);
-    ~LogicalLightStrip();
     LightStrip& delegate;
-    int num_pixels;
+    const int num_pixels;
     Pixel* pixel_mapping;
 };
 

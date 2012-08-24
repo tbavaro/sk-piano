@@ -28,7 +28,8 @@ Offsets = {
   TOP: [ 1, 2 ],
   SECOND_ROW: [ 0.9, 1.9 ],
   THIRD_ROW: [ 0.5, 1.5 ],
-  BOTTOM_ROW: [ 0.3, 1.3 ]
+  BOTTOM_ROW: [ 0.3, 1.3 ],
+  LEGS: [ 0.3, 1.3 ]
 };
 
 Shapes = {
@@ -189,6 +190,78 @@ Shapes = {
       points: [
         [ 7,   -1 ],
         [ 7,   2 ]
+      ]
+    },
+    {
+      // LEDS 542-559, up the back of the right leg
+      num_leds: 18,
+      offsets: Offsets.LEGS,
+      points: [
+        [ 6,   1.1 ],
+        [ 7,   2.1 ]
+      ]
+    },
+    {
+      // LEDS 560-577, down the front of the right leg
+      num_leds: 18,
+      offsets: Offsets.LEGS,
+      points: [
+        [ 7,   1.9 ],
+        [ 6,   0.9 ]
+      ]
+    },
+    {
+      // LEDS 578-595, down the front right of the back leg
+      num_leds: 18,
+      offsets: Offsets.LEGS,
+      points: [
+        [ 2.75,   5.8 ],
+        [ 1.75,   4.8 ]
+      ]
+    },
+    {
+      // LEDS 596-613, up the rear right of the back leg
+      num_leds: 18,
+      offsets: Offsets.LEGS,
+      points: [
+        [ 1.75,   5 ],
+        [ 2.75,   6 ]
+      ]
+    },
+    {
+      // LEDS 614-631, down the rear left of the back leg
+      num_leds: 18,
+      offsets: Offsets.LEGS,
+      points: [
+        [ 2.25,   6 ],
+        [ 1.25,   5 ]
+      ]
+    },
+    {
+      // LEDS 632-649, up the front left of the back leg
+      num_leds: 18,
+      offsets: Offsets.LEGS,
+      points: [
+        [ 1.25,   4.8 ],
+        [ 2.25,   5.8 ]
+      ]
+    },
+    {
+      // LEDS 650-667, up the back of the right leg
+      num_leds: 18,
+      offsets: Offsets.LEGS,
+      points: [
+        [ -1,   1.1 ],
+        [ 0,   2.1 ]
+      ]
+    },
+    {
+      // LEDS 668-685, down the front of the right leg
+      num_leds: 18,
+      offsets: Offsets.LEGS,
+      points: [
+        [ 0,   1.9 ],
+        [ -1,   0.9 ]
       ]
     }
   ],

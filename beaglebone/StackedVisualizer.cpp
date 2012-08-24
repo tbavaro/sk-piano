@@ -13,7 +13,7 @@ StackedVisualizer::~StackedVisualizer() {
 }
 
 void StackedVisualizer::onKeyDown(Key key) {
-  Color c = Colors::hsv(360/12*(key%12), 1.0, (key / 12.0));
+  Color c = Colors::hsv((360.0/12.0) * (key % 12), 1.0, 1.0);
   pixels[0] = Colors::add(pixels[0], c); 
 }
 
@@ -21,11 +21,11 @@ void StackedVisualizer::onKeyUp(Key key) {
 }
   
 void StackedVisualizer::onPassFinished(bool something_changed) {
-  for (int fps = 0; fps < 5; ++fps) {
+  for (int fps = 0; fps < 1; ++fps) {
     if (Colors::BLACK != pixels[strip.numPixels() - 1]) {
-      age--;
+      age -= 10;
     }
-    if (age == 0) {
+    if (age <= 0) {
       pixels[strip.numPixels() - 1] = Colors::BLACK;
       age = strip.numPixels();
     }
@@ -35,7 +35,7 @@ void StackedVisualizer::onPassFinished(bool something_changed) {
         pixels[i-1] = Colors::BLACK;
   	  }
       strip.setPixel(i, pixels[i]);
-    }    
+    }
   }
 }
 

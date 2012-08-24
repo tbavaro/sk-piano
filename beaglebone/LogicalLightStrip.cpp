@@ -3,6 +3,8 @@
 
 using namespace std;
 
+static const Pixel NOOP_PIXEL = 2000;
+
 static int numPixelsInRange(Pixel first_pixel, Pixel last_pixel) {
   if (first_pixel < last_pixel) {
     return (last_pixel - first_pixel) + 1;
@@ -47,6 +49,35 @@ LogicalLightStrip* LogicalLightStrip::fromRanges(
   }
 
   return new LogicalLightStrip(delegate, pixels, num_pixels); 
+}
+
+LogicalLightStrip* LogicalLightStrip::noopStrip(
+    LightStrip& delegate, int length) {
+  Pixel* pixels = new Pixel[length];
+  for (int i = 0; i < length; ++i) {
+    pixels[i] = NOOP_PIXEL;
+  }
+  return new LogicalLightStrip(delegate, pixels, length);
+}
+
+LogicalLightStrip* LogicalLightStrip::joinLogicalStrips(
+    LightStrip& delegate, const std::vector<LogicalLightStrip*> strips) {
+  int total_length = 0;
+  for (vector<LogicalLightStrip*>::const_iterator i = strips.begin();
+       i != strips.end(); ++i) {
+    total_length += (*i)->num_pixels;
+  }
+
+  Pixel* pixels = new Pixel[total_length];
+  int n = 0;
+  for (vector<LogicalLightStrip*>::const_iterator i = strips.begin();
+       i != strips.end(); ++i) {
+    Pixel* strip_pixels = (*i)->pixel_mapping;
+    for (int j = 0; j < (*i)->num_pixels; ++j) {
+      pixels[n++] = strip_pixels[j];
+    }
+  }
+  return new LogicalLightStrip(delegate, pixels, total_length);
 }
 
 LogicalLightStrip::LogicalLightStrip(

@@ -23,7 +23,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-static const int NUM_PIXELS = 578;
+static const int NUM_PIXELS = 686;
 static const int MAX_FPS = 30;
 
 static void throttleFrameRate() {
@@ -186,13 +186,44 @@ static void addLegAmplitudeMeters(
     float decrease_rate, float max_value) {
   LogicalLightStrip* up_right_leg_front = 
       PianoLocations::upRightLegFront(strip);
-  LogicalLightStrip* up_right_leg_rear = PianoLocations::upRightLegRear(strip);
+  LogicalLightStrip* up_right_leg_rear = 
+      PianoLocations::upRightLegRear(strip);
+  LogicalLightStrip* up_back_leg_right_front = 
+      PianoLocations::upBackLegFrontRight(strip);
+  LogicalLightStrip* up_back_leg_right_rear = 
+      PianoLocations::upBackLegRearRight(strip);
+  LogicalLightStrip* up_back_leg_left_front = 
+      PianoLocations::upBackLegFrontLeft(strip);
+  LogicalLightStrip* up_back_leg_left_rear = 
+      PianoLocations::upBackLegRearLeft(strip);
+  LogicalLightStrip* up_left_leg_front = 
+      PianoLocations::upLeftLegFront(strip);
+  LogicalLightStrip* up_left_leg_rear = 
+      PianoLocations::upLeftLegRear(strip);
   vis->addVisualizer(
       new AmplitudeMeterVisualizer(
         *up_right_leg_front, note_increase, decrease_rate, max_value));
   vis->addVisualizer(
       new AmplitudeMeterVisualizer(
         *up_right_leg_rear, note_increase, decrease_rate, max_value));
+  vis->addVisualizer(
+      new AmplitudeMeterVisualizer(
+        *up_back_leg_right_front, note_increase, decrease_rate, max_value));
+  vis->addVisualizer(
+      new AmplitudeMeterVisualizer(
+        *up_back_leg_right_rear, note_increase, decrease_rate, max_value));
+  vis->addVisualizer(
+      new AmplitudeMeterVisualizer(
+        *up_back_leg_left_front, note_increase, decrease_rate, max_value));
+  vis->addVisualizer(
+      new AmplitudeMeterVisualizer(
+        *up_back_leg_left_rear, note_increase, decrease_rate, max_value));
+  vis->addVisualizer(
+      new AmplitudeMeterVisualizer(
+        *up_left_leg_front, note_increase, decrease_rate, max_value));
+  vis->addVisualizer(
+      new AmplitudeMeterVisualizer(
+        *up_left_leg_rear, note_increase, decrease_rate, max_value));
 }
 
 static Visualizer* makeSceneOne(LightStrip& strip) {
@@ -218,12 +249,24 @@ static Visualizer* makeSceneTwo(LightStrip& strip) {
   LogicalLightStrip* entire_second_row = PianoLocations::aroundSecondRowExcludingFrontRow(strip);
   vis->addVisualizer(new StackedVisualizer(*entire_second_row));
   
+  LogicalLightStrip* around_third_row = PianoLocations::aroundThirdRowExcludingFrontRow(strip);
+  vis->addVisualizer(new StackedVisualizer(*around_third_row));
+  
+  LogicalLightStrip* around_bottom_row = PianoLocations::aroundBottomRowWithGapToMatchThirdRow(strip);
+  vis->addVisualizer(new StackedVisualizer(*around_bottom_row));
+
   LogicalLightStrip* top_front_row = PianoLocations::topFrontRow(strip);
   vis->addVisualizer(new DaveeyVisualizer(*top_front_row));
   
   LogicalLightStrip* above_keyboard = PianoLocations::directlyAboveKeys(strip);
   vis->addVisualizer(new DaveeyVisualizer(*above_keyboard));
 
+  LogicalLightStrip* third_front_row = PianoLocations::thirdFrontRow(strip);
+  vis->addVisualizer(new DaveeyVisualizer(*third_front_row));
+  
+  LogicalLightStrip* bottom_front_row = PianoLocations::bottomFrontRow(strip);
+  vis->addVisualizer(new DaveeyVisualizer(*bottom_front_row));
+  
   return vis;
 }
 

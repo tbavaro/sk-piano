@@ -39,39 +39,53 @@ class PianoLocations {
       SECOND_ROW_LEFT_JUST_BEHIND_HINGE = 297,
       // CHECK THIS: notes said "right" not "left" but that doesnt make sense
       THIRD_ROW_LEFT_JUST_IN_FRONT_OF_HINGE = 298,
+      THIRD_ROW_FRONT_LEFT_SIDE = 319,
       THIRD_ROW_FRONT_LEFT = 320,
       THIRD_ROW_FRONT_RIGHT = 363,
+      THIRD_ROW_FRONT_RIGHT_SIDE = 364,
       // missing THIRD_ROW_RIGHT_JUST_IN_FRONT_OF_HINGE
       // missing THIRD_ROW_RIGHT_JUST_BEHIND_HINGE
       THIRD_ROW_LEFT_JUST_BEHIND_HINGE = 457,
       BOTTOM_ROW_LEFT_JUST_IN_FRONT_OF_HINGE = 458,
+      BOTTOM_ROW_FRONT_LEFT_SIDE = 477,
       BOTTOM_ROW_FRONT_LEFT = 478,
       BOTTOM_ROW_FRONT_RIGHT = 521,
+      BOTTOM_ROW_FRONT_RIGHT_SIDE = 522,
       BOTTOM_ROW_RIGHT_JUST_IN_FRONT_OF_HINGE = 541,
       RIGHT_LEG_REAR_BOTTOM = 542,
       RIGHT_LEG_REAR_TOP = 559,
       RIGHT_LEG_FRONT_TOP = 560,
-      RIGHT_LEG_FRONT_BOTTOM = 577
-      // missing BACK_LEG_RIGHT_FRONT_TOP
-      // missing BACK_LEG_RIGHT_FRONT_BOTTOM
-      // missing BACK_LEG_RIGHT_REAR_BOTTOM
-      // missing BACK_LEG_RIGHT_REAR_TOP
-      // missing BACK_LEG_LEFT_REAR_TOP
-      // missing BACK_LEG_LEFT_REAR_BOTTOM
-      // missing BACK_LEG_LEFT_FRONT_BOTTOM
-      // missing BACK_LEG_LEFT_FRONT_TOP
-      // missing LEFT_LEG_REAR_BOTTOM
-      // missing LEFT_LEG_REAR_TOP
-      // missing LEFT_LEG_FRONT_TOP
-      // missing LEFT_LEG_FRONT_BOTTOM
+      RIGHT_LEG_FRONT_BOTTOM = 577,
+      BACK_LEG_FRONT_RIGHT_TOP = 578, // check this
+      BACK_LEG_FRONT_RIGHT_BOTTOM = 595, // check this
+      BACK_LEG_REAR_RIGHT_BOTTOM = 596, // check this
+      BACK_LEG_REAR_RIGHT_TOP = 613, // check this
+      BACK_LEG_REAR_LEFT_TOP = 614, // check this
+      BACK_LEG_REAR_LEFT_BOTTOM = 631, // check this
+      BACK_LEG_FRONT_LEFT_BOTTOM = 632, // check this
+      BACK_LEG_FRONT_LEFT_TOP = 649, // check this
+      LEFT_LEG_REAR_BOTTOM = 650, // check this
+      LEFT_LEG_REAR_TOP = 667, // check this
+      LEFT_LEG_FRONT_TOP = 668, // check this
+      LEFT_LEG_FRONT_BOTTOM = 685 // check this
     };
 
   public:
     /*** Light Strip Regions ***/
     static LogicalLightStrip* topFrontRow(LightStrip& delegate);
     static LogicalLightStrip* directlyAboveKeys(LightStrip& delegate);
+    static LogicalLightStrip* thirdFrontRow(LightStrip& delegate);
+    static LogicalLightStrip* bottomFrontRow(LightStrip& delegate);
+
+
     static LogicalLightStrip* upRightLegFront(LightStrip& delegate);
     static LogicalLightStrip* upRightLegRear(LightStrip& delegate);
+    static LogicalLightStrip* upBackLegFrontRight(LightStrip& delegate);
+    static LogicalLightStrip* upBackLegRearRight(LightStrip& delegate);
+    static LogicalLightStrip* upBackLegFrontLeft(LightStrip& delegate);
+    static LogicalLightStrip* upBackLegRearLeft(LightStrip& delegate);
+    static LogicalLightStrip* upLeftLegFront(LightStrip& delegate);
+    static LogicalLightStrip* upLeftLegRear(LightStrip& delegate);
 
     /**
      * Entire top, starting at left front and going around the back all the way
@@ -94,6 +108,18 @@ class PianoLocations {
      * Same as entireTop but excludes the front row
      */
     static LogicalLightStrip* aroundSecondRowExcludingFrontRow(LightStrip& delegate);
+
+    /**
+     * Same as entireThirdRow but excludes the front row
+     */
+    static LogicalLightStrip* aroundThirdRowExcludingFrontRow(LightStrip& delegate);
+
+    /**
+     * Along the bottom row, parallel to aroundThirdRowExcludingFrontRow, with
+     * a gap in the strip to match the third row (pixels mapped to the gap will
+     * not actually light any LEDs)
+     */
+    static LogicalLightStrip* aroundBottomRowWithGapToMatchThirdRow(LightStrip& delegate);
     
 };
 
