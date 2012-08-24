@@ -14,4 +14,5 @@ class StackedVisualizer : public LightStripVisualizer {
   private:
     Color* pixels;
     int age;
+    int num_on;
 };
