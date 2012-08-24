@@ -100,10 +100,20 @@ Color Colors::average(Color* colors, int num_colors) {
 
   return Colors::rgb(red_accum / num_colors, green_accum / num_colors, blue_accum / num_colors);
 }
-    
+
+static inline int min(int a, int b) {
+  if (a < b) {
+    return a;
+  } else {
+    return b;
+  }
+}
+
 Color Colors::multiply(Color color, float multiplier) {
-  return Colors::rgb(Colors::red(color) * multiplier,
-      Colors::green(color) * multiplier, Colors::blue(color) * multiplier);
+  return Colors::rgb(
+      min(Colors::red(color) * multiplier, 127),
+      min(Colors::green(color) * multiplier, 127),
+      min(Colors::blue(color) * multiplier, 127));
 }
 
 Color Colors::gammaCorrect(Color color, float gamma) {

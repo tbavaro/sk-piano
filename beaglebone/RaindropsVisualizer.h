@@ -10,6 +10,7 @@ class RaindropsVisualizer : public AbstractAmplitudeVisualizer {
     ~RaindropsVisualizer();
 
     virtual void renderValue(float value);
+    virtual void reset();
 
   private:
     Color* pixels;
