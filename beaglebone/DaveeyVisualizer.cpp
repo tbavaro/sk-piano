@@ -19,8 +19,14 @@ int DaveeyVisualizer::pixelForKey(Key key) {
 
 void DaveeyVisualizer::onKeyDown(Key key) {
   Color c = Colors::hsv(Util::random(360), 1.0, 1.0);
-  old_pixels[pixelForKey(key)] =
-      Colors::add(old_pixels[pixelForKey(key)], c); 
+  Pixel pixel = pixelForKey(key);
+  old_pixels[pixel] = c;
+  if (pixel > 0) {
+    old_pixels[pixel - 1] = Colors::add(old_pixels[pixel - 1], c);
+  }
+  if (pixel < (strip.numPixels() - 1)) {
+    old_pixels[pixel + 1] = Colors::add(old_pixels[pixel + 1], c);
+  }
 }
 
 void DaveeyVisualizer::onKeyUp(Key key) {
