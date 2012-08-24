@@ -15,7 +15,7 @@
 #include "SimpleParticleVisualizer.h"
 #include "SimpleVisualizer.h"
 #include "StackedVisualizer.h"
-#include "CannonVisualizer.h"
+#include "LifeVisualizer.h"
 #include "PhysicalPiano.h"
 #include "PianoLocations.h"
 #include "Util.h"
@@ -284,6 +284,8 @@ static void piano(LightStrip& strip) {
 
   // add visualizers
   LogicalLightStrip* above_keyboard = LogicalLightStrip::fromRange(strip, 163, 203);
+
+  master_viz.addVisualizer(new LifeVisualizer(strip));
 
 //  master_viz.addVisualizer(makeRaindropsScene(strip));
   master_viz.addVisualizer(makeSceneOne(strip));
