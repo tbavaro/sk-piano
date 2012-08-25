@@ -2,6 +2,7 @@
 #include "Util.h"
 
 static const uint8_t MAX_VISUALIZERS = 64;
+static const uint32_t IDLE_TIME_SWITCH_MS = 3 * 60 * 1000;
 
 MasterVisualizer::MasterVisualizer(LightStrip& strip)
     : visualizers(new Visualizer*[MAX_VISUALIZERS]), strip(strip) {
@@ -10,6 +11,7 @@ MasterVisualizer::MasterVisualizer(LightStrip& strip)
   current_viz = new Visualizer();
   current_viz_index = -1;
   num_visualizers = 0;
+  next_switch_time = Util::millis() + IDLE_TIME_SWITCH_MS;
 }
 
 MasterVisualizer::~MasterVisualizer() {
@@ -52,6 +54,7 @@ void MasterVisualizer::nextVisualizer() {
   // reset the strip and the visualizer
   strip.reset();
   current_viz->reset();
+  next_switch_time = Util::millis() + IDLE_TIME_SWITCH_MS;
 }
 
 void MasterVisualizer::reset() {
@@ -62,6 +65,8 @@ void MasterVisualizer::reset() {
     current_viz_index = 0;
     current_viz = visualizers[current_viz_index];
   }
+  
+  next_switch_time = Util::millis() + IDLE_TIME_SWITCH_MS;
 
   // reset the strip and the current visualizer
   strip.reset();
@@ -73,6 +78,8 @@ void MasterVisualizer::onKeyDown(Key key) {
   if (key == 0) {
     this->nextVisualizer();
   }
+  
+  next_switch_time = Util::millis() + IDLE_TIME_SWITCH_MS;
 
   current_viz->onKeyDown(key);
 }
@@ -82,6 +89,11 @@ void MasterVisualizer::onKeyUp(Key key) {
 }
 
 void MasterVisualizer::onPassFinished(bool something_changed) {
+  uint32_t now = Util::millis();
+  if (next_switch_time <= now) {
+    this->nextVisualizer();
+    next_switch_time = Util::millis() + IDLE_TIME_SWITCH_MS;
+  }
   Visualizer::onPassFinished(something_changed);
   current_viz->onPassFinished(something_changed);
 }

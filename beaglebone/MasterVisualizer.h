@@ -23,6 +23,7 @@ class MasterVisualizer : public Visualizer {
     int8_t current_viz_index;
     Visualizer** const visualizers;
     uint8_t num_visualizers;
+    uint32_t next_switch_time;
 };
 
 #endif
