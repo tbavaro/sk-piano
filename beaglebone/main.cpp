@@ -16,6 +16,7 @@
 #include "SimpleParticleVisualizer.h"
 #include "SimpleVisualizer.h"
 #include "StackedVisualizer.h"
+#include "TwinkleVisualizer.h"
 #include "LifeVisualizer.h"
 #include "PhysicalPiano.h"
 #include "PianoLocations.h"
@@ -320,12 +321,17 @@ static Visualizer* makeJackieScene(LightStrip& strip) {
 	return new IdleVisualizerWrapper(*vis, 30.0, 0.02, 1.0, 3.0);
 }
 
+static Visualizer* makeTwinkleScene(LightStrip& strip) {
+  return new TwinkleVisualizer(strip);
+}
+
 static void piano(LightStrip& strip) {
   MasterVisualizer master_viz(strip);
 
   // add visualizers
   LogicalLightStrip* above_keyboard = LogicalLightStrip::fromRange(strip, 163, 203);
 
+  master_viz.addVisualizer(makeTwinkleScene(strip));
   master_viz.addVisualizer(makeRaindropsScene(strip));
   master_viz.addVisualizer(makeJackieScene(strip));
   master_viz.addVisualizer(makeSceneOne(strip));
