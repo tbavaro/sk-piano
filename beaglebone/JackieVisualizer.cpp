@@ -1,7 +1,7 @@
 #include "JackieVisualizer.h"
 #include "Colors.h"
 #include "Util.h"
-#include "Math.h"
+#include <math.h>
 #include <string.h>
 
 JackieVisualizer::JackieVisualizer(LightStrip& strip) : LightStripVisualizer(strip) {
