@@ -20,7 +20,7 @@ IdleVisualizerWrapper::IdleVisualizerWrapper(
 }
     
 void IdleVisualizerWrapper::reset() {
-  prev_key_time = Util::millis();
+//  prev_key_time = Util::millis();
   delegate.reset();
 }
 
