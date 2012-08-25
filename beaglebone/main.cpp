@@ -322,7 +322,17 @@ static Visualizer* makeJackieScene(LightStrip& strip) {
 }
 
 static Visualizer* makeTwinkleScene(LightStrip& strip) {
-  return new TwinkleVisualizer(strip);
+	CompositeVisualizer* vis = new CompositeVisualizer();
+	
+  vis->addVisualizer(new TwinkleVisualizer(strip, false));
+
+  LogicalLightStrip* top_front_row = PianoLocations::topFrontRow(strip);
+  vis->addVisualizer(new TwinkleVisualizer(*top_front_row, true));
+
+	LogicalLightStrip* above_keyboard = PianoLocations::directlyAboveKeys(strip);
+  vis->addVisualizer(new TwinkleVisualizer(*above_keyboard, true));
+  
+  return vis;
 }
 
 static void piano(LightStrip& strip) {

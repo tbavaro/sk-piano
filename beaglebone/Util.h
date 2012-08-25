@@ -12,6 +12,7 @@ class Util {
     static void delay(uint32_t millis);
     static void delay_until(uint32_t millis);
     static uint32_t random(uint32_t max);
+    static float randomFloat(float max);
     static bool randomTest(float p);
 
     template <typename T> static T min(T a, T b);
