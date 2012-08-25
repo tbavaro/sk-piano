@@ -7,6 +7,7 @@
 #include "DebugVisualizer.h"
 #include "DaveeyVisualizer.h"
 #include "IdleVisualizerWrapper.h"
+#include "JackieVisualizer.h"
 #include "LogicalLightStrip.h"
 #include "PhysicalLightStrip.h"
 #include "MasterVisualizer.h"
@@ -279,6 +280,46 @@ static Visualizer* makeRaindropsScene(LightStrip& strip) {
   return new RaindropsVisualizer(strip);
 }
 
+static Visualizer* makeJackieScene(LightStrip& strip) {
+	CompositeVisualizer* vis = new CompositeVisualizer();
+	
+	LogicalLightStrip* entire_top = PianoLocations::aroundTopExcludingFrontRow(strip);
+	vis->addVisualizer(new JackieVisualizer(*entire_top));
+	
+	LogicalLightStrip* entire_second_row = PianoLocations::aroundSecondRowExcludingFrontRow(strip);
+	vis->addVisualizer(new JackieVisualizer(*entire_second_row));
+	
+	LogicalLightStrip* around_third_row = PianoLocations::aroundThirdRowExcludingFrontRow(strip);
+	vis->addVisualizer(new JackieVisualizer(*around_third_row));
+	
+	LogicalLightStrip* around_bottom_row = PianoLocations::aroundBottomRowWithGapToMatchThirdRow(strip);
+	vis->addVisualizer(new JackieVisualizer(*around_bottom_row));
+	
+	LogicalLightStrip* top_front_row = PianoLocations::topFrontRow(strip);
+	vis->addVisualizer(new JackieVisualizer(*top_front_row));
+	
+	LogicalLightStrip* above_keyboard = PianoLocations::directlyAboveKeys(strip);
+	vis->addVisualizer(new JackieVisualizer(*above_keyboard));
+	
+	LogicalLightStrip* third_front_row = PianoLocations::thirdFrontRow(strip);
+	vis->addVisualizer(new JackieVisualizer(*third_front_row));
+	
+	LogicalLightStrip* bottom_front_row = PianoLocations::bottomFrontRow(strip);
+	vis->addVisualizer(new JackieVisualizer(*bottom_front_row));
+	
+	vis->addVisualizer(new JackieVisualizer(*PianoLocations::upRightLegFront(strip)));
+	vis->addVisualizer(new JackieVisualizer(*PianoLocations::upRightLegRear(strip)));
+	vis->addVisualizer(new JackieVisualizer(*PianoLocations::upBackLegFrontRight(strip)));
+	vis->addVisualizer(new JackieVisualizer(*PianoLocations::upBackLegRearRight(strip)));
+	vis->addVisualizer(new JackieVisualizer(*PianoLocations::upBackLegFrontLeft(strip)));
+	vis->addVisualizer(new JackieVisualizer(*PianoLocations::upBackLegRearLeft(strip)));
+	vis->addVisualizer(new JackieVisualizer(*PianoLocations::upLeftLegFront(strip)));
+	vis->addVisualizer(new JackieVisualizer(*PianoLocations::upLeftLegRear(strip)));
+	
+	
+	return new IdleVisualizerWrapper(*vis, 15.0, 0.02);
+}
+
 static void piano(LightStrip& strip) {
   MasterVisualizer master_viz(strip);
 
@@ -286,10 +327,11 @@ static void piano(LightStrip& strip) {
   LogicalLightStrip* above_keyboard = LogicalLightStrip::fromRange(strip, 163, 203);
 
   master_viz.addVisualizer(makeRaindropsScene(strip));
+  master_viz.addVisualizer(makeJackieScene(strip));
   master_viz.addVisualizer(makeSceneOne(strip));
   master_viz.addVisualizer(makeSceneTwo(strip));
-  master_viz.addVisualizer(new SimpleParticleVisualizer(strip, 1000));
-//  master_viz.addVisualizer(new SimpleVisualizer(*above_keyboard));
+ // master_viz.addVisualizer(new SimpleParticleVisualizer(strip, 1000));
+  //master_viz.addVisualizer(new SimpleVisualizer(*above_keyboard));
 //  master_viz.addVisualizer(new CometVisualizer(strip, 300));
 //  master_viz.addVisualizer(new DebugVisualizer());
 
