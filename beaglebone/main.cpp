@@ -273,7 +273,7 @@ static Visualizer* makeSceneTwo(LightStrip& strip) {
   LogicalLightStrip* bottom_front_row = PianoLocations::bottomFrontRow(strip);
   vis->addVisualizer(new DaveeyVisualizer(*bottom_front_row));
 
-  return new IdleVisualizerWrapper(*vis, 15.0, 0.02);
+  return new IdleVisualizerWrapper(*vis, 30.0, 0.02, 0.2, 1.0);
 }
 
 static Visualizer* makeRaindropsScene(LightStrip& strip) {
@@ -317,7 +317,7 @@ static Visualizer* makeJackieScene(LightStrip& strip) {
 	vis->addVisualizer(new JackieVisualizer(*PianoLocations::upLeftLegRear(strip)));
 	
 	
-	return new IdleVisualizerWrapper(*vis, 15.0, 0.02);
+	return new IdleVisualizerWrapper(*vis, 30.0, 0.02, 1.0, 3.0);
 }
 
 static void piano(LightStrip& strip) {

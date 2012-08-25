@@ -8,7 +8,9 @@ class IdleVisualizerWrapper : public Visualizer {
     IdleVisualizerWrapper(
         Visualizer& delegate,
         float idle_timeout,
-        float random_key_rate);
+        float random_key_rate,
+        float min_press_time,
+        float max_press_time);
 
     virtual void reset();
     virtual void onKeyDown(Key key);
@@ -19,7 +21,10 @@ class IdleVisualizerWrapper : public Visualizer {
     Visualizer& delegate;
     uint32_t prev_key_time;
     uint32_t idle_timeout_ms;
+    uint32_t min_press_ms;
+    uint32_t max_press_ms;
     float random_key_rate;
+    uint32_t* key_up_times;
 };
 
 #endif
