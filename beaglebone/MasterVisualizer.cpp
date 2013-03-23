@@ -90,10 +90,12 @@ void MasterVisualizer::onKeyUp(Key key) {
 
 void MasterVisualizer::onPassFinished(bool something_changed) {
   uint32_t now = Util::millis();
+/*
   if (next_switch_time <= now) {
     this->nextVisualizer();
     next_switch_time = Util::millis() + IDLE_TIME_SWITCH_MS;
   }
+*/
   Visualizer::onPassFinished(something_changed);
   current_viz->onPassFinished(something_changed);
 }
