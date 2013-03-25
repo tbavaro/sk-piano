@@ -1,21 +1,25 @@
 class Colors
   def self.BLACK
-    0x808080
+    0
   end
 
   def self.WHITE
-    0xffffff
+    0x7f7f7f
   end
 
+  def self._bracket(v, min = 0.0, max = 1.0)
+    [[v, min].max, max].min
+  end
+  
   def self.rgb(r, g, b)
-    0x808080 | (g << 16) | (r << 8) | (b)
+    (g << 16) | (r << 8) | (b)
   end
 
   # hue (0-360), saturation (0-1), value (0-1)
   def self.hsv(h, s, v)
     h = h % 360.0
-    s = [[0.0, s * 1.0].max, 1.0].min
-    v = [[0.0, v * 1.0].max, 1.0].min
+    s = _bracket(s * 1.0)
+    v = _bracket(v * 1.0)
     if (s == 0)
       r = g = b = v
     else
@@ -53,6 +57,25 @@ class Colors
       end
     end
     rgb((r * 127).floor, (g * 127).floor, (b * 127).floor)
+  end
+
+  def self.red(c)
+    0x7f & (c >> 8)
+  end
+
+  def self.green(c)
+    0x7f & (c >> 16)
+  end
+
+  def self.blue(c)
+    0x7f & c
+  end
+
+  def self.add(a, b)
+    rgb(
+        _bracket(red(a) + red(b), 0, 127),
+        _bracket(green(a) + green(b), 0, 127),
+        _bracket(blue(a) + blue(b), 0, 127))
   end
 end
 

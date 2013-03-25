@@ -90,9 +90,9 @@ static void processShowMessage(const uint8_t* body, uint32_t bodyLength) {
   uint8_t* out = bytes;
   for (int i = 0; i < numPixels; ++i) {
     in++;
-    *(out++) = *(in++);
-    *(out++) = *(in++);
-    *(out++) = *(in++);
+    *(out++) = 0x80 | *(in++);
+    *(out++) = 0x80 | *(in++);
+    *(out++) = 0x80 | *(in++);
   }
   bytes[numBytes - 1] = 0;
   if (spi != NULL) {
