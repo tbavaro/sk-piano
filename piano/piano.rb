@@ -1,12 +1,16 @@
 #!/usr/bin/env ruby
 
 require "./PianoDriver"
+require "./LightStrips"
+require "./TwinkleVisualizer"
 
 class Piano
   def initialize
     @driver = PianoDriver.new
     targetFps = 30
     @targetFrameDuration = 1.0 / targetFps
+    @showFpsEveryNFrames = targetFps * 3
+    @numPixels = 686
     @prevFrameTime = 0
   end
 
@@ -26,19 +30,30 @@ class Piano
   end
 
   def loop
-    count = 0
+    counter = 0
+    lastFpsTime = 0
+    lightStrip = FrameBufferLightStrip.new(@numPixels)
+    visualizer = TwinkleVisualizer.new(lightStrip)
+    lightStrip.reset
     while true
-      scan
-      puts "frame! #{count}"
-      count += 1
+      # scan to see which keys are pressed
+      pressedKeys = scan
+      visualizer.setPressedKeys(pressedKeys)
+
+      # send the LED values
+      @driver.sendMessage("SHOW", lightStrip.pixels.pack("L*"))
+      
       throttle
-#      msg = @driver.peekMessage 
-#      if msg != nil
-#        puts ">#{msg}"
-#      else
-#        @driver.sendMessage("ECHO", "count#{count}")
-#        count += 1
-#      end
+      
+      if (counter % @showFpsEveryNFrames == 0)
+        now = Time.now.to_f
+        if (lastFpsTime != 0)
+          fps = @showFpsEveryNFrames / (now - lastFpsTime)
+          puts "fps: #{fps}"
+        end
+        lastFpsTime = now
+      end
+      counter += 1
     end
   end
 end

@@ -77,6 +77,8 @@ static void processMessage(Command cmd, const uint8_t* body, uint32_t bodyLength
   } else if (cmd == CMD_SCAN) {
     // TODO actually scan it
     sendMessage(CMD_KEYS, NULL, 0);
+  } else if (cmd == CMD_SHOW) {
+    // TODO actually show it
   } else {
     printf("unknown command: %.4s (bodyLength=%d)\n", (char*)&cmd, bodyLength);
   }
@@ -95,16 +97,6 @@ static void processMessage(const Message& message) {
  *
  * Simple binary message format in both directions: 4 bytes for length 
  * of message followed by that many bytes of message body
- *
- * Set LEDs message format:
- *   - (4b) command = "SHOW"
- *   - (2b) number of LEDs to set = N
- *   - (N*3b) rgb values, 1 byte each for R, G, and then B.  0-127
- *
- * Keypress message format:
- *   - (4b) command = "KEYS"
- *   - (1b) number of keys currently pressed = N
- *   - (N*1b) key indexes of currently-pressed keys
  */
 int main(int argc, char** argv) {
   if (argc < 3) {

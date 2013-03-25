@@ -35,6 +35,7 @@ end
 class FrameBufferLightStrip < LightStrip
   def initialize(numPixels)
     super(numPixels)
+    @pixels = Array.new(numPixels)
     reset
   end
 
