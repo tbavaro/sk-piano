@@ -41,7 +41,7 @@ class RealPiano < Piano
     if select([@r], [], [], timeout) == nil
       nil
     else
-      receiveMessage
+      _receiveMessage
     end
   end
 

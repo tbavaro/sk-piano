@@ -32,7 +32,7 @@ class PianoApp
       visualizer.setPressedKeys(@piano.pressedKeys)
 
       # set the LEDs
-      @piano.setLeds(@lightStrip.pixels)
+      @piano.setLeds(lightStrip.pixels)
 
       # sleep to keep the FPS consistent
       throttle
