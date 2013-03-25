@@ -1,3 +1,6 @@
+#include "BeagleBone.h"
+#include "PhysicalPiano.h"
+
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -8,10 +11,8 @@ using namespace std;
 typedef uint32_t Command;
 
 static const Command CMD_OK   = *((const Command*)"OK  ");
-static const Command CMD_ECHO = *((const Command*)"ECHO");
 static const Command CMD_SCAN = *((const Command*)"SCAN");
 static const Command CMD_KEYS = *((const Command*)"KEYS");
-static const Command CMD_LOG  = *((const Command*)"LOG ");
 static const Command CMD_SHOW = *((const Command*)"SHOW");
 
 static void log(const char* msg) {
@@ -54,6 +55,8 @@ Message* Message::read(FILE* f) {
 }
 
 static FILE* outPipe = NULL;
+static SPI* spi = NULL;
+static PhysicalPiano* piano = NULL;
 
 static void sendMessage(Command cmd, const uint8_t* body, uint32_t bodyLength) {
   uint32_t totalLength = bodyLength + sizeof(cmd);
@@ -69,16 +72,39 @@ static void sendMessage(Command cmd) {
   sendMessage(cmd, NULL, 0);
 }
 
+static void processScanMessage() {
+  uint8_t keys[88];
+  uint8_t numPressedKeys = 0;
+  if (piano != NULL) {
+    piano->scan();
+    numPressedKeys = piano->fillPressedKeys(keys);
+  }
+  sendMessage(CMD_KEYS, keys, numPressedKeys);
+}
+
+static void processShowMessage(const uint8_t* body, uint32_t bodyLength) {
+  int numPixels = bodyLength / 4;
+  int numBytes = numPixels * 3 + 1;
+  uint8_t bytes[numBytes];
+  const uint8_t* in = body;
+  uint8_t* out = bytes;
+  for (int i = 0; i < numPixels; ++i) {
+    in++;
+    *(out++) = *(in++);
+    *(out++) = *(in++);
+    *(out++) = *(in++);
+  }
+  bytes[numBytes - 1] = 0;
+  if (spi != NULL) {
+    spi->send(bytes, numBytes);
+  }
+}
+
 static void processMessage(Command cmd, const uint8_t* body, uint32_t bodyLength) {
-  if (cmd == CMD_LOG) {
-    printf("LOG: %.*s\n", bodyLength, body);
-  } else if (cmd == CMD_ECHO) {
-    sendMessage(CMD_LOG, body, bodyLength);
-  } else if (cmd == CMD_SCAN) {
-    // TODO actually scan it
-    sendMessage(CMD_KEYS, NULL, 0);
+  if (cmd == CMD_SCAN) {
+    processScanMessage();
   } else if (cmd == CMD_SHOW) {
-    // TODO actually show it
+    processShowMessage(body, bodyLength);
   } else {
     printf("unknown command: %.4s (bodyLength=%d)\n", (char*)&cmd, bodyLength);
   }
@@ -105,6 +131,11 @@ int main(int argc, char** argv) {
 
   FILE* inPipe = fopen(argv[1], "rb+");
   outPipe = fopen(argv[2], "wb+");
+
+#ifndef NOT_BEAGLEBONE
+  spi = new SPI(4e6);
+  piano = new PhysicalPiano();
+#endif
 
   sendMessage(CMD_OK);
   while(1) {

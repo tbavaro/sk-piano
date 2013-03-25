@@ -40,8 +40,11 @@ class Piano
       pressedKeys = scan
       visualizer.setPressedKeys(pressedKeys)
 
-      # send the LED values
-      @driver.sendMessage("SHOW", lightStrip.pixels.pack("L*"))
+      # send the LED values.  These will be in the same order we should
+      # send them to the LED strip, except we pack them as 4 byte 
+      # network-order values but the LED strip just wants 3 bytes per pixel
+      # so we'll need to strip out the leading 0 byte for each pixel
+      @driver.sendMessage("SHOW", lightStrip.pixels.pack("N*"))
       
       throttle
       

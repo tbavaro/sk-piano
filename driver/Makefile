@@ -1,5 +1,5 @@
 CC=g++
-CPPFLAGS=-g -I. -I../beaglebone
+CPPFLAGS=-g -I.
 EXEC=driver
 
 # add stubs for non-beaglebone env
@@ -8,10 +8,10 @@ ifneq ($(shell uname -m),armv7l)
 endif
 
 # right now a change to any header file will cause everything to get rebuilt
-DEPS = $(shell ls *.h ../beaglebone/Util.h ../beaglebone/BeagleBone.h)
+DEPS = $(shell ls *.h)
 
 # assume all *.cpp files should be included
-OBJ = $(shell ls *.cpp ../beaglebone/Util.cpp ../beaglebone/BeagleBone.cpp | sed "s/cpp$$/o/")
+OBJ = $(shell ls *.cpp | sed "s/cpp$$/o/")
 
 all: $(OBJ)
 	$(CC) -o $(EXEC) $^ $(CPPFLAGS)
