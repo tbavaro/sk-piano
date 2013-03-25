@@ -1,25 +1,17 @@
 #!/usr/bin/env ruby
 
-require "./PianoDriver"
+require "./Piano"
 require "./LightStrips"
 require "./TwinkleVisualizer"
 
-class Piano
-  def initialize
-    @driver = PianoDriver.new
+class PianoApp
+  def initialize(piano)
+    @piano = piano
     targetFps = 30
     @targetFrameDuration = 1.0 / targetFps
     @showFpsEveryNFrames = targetFps * 3
     @numPixels = 686
     @prevFrameTime = 0
-  end
-
-  def scan
-    @driver.sendMessage("SCAN")
-    resultCmd, resultBody = @driver.receiveMessageWithTimeout(5)
-    abort "result timeout" if resultCmd == nil
-    abort "wrong result" if resultCmd != "KEYS"
-    resultBody.unpack("c*")
   end
 
   def throttle
@@ -37,15 +29,12 @@ class Piano
     lightStrip.reset
     while true
       # scan to see which keys are pressed
-      pressedKeys = scan
-      visualizer.setPressedKeys(pressedKeys)
+      visualizer.setPressedKeys(@piano.pressedKeys)
 
-      # send the LED values.  These will be in the same order we should
-      # send them to the LED strip, except we pack them as 4 byte 
-      # network-order values but the LED strip just wants 3 bytes per pixel
-      # so we'll need to strip out the leading 0 byte for each pixel
-      @driver.sendMessage("SHOW", lightStrip.pixels.pack("N*"))
-      
+      # set the LEDs
+      @piano.setLeds(@lightStrip.pixels)
+
+      # sleep to keep the FPS consistent
       throttle
       
       if (counter % @showFpsEveryNFrames == 0)
@@ -61,7 +50,6 @@ class Piano
   end
 end
 
-piano = Piano.new
-piano.loop
+PianoApp.new(RealPiano.new).loop
 
 
