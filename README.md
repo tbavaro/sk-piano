@@ -1,3 +1,5 @@
+NOTE: this is out of date!
+
 sk-piano
 ========
 
