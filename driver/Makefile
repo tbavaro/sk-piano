@@ -4,7 +4,7 @@ EXEC=driver
 
 # add stubs for non-beaglebone env
 ifneq ($(shell uname -m),armv7l)
-  CPPFLAGS+= -I../beaglebone/stubs -DNOT_BEAGLEBONE
+  CPPFLAGS+= -I./stubs -DNOT_BEAGLEBONE
 endif
 
 # right now a change to any header file will cause everything to get rebuilt
