@@ -59,8 +59,12 @@ EventMachine::WebSocket.start(:host => "0.0.0.0", :port => PORT) do |ws|
   ws.onopen do
     puts "Connected!"
     thread = Thread.new do
-      piano = SimulatorPiano.new(ws)
-      piano.loop
+      begin
+        piano = SimulatorPiano.new(ws)
+        piano.loop
+      rescue => e
+        puts "EXCEPTION:\n#{e}\n#{e.backtrace.join("\n")}"
+      end
     end
   end
 

@@ -1,4 +1,5 @@
 require "./LightStrips"
+require "./TestVisualizer"
 require "./TwinkleVisualizer"
 
 TARGET_FPS = 30
@@ -31,6 +32,7 @@ class Piano
     showFpsEveryNFrames = TARGET_FPS * 3
     lightStrip = FrameBufferLightStrip.new(NUM_PIXELS)
     visualizer = TwinkleVisualizer.new(lightStrip)
+#   visualizer = TestVisualizer.new(lightStrip)
     lightStrip.reset
     while true
       # scan to see which keys are pressed

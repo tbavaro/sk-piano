@@ -38,7 +38,7 @@ class TwinkleVisualizerHelper < AmplitudeVisualizer
     @pixelValues.map! { |v| v * 0.8 }
 
     # reset some pixels to 1
-    @sparkleAccum = @lightStrip.numPixels * (0.001 + ((value ** 0.8) * 0.05))
+    @sparkleAccum += @lightStrip.numPixels * (0.001 + ((value ** 0.8) * 0.05))
     for i in 0...@sparkleAccum.floor
       pixel = rand(@lightStrip.numPixels)
       @pixelValues[pixel] = 1.0
@@ -56,7 +56,7 @@ class TwinkleVisualizerHelper < AmplitudeVisualizer
         leftPixel = [0, pixel - radius].max
         rightPixel = [@lightStrip.numPixels - 1, pixel + radius].min
         for i in leftPixel..rightPixel
-          pixelSaturations[i] = 1.0
+          @pixelSaturations[i] = 1.0
         end
       end
     end
@@ -74,6 +74,7 @@ class TwinkleVisualizerHelper < AmplitudeVisualizer
         saturation = overallSaturation
         brightness = [1.0, @pixelValues[i]].min
       end
+#      puts "#{i} #{hue} #{saturation} #{brightness}"
       @lightStrip.setPixel(i, Colors.hsv(hue, saturation, brightness))
     end
   end
