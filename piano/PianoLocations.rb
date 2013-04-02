@@ -41,73 +41,73 @@ module PianoLocations
   BOTTOM_ROW_FRONT_RIGHT_SIDE = 522
   BOTTOM_ROW_RIGHT_JUST_IN_FRONT_OF_HINGE = 541
 
-  def PianoLocations._makeRange(first, last)
+  def PianoLocations._make_range(first, last)
     (first < last) ? first.upto(last).to_a : first.downto(last).to_a
   end
 
   # light strip ranges
-  def PianoLocations.topFrontRow
-    _makeRange(TOP_FRONT_ROW_LEFT, TOP_FRONT_ROW_RIGHT)
+  def PianoLocations.top_front_row
+    _make_range(TOP_FRONT_ROW_LEFT, TOP_FRONT_ROW_RIGHT)
   end
 
-  def PianoLocations.directlyAboveKeys
-    _makeRange(SECOND_ROW_LEFTMOST_ABOVE_KEYS, SECOND_ROW_RIGHTMOST_ABOVE_KEYS)
+  def PianoLocations.directly_above_keys
+    _make_range(SECOND_ROW_LEFTMOST_ABOVE_KEYS, SECOND_ROW_RIGHTMOST_ABOVE_KEYS)
   end
 
-  def PianoLocations.thirdFrontRow
-    _makeRange(THIRD_ROW_FRONT_LEFT, THIRD_ROW_FRONT_RIGHT)
+  def PianoLocations.third_front_row
+    _make_range(THIRD_ROW_FRONT_LEFT, THIRD_ROW_FRONT_RIGHT)
   end
 
-  def PianoLocations.bottomFrontRow
-    _makeRange(BOTTOM_ROW_FRONT_LEFT, BOTTOM_ROW_FRONT_RIGHT)
+  def PianoLocations.bottom_front_row
+    _make_range(BOTTOM_ROW_FRONT_LEFT, BOTTOM_ROW_FRONT_RIGHT)
   end
 
-  def PianoLocations.entireTop
+  def PianoLocations.entire_top
     [
-      _makeRange(TOP_FRONT_ROW_LEFT_SIDE, TOP_LEFT_JUST_IN_FRONT_OF_HINGE),
-      _makeRange(TOP_LEFT_JUST_BEHIND_HINGE, TOP_RIGHT_JUST_BEHIND_HINGE),
-      _makeRange(TOP_RIGHT_JUST_IN_FRONT_OF_HINGE, TOP_FRONT_ROW_RIGHT_SIDE),
-      _makeRange(TOP_FRONT_ROW_RIGHT, TOP_FRONT_ROW_LEFT)
+      _make_range(TOP_FRONT_ROW_LEFT_SIDE, TOP_LEFT_JUST_IN_FRONT_OF_HINGE),
+      _make_range(TOP_LEFT_JUST_BEHIND_HINGE, TOP_RIGHT_JUST_BEHIND_HINGE),
+      _make_range(TOP_RIGHT_JUST_IN_FRONT_OF_HINGE, TOP_FRONT_ROW_RIGHT_SIDE),
+      _make_range(TOP_FRONT_ROW_RIGHT, TOP_FRONT_ROW_LEFT)
     ].flatten
   end
 
-  def PianoLocations.aroundTopExcludingFrontRow
+  def PianoLocations.around_top_excluding_front_row
     [
-      _makeRange(TOP_FRONT_ROW_LEFT_SIDE, TOP_LEFT_JUST_IN_FRONT_OF_HINGE),
-      _makeRange(TOP_LEFT_JUST_BEHIND_HINGE, TOP_RIGHT_JUST_BEHIND_HINGE),
-      _makeRange(TOP_RIGHT_JUST_IN_FRONT_OF_HINGE, TOP_FRONT_ROW_RIGHT_SIDE)
+      _make_range(TOP_FRONT_ROW_LEFT_SIDE, TOP_LEFT_JUST_IN_FRONT_OF_HINGE),
+      _make_range(TOP_LEFT_JUST_BEHIND_HINGE, TOP_RIGHT_JUST_BEHIND_HINGE),
+      _make_range(TOP_RIGHT_JUST_IN_FRONT_OF_HINGE, TOP_FRONT_ROW_RIGHT_SIDE)
     ]
   end
 
-  def PianoLocations.entireSecondRow
+  def PianoLocations.entire_second_row
     [
-      _makeRange(SECOND_ROW_FRONT_ROW_LEFT_SIDE, SECOND_ROW_LEFT_JUST_IN_FRONT_OF_HINGE),
-      _makeRange(SECOND_ROW_LEFT_JUST_BEHIND_HINGE, SECOND_ROW_RIGHT_JUST_BEHIND_HINGE),
-      _makeRange(SECOND_ROW_RIGHT_JUST_IN_FRONT_OF_HINGE, SECOND_ROW_FRONT_ROW_RIGHT_SIDE),
-      _makeRange(SECOND_ROW_FRONT_ROW_RIGHT, SECOND_ROW_FRONT_ROW_LEFT)
+      _make_range(SECOND_ROW_FRONT_ROW_LEFT_SIDE, SECOND_ROW_LEFT_JUST_IN_FRONT_OF_HINGE),
+      _make_range(SECOND_ROW_LEFT_JUST_BEHIND_HINGE, SECOND_ROW_RIGHT_JUST_BEHIND_HINGE),
+      _make_range(SECOND_ROW_RIGHT_JUST_IN_FRONT_OF_HINGE, SECOND_ROW_FRONT_ROW_RIGHT_SIDE),
+      _make_range(SECOND_ROW_FRONT_ROW_RIGHT, SECOND_ROW_FRONT_ROW_LEFT)
     ]
   end
 
-  def PianoLocations.aroundSecondRowExcludingFrontRow
+  def PianoLocations.around_second_row_excluding_front_row
     [
-      _makeRange(SECOND_ROW_FRONT_ROW_LEFT_SIDE, SECOND_ROW_LEFT_JUST_IN_FRONT_OF_HINGE),
-      _makeRange(SECOND_ROW_LEFT_JUST_BEHIND_HINGE, SECOND_ROW_RIGHT_JUST_BEHIND_HINGE),
-      _makeRange(SECOND_ROW_RIGHT_JUST_IN_FRONT_OF_HINGE, SECOND_ROW_FRONT_ROW_RIGHT_SIDE)
+      _make_range(SECOND_ROW_FRONT_ROW_LEFT_SIDE, SECOND_ROW_LEFT_JUST_IN_FRONT_OF_HINGE),
+      _make_range(SECOND_ROW_LEFT_JUST_BEHIND_HINGE, SECOND_ROW_RIGHT_JUST_BEHIND_HINGE),
+      _make_range(SECOND_ROW_RIGHT_JUST_IN_FRONT_OF_HINGE, SECOND_ROW_FRONT_ROW_RIGHT_SIDE)
     ]
   end
 
-  def PianoLocations.aroundThirdRowExcludingFrontRow
+  def PianoLocations.around_third_row_excluding_front_row
     [
-      _makeRange(THIRD_ROW_FRONT_LEFT_SIDE, THIRD_ROW_LEFT_JUST_IN_FRONT_OF_HINGE),
-      _makeRange(THIRD_ROW_LEFT_JUST_BEHIND_HINGE, THIRD_ROW_FRONT_RIGHT_SIDE)
+      _make_range(THIRD_ROW_FRONT_LEFT_SIDE, THIRD_ROW_LEFT_JUST_IN_FRONT_OF_HINGE),
+      _make_range(THIRD_ROW_LEFT_JUST_BEHIND_HINGE, THIRD_ROW_FRONT_RIGHT_SIDE)
     ]
   end
 
-  def PianoLocations.aroundBottomRowWithGapToMatchThirdRow
+  def PianoLocations.around_bttom_row_with_gap_to_match_third_row
     [
-      _makeRange(BOTTOM_ROW_FRONT_LEFT_SIDE, BOTTOM_ROW_LEFT_JUST_IN_FRONT_OF_HINGE),
+      _make_range(BOTTOM_ROW_FRONT_LEFT_SIDE, BOTTOM_ROW_LEFT_JUST_IN_FRONT_OF_HINGE),
       [-1] * 76,
-      _makeRange(BOTTOM_ROW_RIGHT_JUST_IN_FRONT_OF_HINGE, BOTTOM_ROW_FRONT_RIGHT_SIDE)
+      _make_range(BOTTOM_ROW_RIGHT_JUST_IN_FRONT_OF_HINGE, BOTTOM_ROW_FRONT_RIGHT_SIDE)
     ]
   end
 end

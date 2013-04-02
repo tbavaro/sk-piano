@@ -5,18 +5,18 @@ require "./Piano"
 class RealPiano < Piano
   def initialize
     super
-    inPipe = "/tmp/piano.#{Process.pid}.in"
-    outPipe = "/tmp/piano.#{Process.pid}.out"
-    `mkfifo #{inPipe}`
-    `mkfifo #{outPipe}`
-    @w = open(outPipe, "wb+")
-    @r = open(inPipe, "rb+")
-    @subprocess = IO.popen(["../driver/driver", outPipe, inPipe], mode = "w")
+    in_pipe = "/tmp/piano.#{Process.pid}.in"
+    out_pipe = "/tmp/piano.#{Process.pid}.out"
+    `mkfifo #{in_pipe}`
+    `mkfifo #{out_pipe}`
+    @w = open(out_pipe, "wb+")
+    @r = open(in_pipe, "rb+")
+    @subprocess = IO.popen(["../driver/driver", out_pipe, in_pipe], mode = "w")
     begin
-      abort "can't connect" if _receiveMessageWithTimeout(5) != ["OK", ""]
+      abort "can't connect" if _receive_message_with_timeout(5) != ["OK", ""]
     ensure
-      File.delete inPipe
-      File.delete outPipe
+      File.delete in_pipe
+      File.delete out_pipe
     end
   end
 
@@ -30,38 +30,38 @@ class RealPiano < Piano
     receiveMessageWithTimeout(0)
   end
 
-  def _receiveMessageWithTimeout(timeout)
+  def _receive_message_with_timeout(timeout)
     if select([@r], [], [], timeout) == nil
       nil
     else
-      _receiveMessage
+      _receive_message
     end
   end
 
-  def _receiveMessage
+  def _receive_message
     length = _readBytes(4).unpack("L")[0]
     _readBytes(length).unpack("A4a*")
   end
 
-  def _sendMessage(cmd, body = "")
+  def _send_message(cmd, body = "")
     @w.write([body.length + 4, cmd, body].pack("LA4a*"))
     @w.flush
   end
   
-  def pressedKeys
-    _sendMessage("SCAN")
-    resultCmd, resultBody = _receiveMessageWithTimeout(5)
+  def pressed_keys
+    _send_message("SCAN")
+    resultCmd, resultBody = _receive_message_with_timeout(5)
     abort "result timeout" if resultCmd == nil
     abort "wrong result" if resultCmd != "KEYS"
     resultBody.unpack("c*")
   end
 
-  def setLeds(pixels)
+  def set_leds(pixels)
     # send the LED values.  These will be in the same order we should
     # send them to the LED strip, except we pack them as 4 byte 
     # network-order values but the LED strip just wants 3 bytes per pixel
     # so we'll need to strip out the leading 0 byte for each pixel
-    _sendMessage("SHOW", pixels.pack("N*"))
+    _send_message("SHOW", pixels.pack("N*"))
   end
 end
 

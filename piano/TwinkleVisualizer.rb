@@ -5,90 +5,85 @@ require "./Visualizers"
 
 class TwinkleVisualizerHelper < AmplitudeVisualizer
   alias :super_reset :reset
-  alias :super_setPressedKeys :setPressedKeys
+  alias :super_set_pressed_keys :set_pressed_keys
 
-  def initialize(lightStrip, highlightKeys)
-    super(lightStrip, 0.15, 0.3, 1.2)
-    @lightStrip = lightStrip
-    @highlightKeys = highlightKeys
+  def initialize(light_strip, highlight_keys)
+    super(light_strip, 0.15, 0.3, 1.2)
+    @light_strip = light_strip
+    @highlight_keys = highlight_keys
     reset
   end
 
   def reset
-    @pixelValues = Array.new(@lightStrip.numPixels, 0.0)
-    @pixelSaturations = Array.new(@lightStrip.numPixels, 0.0)
-    @pressedKeys = []
-    @sparkleAccum = 0
+    @pixel_values = Array.new(@light_strip.num_pixels, 0.0)
+    @pixel_saturations = Array.new(@light_strip.num_pixels, 0.0)
+    @pressed_keys = []
+    @sparkle_accum = 0
     super_reset()
   end
 
-  def pixelForKey(key)
-    (key / 88.0 * @lightStrip.numPixels).floor
+  def pixel_for_key(key)
+    (key / 88.0 * @light_strip.num_pixels).floor
   end
 
-  def setPressedKeys(pressedKeys)
-    @pressedKeys = pressedKeys
-    super_setPressedKeys(pressedKeys)
+  def set_pressed_keys(pressed_keys)
+    @pressed_keys = pressed_keys
+    super_set_pressed_keys(pressed_keys)
   end
 
-  def renderValue(value)
+  def render_value(value)
     value = [1.0, value].min
 
     # decay pixels
-    @pixelValues.map! { |v| v * 0.8 }
+    @pixel_values.map! { |v| v * 0.8 }
 
     # reset some pixels to 1
-    @sparkleAccum += @lightStrip.numPixels * (0.001 + ((value ** 0.8) * 0.05))
-    for i in 0...@sparkleAccum.floor
-      pixel = rand(@lightStrip.numPixels)
-      @pixelValues[pixel] = 1.0
+    @sparkle_accum += @light_strip.num_pixels * (0.001 + ((value ** 0.8) * 0.05))
+    while @sparkle_accum >= 1.0
+      pixel = rand(@light_strip.num_pixels)
+      @pixel_values[pixel] = 1.0
+      @sparkle_accum -= 1.0
     end
-    @sparkleAccum = @sparkleAccum % 1.0
 
-    if (@highlightKeys)
+    if @highlight_keys
       # decay saturations
-      @pixelSaturations.map! { |v| v * 0.9 }
+      @pixel_saturations.map! { |v| v * 0.9 }
 
       # set saturations for pressed keys
-      radius = (@lightStrip.numPixels / 88.0 * 2.0).floor
-      @pressedKeys.each do |key|
-        pixel = pixelForKey(key)
-        leftPixel = [0, pixel - radius].max
-        rightPixel = [@lightStrip.numPixels - 1, pixel + radius].min
-        for i in leftPixel..rightPixel
-          @pixelSaturations[i] = 1.0
-        end
+      radius = (@light_strip.num_pixels / 88.0 * 2.0).floor
+      @pressed_keys.each do |key|
+        pixel = pixel_for_key(key)
+        left_pixel = [0, pixel - radius].max
+        right_pixel = [@light_strip.num_pixels - 1, pixel + radius].min
+        (left_pixel..right_pixel).each { |i| @pixel_saturations[i] = 1.0 }
       end
     end
 
     # draw
-    overallSaturation = [1.0, value ** 2.0].min
-    hue = (Time.now.to_f * 1000.0 / 30.0)  % 360.0
-    for i in 0...(@lightStrip.numPixels)
-      saturation = 0.0
-      brightness = 0.0
-      if (@highlightKeys)
-        saturation = [0.0, overallSaturation - @pixelSaturations[i]].max
-        brightness = [1.0, @pixelValues[i] * 0.3 + @pixelSaturations[i] * 0.7].min
+    overall_saturation = [1.0, value ** 2.0].min
+    hue = (Time.now.to_f * 1000.0 / 30.0) % 360.0
+    (0...@light_strip.num_pixels).each do |i|
+      if @highlight_keys
+        saturation = [0.0, overall_saturation - @pixel_saturations[i]].max
+        brightness = [1.0, @pixel_values[i] * 0.3 + @pixel_saturations[i] * 0.7].min
       else
-        saturation = overallSaturation
-        brightness = [1.0, @pixelValues[i]].min
+        saturation = overall_saturation
+        brightness = [1.0, @pixel_values[i]].min
       end
 #      puts "#{i} #{hue} #{saturation} #{brightness}"
-      @lightStrip.setPixel(i, Colors.hsv(hue, saturation, brightness))
+      @light_strip.set_pixel(i, Colors.hsv(hue, saturation, brightness))
     end
   end
 end
 
 class TwinkleVisualizer < CompositeVisualizer
-  def initialize(lightStrip)
+  def initialize(light_strip)
     super [
-      TwinkleVisualizerHelper.new(lightStrip, false),
+      TwinkleVisualizerHelper.new(light_strip, false),
       TwinkleVisualizerHelper.new(
-          LogicalLightStrip.new(lightStrip, PianoLocations.topFrontRow),
-          true),
-      TwinkleVisualizerHelper.new(
-          LogicalLightStrip.new(lightStrip, PianoLocations.directlyAboveKeys),
+          LogicalLightStrip.new(
+              light_strip,
+              PianoLocations.top_front_row + PianoLocations.directly_above_keys),
           true)
     ]
   end

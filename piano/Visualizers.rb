@@ -1,9 +1,9 @@
 class Visualizer
   def reset
-    setPressedKeys([])
+    set_pressed_keys([])
   end
 
-  def setPressedKeys(pressedKeys)
+  def set_pressed_keys(pressed_keys)
     throw "abstract"
   end
 end
@@ -18,40 +18,40 @@ class KeyUpDownVisualizer < Visualizer
     @keys2 = Array.new(@@num_keys, false)
   end
 
-  def setPressedKeys(pressedKeys)
-    newKeys = @keys2
-    newKeys.fill(false)
-    pressedKeys.each { |key| newKeys[key] = true }
+  def set_pressed_keys(pressed_keys)
+    new_keys = @keys2
+    new_keys.fill(false)
+    pressed_keys.each { |key| new_keys[key] = true }
     for key in 0...@@num_keys
-      if newKeys[key] != @keys[key]
-        newKeys[key] ? onKeyDown(key) : onKeyUp(key)
+      if new_keys[key] != @keys[key]
+        new_keys[key] ? on_key_down(key) : on_key_up(key)
       end
     end
     @keys2 = @keys
-    @keys = newKeys
-    onPassFinished
+    @keys = new_keys
+    on_pass_finished
   end
 
-  def onKeyDown(key)
+  def on_key_down(key)
   end
 
-  def onKeyUp(key)
+  def on_key_up(key)
   end
 
-  def onPassFinished
+  def on_pass_finished
   end
 end
 
 class TestKeyUpDownVisualizer < KeyUpDownVisualizer
-  def onKeyDown(key)
+  def on_key_down(key)
     puts "key down: #{key}"
   end
 
-  def onKeyUp(key)
+  def on_key_up(key)
     puts "key up: #{key}"
   end
 
-  def onPassFinished
+  def on_pass_finished
     puts "---"
   end
 end
@@ -65,44 +65,44 @@ class CompositeVisualizer < Visualizer
     @visualizers.each { |v| v.reset }
   end
 
-  def setPressedKeys(pressedKeys)
-    @visualizers.each { |v| v.setPressedKeys(pressedKeys) }
+  def set_pressed_keys(pressed_keys)
+    @visualizers.each { |v| v.set_pressed_keys(pressed_keys) }
   end
 end
 
 class AmplitudeVisualizer < KeyUpDownVisualizer
-  def initialize(strip, noteIncrease, decreaseRate, maxValue)
+  def initialize(strip, note_increase, decrease_rate, max_value)
     super()
     @strip = strip
-    @noteIncrease = noteIncrease
-    @decreaseRate = decreaseRate
-    @maxValue = maxValue
-    @prevFrameTime = 0
+    @note_increase = note_increase
+    @decrease_rate = decrease_rate
+    @max_value = max_value
+    @prev_frame_time = 0
     @value = 0
   end
 
-  def onKeyDown(key)
-    @value = [@value + @noteIncrease, @maxValue].min
+  def on_key_down(key)
+    @value = [@value + @note_increase, @max_value].min
   end
 
-  def onPassFinished
+  def on_pass_finished
     now = Time.now.to_f
-    if @prevFrameTime != 0
-      secs = (now - @prevFrameTime)
-      @value = [@value - (secs * @decreaseRate), 0].max
+    if @prev_frame_time != 0
+      secs = (now - @prev_frame_time)
+      @value = [@value - (secs * @decrease_rate), 0].max
     end
-    @prevFrameTime = now
-    renderValue(@value)
+    @prev_frame_time = now
+    render_value(@value)
   end
 
-  def renderValue(value)
+  def render_value(value)
     throw "abstract"
   end
 
   def reset
-    @prevFrameTime = 0
+    @prev_frame_time = 0
     @value = 0
-    renderValue(@value)
+    render_value(@value)
   end
 end
 
