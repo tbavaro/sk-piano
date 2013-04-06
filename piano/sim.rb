@@ -15,8 +15,10 @@ class SimulatorPiano < Piano
     @ws = ws
     @mutex = Mutex.new
     @keys = Array.new(88, false)
-    @gamma_correction = (0..127).map do |v|
-      (127.0 * ((v / 127.0) ** 0.5)).floor
+    @onscreen_color_hex = (0..127).map do |v|
+      # do some gamma correction since the LEDs are anything but linear in
+      # intensity
+      "%02x" % ((255.0 * ((v / 127.0) ** 0.4)).floor)
     end
   end
 
@@ -38,14 +40,10 @@ class SimulatorPiano < Piano
 
   def set_leds(pixels)
     def serialize(pixel)
-      def gamma_correct(v)
-        @gamma_correction[v.floor]
-      end
-
-      "'%02x%02x%02x'" % [
-        gamma_correct(Colors.red(pixel)) * 2,
-        gamma_correct(Colors.green(pixel)) * 2,
-        gamma_correct(Colors.blue(pixel)) * 2
+      "'%s%s%s'" % [
+        @onscreen_color_hex[Colors.red(pixel) * 127],
+        @onscreen_color_hex[Colors.green(pixel) * 127],
+        @onscreen_color_hex[Colors.blue(pixel) * 127]
       ]
     end
 

@@ -38,13 +38,13 @@ class Piano
     show_fps_every_n_frames = TARGET_FPS
     light_strip = FrameBufferLightStrip.new(NUM_PIXELS)
     visualizer = TwinkleVisualizer.new(light_strip)
-#   visualizer = TestVisualizer.new(light_strip)
+#    visualizer = TestVisualizer.new(light_strip)
     light_strip.reset
     while true
       # scan to see which keys are pressed
       start_time = Time.now.to_f
 
-      #visualizer.set_pressed_keys(pressed_keys)
+      visualizer.set_pressed_keys(pressed_keys)
 
       render_end_time = Time.now.to_f
       render_time_since_last_check += (render_end_time - start_time)

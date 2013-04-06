@@ -1,4 +1,137 @@
+require "inline"
+
 class Colors
+  @@compile_start_time = Time.now.to_f
+
+  inline do |builder|
+    builder.include '"math.h"'
+    builder.include '"unistd.h"'
+
+    builder.add_compile_flags "-x c++"
+
+    builder.prefix "
+      static inline uint32_t _rgb_unchecked(uint32_t r, uint32_t g, uint32_t b) {
+        return (g << 16) | (r << 8) | b;
+      }
+
+      #define COLOR_PART(c, shift) ((uint8_t)(0x7f & ((c) >> (shift))))
+
+      static inline uint8_t _red(uint32_t c) {
+        return COLOR_PART(c, 8);
+      }
+
+      static inline uint8_t _green(uint32_t c) {
+        return COLOR_PART(c, 16);
+      }
+
+      static inline uint8_t _blue(uint32_t c) {
+        return COLOR_PART(c, 0);
+      }
+
+      #define BRACKET(v, min, max) \
+          (((v) <= (min)) ? (min) : (((v) >= (max)) ? (max) : (v)))
+
+      static inline double bracket(double v) {
+        return BRACKET(v, 0.0, 1.0);
+      }
+
+      static inline uint8_t _add_and_bracket127(uint16_t a, uint16_t b) {
+        uint16_t c = a + b;
+        return BRACKET(c, 0, 127);
+      }
+
+      static uint32_t _hsv_unchecked(double h, double s, double v) {
+        float r, g, b;
+        if( s == 0 ) {
+          // achromatic (grey)
+          r = g = b = v;
+        } else {
+          h /= 60;                      // sector 0 to 5
+          int i = floor(h);
+          float f = h - i;                      // factorial part of h
+          float p = v * (1 - s);
+          float q = v * (1 - s * f);
+          float t = v * (1 - s * (1 - f));
+          switch(i) {
+            case 0:
+              r = v;
+              g = t;
+              b = p;
+              break;
+            case 1:
+              r = q;
+              g = v;
+              b = p;
+              break;
+            case 2:
+              r = p;
+              g = v;
+              b = t;
+              break;
+            case 3:
+              r = p;
+              g = q;
+              b = v;
+              break;
+            case 4:
+              r = t;
+              g = p;
+              b = v;
+              break;
+            default:                // case 5:
+              r = v;
+              g = p;
+              b = q;
+              break;
+          }
+        }
+        return _rgb_unchecked(r * 127, g * 127, b * 127);
+      }
+    "
+
+    builder.c_singleton "
+      unsigned int rgb(double r, double g, double b) {
+        return _rgb_unchecked(bracket(r) * 127, bracket(g) * 127, bracket(b) * 127);
+      }
+    "
+
+    builder.c_singleton "
+      unsigned int hsv(double h, double s, double v) {
+        return _hsv_unchecked(fmod(h, 360.0), bracket(s), bracket(v));
+      }
+    "
+
+    builder.c_singleton "
+      unsigned int add(unsigned int a, unsigned int b) {
+        return _rgb_unchecked(
+            _add_and_bracket127(_red(a), _red(b)),
+            _add_and_bracket127(_green(a), _green(b)),
+            _add_and_bracket127(_blue(a), _blue(b)));
+      }
+    "
+
+    builder.c_singleton "
+      double red(unsigned int c) {
+        return _red(c) / 127.0;
+      }
+    "
+
+    builder.c_singleton "
+      double green(unsigned int c) {
+        return _green(c) / 127.0;
+      }
+    "
+
+    builder.c_singleton "
+      double blue(unsigned int c) {
+        return _blue(c) / 127.0;
+      }
+    "
+  end
+
+  STDERR.puts "> Colors.rb native code compiled: %.2fms" %
+      ((Time.now.to_f - @@compile_start_time) * 1000)
+
   def self.BLACK
     0
   end
@@ -7,75 +140,20 @@ class Colors
     0x7f7f7f
   end
 
-  def self._bracket(v, min = 0.0, max = 1.0)
-    if v < min
-      min
-    elsif v > max
-      max
-    else
-      v
+  def self.perf_test
+    iterations = 100000
+    n = iterations
+    start_time = Time.now.to_f
+    while n > 0 do
+      h = rand() * 360.0
+      s = rand()
+      v = rand()
+      hsv(h, s, v)
+      n -= 1
     end
-  end
-  
-  def self.rgb(r, g, b)
-    _rgb_unsafe(
-        _bracket(r, 0, 127).floor,
-        _bracket(g, 0, 127).floor,
-        _bracket(b, 0, 127).floor)
-  end
-
-  def self._rgb_unsafe(r, g, b)
-    # (g << 16) | (r << 8) | (b)
-    [0, g, r, b].pack("cccc").unpack("N")[0]
-  end
-
-  # hue (0-360), saturation (0-1), value (0-1)
-  def self.hsv(h, s, v)
-    _hsv_unsafe(h % 360.0, _bracket(s * 1.0), _bracket(v * 1.0))
-  end
-
-  def self._hsv_unsafe(h, s, v)
-    if s == 0
-      r = g = b = v
-    else
-      h /= 60.0  # sector 0 to 5
-      i = h.floor
-      f = h - i # factorial part of h
-      p = v * (1.0 - s)
-      q = v * (1.0 - s * f)
-      t = v * (1.0 - s * (1.0 - f))
-      case i
-      when 0
-        r, g, b = v, t, p
-      when 1
-        r, g, b = q, v, p
-      when 2
-        r, g, b = p, v, t
-      when 3
-        r, g, b = p, q, v
-      when 4
-        r, g, b = t, p, v
-      else
-        r, g, b = v, p, q
-      end
-    end
-    rgb((r * 127).floor, (g * 127).floor, (b * 127).floor)
-  end
-
-  def self.red(c)
-    0x7f & (c >> 8)
-  end
-
-  def self.green(c)
-    0x7f & (c >> 16)
-  end
-
-  def self.blue(c)
-    0x7f & c
-  end
-
-  def self.add(a, b)
-    rgb(red(a) + red(b), green(a) + green(b), blue(a) + blue(b))
+    end_time = Time.now.to_f
+    duration_ms = (end_time - start_time) * 1000.0
+    puts "total time: %.2fms" % (duration_ms)
+    puts "time per iteration: %.6fms" % (duration_ms / iterations)
   end
 end
-

@@ -83,8 +83,11 @@ class TwinkleVisualizer < CompositeVisualizer
       TwinkleVisualizerHelper.new(
           LogicalLightStrip.new(
               light_strip,
-              PianoLocations.top_front_row + PianoLocations.directly_above_keys),
-          true)
+              PianoLocations.top_front_row), true),
+      TwinkleVisualizerHelper.new(
+          LogicalLightStrip.new(
+              light_strip,
+              PianoLocations.directly_above_keys), true)
     ]
   end
 end
