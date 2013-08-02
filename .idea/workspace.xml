@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="be487878-5b0d-4c99-bf75-7fc2c6a3210b" name="Default" comment="" />
+    <list default="true" id="be487878-5b0d-4c99-bf75-7fc2c6a3210b" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/Colors.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/Colors.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="piano.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365112020926" ignored="false" />
+    <file path="/Dummy.txt" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365627774459" ignored="false" />
     <file path="/temp.rb" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365283208619" ignored="false" />
     <file path="/TwinkleVisualizer.rb" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365283888635" ignored="false" />
     <file path="/a.dummy" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365207597851" ignored="false" />
@@ -26,14 +32,14 @@
     <file path="$USER_HOME$/Workspaces/asana/luna/common/model/domain_user.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365045408932" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/model/team.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1364933642067" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/luna/common/model/test_user.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365183405147" ignored="false" />
-    <file path="$USER_HOME$/Workspaces/asana/luna/common/model/test_domain_user.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365045408932" ignored="false" />
+    <file path="$USER_HOME$/Workspaces/asana/luna/common/model/test_domain_user.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365364478448" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/nux/nux_network_dialog_renderer.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1364933642067" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/luna/temp/migrations/distributed_jobs/merge_domain_as_team_distributed_job.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1364951184822" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/nux/test_nux_dialog.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1364933642067" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/luna/temp/migrations/distributed_jobs/merge_domain_as_team.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1364933800850" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/model/test_task.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365025978059" ignored="false" />
     <file path="/test_task.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1364933863246" ignored="false" />
-    <file path="/test_domain_user.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365031586888" ignored="false" />
+    <file path="/test_domain_user.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365361732250" ignored="false" />
     <file path="/Colors.py" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365209301642" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/luna/temp/migrations/distributed_jobs/test_merge_domain_as_team.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1364951184822" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/luna/admin/profile_page_loads" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365025978058" ignored="false" />
@@ -42,7 +48,7 @@
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/widgets/photo_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1364951184822" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/task_assigned_to_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1364951184822" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/advanced_search/advanced_search_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1364951184822" ignored="false" />
-    <file path="$USER_HOME$/Workspaces/asana/apps/asana/model/verified_email.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365183398338" ignored="false" />
+    <file path="$USER_HOME$/Workspaces/asana/apps/asana/model/verified_email.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365364478449" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/luna/common/flags.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365025978058" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana_mobile/asana_mobile_session.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365025978058" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/luna/server/test_incoming_email.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365025978058" ignored="false" />
@@ -67,7 +73,7 @@
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/model/email_domain.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365025978059" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/jobs/test_send_push_notifications_remote_job.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365025978059" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/model/test_add_email_verification_workflow.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365025978059" ignored="false" />
-    <file path="$USER_HOME$/Workspaces/asana/apps/asana/model/test_verified_email.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365045408932" ignored="false" />
+    <file path="$USER_HOME$/Workspaces/asana/apps/asana/model/test_verified_email.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365360868800" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/luna/common/datastore/datastore_object.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365025978060" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/luna/common/model/ihas_image.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365025978060" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/luna/common/datastore/query_results.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365025978060" ignored="false" />
@@ -106,7 +112,7 @@
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/model/test_domain_invite.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365183405147" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/dialog/test_manage_workspace_dialog.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365183405147" ignored="false" />
     <file path="/asana.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365193332853" ignored="false" />
-    <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/navigation_dock_team_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365200672737" ignored="false" />
+    <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/navigation_dock_team_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365364478449" ignored="false" />
     <file path="/navigation_dock_team_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365199852628" ignored="false" />
     <file path="/manage_team_members_list_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365202406905" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/manage_team_members_list_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365202408065" ignored="false" />
@@ -114,7 +120,7 @@
     <file path="/manage_billable_group_members_list_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365202331914" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/manage_workspace_members_header_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365204231915" ignored="false" />
     <file path="/manage_workspace_members_header_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365201566407" ignored="false" />
-    <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/test_manage_team_members_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365204231915" ignored="false" />
+    <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/test_manage_team_members_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365364478449" ignored="false" />
     <file path="/test_manage_team_members_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365202178943" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/manage_old_billable_group_members_list_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365202297097" ignored="false" />
     <file path="/manage_old_billable_group_members_list_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365201672320" ignored="false" />
@@ -122,6 +128,13 @@
     <file path="/view_tracker.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365202008227" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/billing/billing_plans_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365209083052" ignored="false" />
     <file path="/Colors2.rb" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365216304905" ignored="false" />
+    <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/dialog/api_apps_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365359932683" ignored="false" />
+    <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/navigation_dock_network_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365364478449" ignored="false" />
+    <file path="$USER_HOME$/Workspaces/asana/apps/asana/jobs/notification_remote_job.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365364478449" ignored="false" />
+    <file path="$USER_HOME$/Workspaces/asana/apps/asana/jobs/test_notification_remote_job.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365364478449" ignored="false" />
+    <file path="/Colors.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365381359560" ignored="false" />
+    <file path="/a.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365380719975" ignored="false" />
+    <file path="/Colors.coffee" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365404282067" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,6 +149,7 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -170,7 +184,6 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -189,37 +202,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="piano.iml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/piano.iml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sim.rb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/piano/sim.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="44" selection-start="446" selection-end="446" vertical-scroll-proportion="0.45212767">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="TwinkleVisualizer.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/piano/TwinkleVisualizer.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="0" selection-start="917" selection-end="917" vertical-scroll-proportion="0.0">
+            <state line="63" column="37" selection-start="1749" selection-end="1749" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Colors.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/piano/Colors.rb">
+      <file leaf-file-name="Colors.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/piano/Colors.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="131" column="17" selection-start="3255" selection-end="3255" vertical-scroll-proportion="0.0">
+            <state line="82" column="18" selection-start="1773" selection-end="1773" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Colors.coffee" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/piano/Colors.coffee">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="53" column="37" selection-start="1050" selection-end="1050" vertical-scroll-proportion="0.15782493">
               <folding />
             </state>
           </provider>
@@ -251,10 +255,12 @@
         <option value="$PROJECT_DIR$/piano/Colors.py" />
         <option value="$PROJECT_DIR$/piano/Colors2.rb" />
         <option value="$PROJECT_DIR$/piano/TestVisualizer.rb" />
-        <option value="$PROJECT_DIR$/piano/TwinkleVisualizer.rb" />
         <option value="$PROJECT_DIR$/piano/Piano.rb" />
         <option value="$PROJECT_DIR$/piano/Colors.rb" />
         <option value="$PROJECT_DIR$/piano/sim.rb" />
+        <option value="$PROJECT_DIR$/piano/TwinkleVisualizer.rb" />
+        <option value="$PROJECT_DIR$/piano/Colors.js" />
+        <option value="$PROJECT_DIR$/piano/Colors.coffee" />
       </list>
     </option>
   </component>
@@ -289,17 +295,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Default">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -334,18 +329,41 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope">
+        <subPane subId="Default">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="options.lastSelected" value="preferences.sourceCode.JavaScript" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="MemberChooser.sorted" value="false" />
-    <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
+    <property name="FullScreen" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="GoToClass.includeJavaFiles" value="false" />
-    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
+  </component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <PyConsoleSettings />
+    </option>
+    <option name="myDjangoConsoleState">
+      <PyConsoleSettings />
+    </option>
   </component>
   <component name="RunManager">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -483,7 +501,6 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32948717" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33076924" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SBT Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -499,6 +516,7 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33076924" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -609,9 +627,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/piano.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/piano/Piano.rb">
@@ -628,23 +644,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/piano/sim.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="44" selection-start="446" selection-end="446" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/piano/Colors.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="131" column="17" selection-start="3255" selection-end="3255" vertical-scroll-proportion="0.0">
+        <state line="17" column="0" selection-start="0" selection-end="3835" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/piano/TwinkleVisualizer.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="0" selection-start="917" selection-end="917" vertical-scroll-proportion="0.0">
+        <state line="63" column="37" selection-start="1749" selection-end="1749" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/piano/sim.rb">
+    <entry file="file://$PROJECT_DIR$/piano/Colors.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="44" selection-start="446" selection-end="446" vertical-scroll-proportion="0.45212767">
+        <state line="82" column="18" selection-start="1773" selection-end="1773" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/piano/Colors.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="53" column="37" selection-start="1050" selection-end="1050" vertical-scroll-proportion="0.15782493">
           <folding />
         </state>
       </provider>
