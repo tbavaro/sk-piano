@@ -2,27 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="be487878-5b0d-4c99-bf75-7fc2c6a3210b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/AmplitudeVisualizer.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/CompositeVisualizer.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/FrameBufferLightStrip.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/KeyUpDownVisualizer.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/LightStrip.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/LogicalLightStrip.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/Main.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/Piano.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/PianoLocations.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/Simulator.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/TwinkleVisualizer.coffee" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/Visualizer.coffee" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/piano/Colors.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/piano/Colors.coffee" afterPath="$PROJECT_DIR$/piano/Colors.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/driver/main.cpp" afterPath="$PROJECT_DIR$/driver/main.cpp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node-spi/Makefile" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node-spi/node-spi.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node-spi/src/runtime_exception.cpp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node-spi/src/runtime_exception.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node-spi/src/spi.h" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node-spi/src/wrapped_spi.cpp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node-spi/src/wrapped_spi.h" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/piano_node/node-spi/Makefile" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/piano_node/node-spi/binding.gyp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/piano_node/node-spi/spi-test.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/piano_node/node-spi/spi.cpp" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="piano.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1376107852135" ignored="false" />
+    <file path="/Dummy.txt" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1378669329592" ignored="false" />
     <file path="/temp.rb" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365283208619" ignored="false" />
     <file path="/TwinkleVisualizer.rb" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365283888635" ignored="false" />
     <file path="/a.dummy" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1376011124358" ignored="false" />
@@ -145,7 +144,7 @@
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/jobs/notification_remote_job.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365364478449" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/jobs/test_notification_remote_job.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365364478449" ignored="false" />
     <file path="/Colors.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365381359560" ignored="false" />
-    <file path="/a.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365380719975" ignored="false" />
+    <file path="/a.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1378666927758" ignored="false" />
     <file path="/Colors.coffee" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1375462442768" ignored="false" />
     <file path="/Simulator.coffee" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1375418910772" ignored="false" />
     <file path="/Piano.coffee" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1375471627206" ignored="false" />
@@ -171,6 +170,14 @@
     <file path="$USER_HOME$/Workspaces/asana/admin/authorized_keys.py" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1376009093763" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/widgets/details_pane_project_tokenizer_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1376009093763" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/luna/temp/migrations/distributed_jobs/2013_04_23_send_tag_guest_privacy_email.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1376009318459" ignored="false" />
+    <file path="/Makefile" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1378668116132" ignored="false" />
+    <file path="/fragment.java" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1378667465847" ignored="false" />
+    <file path="/wrapped_spi.cpp" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1378674581332" ignored="false" />
+    <file path="/binding.gyp" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1378670587972" ignored="false" />
+    <file path="/a.java" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1378670818865" ignored="false" />
+    <file path="/runtime_exception.h" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1378671091820" ignored="false" />
+    <file path="/spi.cpp" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1378672849843" ignored="false" />
+    <file path="/node_spi_test.coffee" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1378673168865" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,6 +192,7 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -219,7 +227,6 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -228,49 +235,42 @@
     <favorites_list name="piano" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.554693">
+    <splitter split-orientation="horizontal" split-proportion="0.44360903">
       <split-first>
         <leaf>
-          <file leaf-file-name="LogicalLightStrip.coffee" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/piano/LogicalLightStrip.coffee">
+          <file leaf-file-name="node-spi.iml" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/node-spi/node-spi.iml">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="0" column="7" selection-start="7" selection-end="7" vertical-scroll-proportion="0.0">
+                <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="LightStrip.coffee" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/piano/LightStrip.coffee">
+          <file leaf-file-name="spi.cpp" pinned="false" current="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/node-spi/src/spi.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="19" column="19" selection-start="351" selection-end="351" vertical-scroll-proportion="0.0">
+                <state line="20" column="32" selection-start="343" selection-end="347" vertical-scroll-proportion="0.44692737">
+                  <folding>
+                    <element signature="n#!!doc" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="node.h" pinned="false" current="false" current-in-tab="false">
+            <entry file="file:///usr/local/include/node/node.h">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="229" column="8" selection-start="7392" selection-end="7392" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Main.coffee" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/piano/Main.coffee">
+          <file leaf-file-name="node_object_wrap.h" pinned="false" current="false" current-in-tab="false">
+            <entry file="file:///usr/local/include/node/node_object_wrap.h">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="29" column="31" selection-start="744" selection-end="744" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="TwinkleVisualizer.coffee" pinned="false" current="true" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/piano/TwinkleVisualizer.coffee">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="47" column="10" selection-start="1497" selection-end="1497" vertical-scroll-proportion="0.63297874">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Piano.coffee" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/piano/Piano.coffee">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="21" column="0" selection-start="475" selection-end="475" vertical-scroll-proportion="0.0">
+                <state line="41" column="18" selection-start="1669" selection-end="1669" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
@@ -280,46 +280,46 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="main.rb" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/piano_rb/main.rb">
+          <file leaf-file-name="wrapped_spi.cpp" pinned="false" current="true" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/node-spi/src/wrapped_spi.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="59" column="0" selection-start="1326" selection-end="1646" vertical-scroll-proportion="0.0">
+                <state line="82" column="1" selection-start="2083" selection-end="2083" vertical-scroll-proportion="0.66480446">
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="TwinkleVisualizer.rb" pinned="false" current="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/piano_rb/TwinkleVisualizer.rb">
+          <file leaf-file-name="node_spi_test.coffee" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/node-spi/test/node_spi_test.coffee">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="58" column="9" selection-start="1642" selection-end="1642" vertical-scroll-proportion="0.026536312">
+                <state line="2" column="20" selection-start="42" selection-end="42" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Visualizers.rb" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/piano_rb/Visualizers.rb">
+          <file leaf-file-name="wrapped_spi.h" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/node-spi/src/wrapped_spi.h">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="58" column="6" selection-start="1048" selection-end="1048" vertical-scroll-proportion="0.0">
+                <state line="0" column="32" selection-start="32" selection-end="32" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="LightStrips.rb" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/piano_rb/LightStrips.rb">
+          <file leaf-file-name="runtime_exception.h" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/node-spi/src/runtime_exception.h">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="38" column="26" selection-start="634" selection-end="634" vertical-scroll-proportion="0.0">
+                <state line="8" column="0" selection-start="168" selection-end="168" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="CompositeVisualizer.coffee" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/piano/CompositeVisualizer.coffee">
+          <file leaf-file-name="runtime_exception.cpp" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/node-spi/src/runtime_exception.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="12" column="36" selection-start="327" selection-end="327" vertical-scroll-proportion="0.0">
+                <state line="16" column="0" selection-start="298" selection-end="298" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
@@ -345,22 +345,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/piano/sim.rb" />
-        <option value="$PROJECT_DIR$/piano/TwinkleVisualizer.rb" />
-        <option value="$PROJECT_DIR$/piano/Colors.js" />
-        <option value="$PROJECT_DIR$/piano/Simulator.coffee" />
-        <option value="$PROJECT_DIR$/piano/Colors.coffee" />
-        <option value="$PROJECT_DIR$/piano/CompositeVisualizer.coffee" />
-        <option value="$PROJECT_DIR$/piano/KeyUpDownVisualizer.coffee" />
-        <option value="$PROJECT_DIR$/piano/Visualizer.coffee" />
-        <option value="$PROJECT_DIR$/piano/PianoLocations.coffee" />
-        <option value="$PROJECT_DIR$/piano/TwinkleVisualizer.coffee" />
         <option value="$PROJECT_DIR$/piano/LogicalLightStrip.coffee" />
         <option value="$PROJECT_DIR$/piano/AmplitudeVisualizer.coffee" />
         <option value="$PROJECT_DIR$/piano/FrameBufferLightStrip.coffee" />
         <option value="$PROJECT_DIR$/piano/LightStrip.coffee" />
         <option value="$PROJECT_DIR$/piano/Piano.coffee" />
         <option value="$PROJECT_DIR$/piano/Main.coffee" />
+        <option value="$PROJECT_DIR$/node-spi/Makefile" />
+        <option value="$PROJECT_DIR$/node-spi/src/runtime_exception.cpp" />
+        <option value="$PROJECT_DIR$/node-spi/binding.gyp" />
+        <option value="$PROJECT_DIR$/node-spi/src/runtime_exception.h" />
+        <option value="$PROJECT_DIR$/node-spi/src/spi.h" />
+        <option value="$PROJECT_DIR$/node-spi/test/node_spi_test.coffee" />
+        <option value="$PROJECT_DIR$/node-spi/src/wrapped_spi.h" />
+        <option value="/usr/local/include/node/node_object_wrap.h" />
+        <option value="$PROJECT_DIR$/node-spi/src/spi.cpp" />
+        <option value="$PROJECT_DIR$/node-spi/src/wrapped_spi.cpp" />
       </list>
     </option>
   </component>
@@ -368,6 +368,25 @@
     <option name="y" value="22" />
     <option name="width" value="1440" />
     <option name="height" value="874" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>Cpp Inspections</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>Cpp Inspections</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -395,6 +414,17 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope">
+        <subPane subId="Default">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -437,34 +467,65 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="node-spi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
               <option name="myItemId" value="piano" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="piano" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="node-spi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="piano" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="piano" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="node-spi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope">
-        <subPane subId="Default">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="project.structure.last.edited" value="SDKs" />
     <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
-    <property name="options.lastSelected" value="preferences.sourceCode.JavaScript" />
+    <property name="options.lastSelected" value="reference.settingsdialog.IDE.editor.colors.C / C++" />
+    <property name="last_opened_file_path" value="/usr/local/include/node" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="restartRequiresConfirmation" value="true" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="FullScreen" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
@@ -479,7 +540,64 @@
       <PyConsoleSettings />
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Cpp.node-spi test">
+    <configuration default="true" type="CapistranoRunConfigurationType" factoryName="Capistrano">
+      <module name="" />
+      <CAPISTRANO_RUN_CONFIGURATION NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <CAPISTRANO_RUN_CONFIGURATION NAME="WORK DIR" VALUE="" />
+      <CAPISTRANO_RUN_CONFIGURATION NAME="SHOULD_USE_SDK" VALUE="false" />
+      <CAPISTRANO_RUN_CONFIGURATION NAME="ALTERN_SDK_NAME" VALUE="" />
+      <CAPISTRANO_RUN_CONFIGURATION NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <CAPISTRANO_RUN_CONFIG_SETTINGS_ID NAME="CAPISTRANO_TASK_NAME" VALUE="" />
+      <CAPISTRANO_RUN_CONFIG_SETTINGS_ID NAME="CAPISTRANO_TASK_ARGS" VALUE="" />
+      <CAPISTRANO_RUN_CONFIG_SETTINGS_ID NAME="CAPISTRANO_STAGE" VALUE="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="RSpecRunConfigurationType" factoryName="RSpec">
+      <predefined_log_file id="RUBY_RSPEC" enabled="true" />
+      <module name="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TESTS_FOLDER_PATH" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SPEC_RUNNER_PATH" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TEST_FILE_MASK" VALUE="**/*_spec.rb" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SPEC_EXAMPLE_NAME" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="TEST_TEST_TYPE" VALUE="TEST_SCRIPT" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="SPEC_ARGS" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="RUNNER_VERSION" VALUE="" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="USE_CUSTOM_SPEC_RUNNER" VALUE="false" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="DRB" VALUE="false" />
+      <RSPEC_RUN_CONFIG_SETTINGS_ID NAME="FULL_BACKTRACE" VALUE="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <method />
+    </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -493,14 +611,6 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="" />
       <option name="PARAMETERS" value="" />
-      <method />
-    </configuration>
-    <configuration default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
       <method />
     </configuration>
     <configuration default="true" type="RubyRunConfigurationType" factoryName="Ruby">
@@ -520,6 +630,31 @@
       <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
       <RUBY_RUN_CONFIG NAME="SCRIPT_PATH" VALUE="" />
       <RUBY_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestUnitRunConfigurationType" factoryName="Test::Unit/Shoulda/Minitest">
+      <predefined_log_file id="RUBY_TESTUNIT" enabled="true" />
+      <module name="" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
+      <envs />
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="false" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TESTS_FOLDER_PATH" VALUE="" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_FILE_MASK" VALUE="" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_METHOD_NAME" VALUE="" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="TEST_TEST_TYPE" VALUE="TEST_SCRIPT" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="DRB" VALUE="false" />
+      <RTEST_RUN_CONFIG_SETTINGS_ID NAME="RUNNER_OPTIONS" VALUE="" />
       <method />
     </configuration>
     <configuration default="true" type="Applet" factoryName="Applet">
@@ -550,6 +685,9 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="true" type="CppRunConfigurationType" factoryName="Cpp" executable="" parameters="" workingDir="">
+      <method />
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -571,7 +709,14 @@
       <patterns />
       <method />
     </configuration>
-    <list size="0" />
+    <configuration default="false" name="node-spi test" type="CppRunConfigurationType" factoryName="Cpp" executable="/usr/bin/make" parameters="test" workingDir="$PROJECT_DIR$/node-spi">
+      <RunnerSettings RunnerId="CppRunner" />
+      <ConfigurationWrapper RunnerId="CppRunner" />
+      <method />
+    </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Cpp.node-spi test" />
+    </list>
     <configuration name="&lt;template&gt;" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" default="true" selected="false">
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
     </configuration>
@@ -582,25 +727,26 @@
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1440" height="874" extended-state="6" />
+    <frame x="0" y="22" width="1440" height="874" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32948717" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33076924" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24911785" sideWeight="0.66923076" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24911785" sideWeight="0.66923076" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32948717" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33076924" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="SBT Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="SBT Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32948717" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -663,80 +809,9 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/piano/Visualizer.coffee">
+    <entry file="file://$PROJECT_DIR$/piano/TwinkleVisualizer.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="27" selection-start="132" selection-end="132" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/piano/KeyUpDownVisualizer.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="33" selection-start="734" selection-end="734" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/piano_rb/Colors.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/piano_rb/PianoLocations.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="95" column="5" selection-start="3688" selection-end="3688" vertical-scroll-proportion="0.4567039">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/piano_rb/LightStrips.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="26" selection-start="634" selection-end="634" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/piano/CompositeVisualizer.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="36" selection-start="327" selection-end="327" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/piano/PianoLocations.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="90" column="13" selection-start="3649" selection-end="3649" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/piano/AmplitudeVisualizer.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="19" selection-start="740" selection-end="740" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/piano/FrameBufferLightStrip.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="222" selection-end="222" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/piano/LightStrip.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="19" selection-start="351" selection-end="351" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/piano/LogicalLightStrip.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="7" selection-start="7" selection-end="7" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/piano/Piano.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="0" selection-start="475" selection-end="475" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="53" column="10" selection-start="1770" selection-end="1770" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/piano_rb/main.rb">
@@ -748,25 +823,179 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/piano_rb/TwinkleVisualizer.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="9" selection-start="1642" selection-end="1642" vertical-scroll-proportion="0.026536312">
+        <state line="58" column="9" selection-start="1642" selection-end="1642" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/piano/Main.coffee">
+    <entry file="file://$PROJECT_DIR$/node-spi/binding.gyp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="31" selection-start="744" selection-end="744" vertical-scroll-proportion="0.0">
+        <state line="5" column="36" selection-start="106" selection-end="106" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/piano/TwinkleVisualizer.coffee">
+    <entry file="file://$PROJECT_DIR$/node-spi/Makefile">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="10" selection-start="1497" selection-end="1497" vertical-scroll-proportion="0.63297874">
+        <state line="16" column="0" selection-start="401" selection-end="401" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/node-spi/src/spi.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="6" selection-start="276" selection-end="276" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node-spi/src/runtime_exception.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="0" selection-start="168" selection-end="168" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/include/node/v8.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2641" column="23" selection-start="85723" selection-end="85723" vertical-scroll-proportion="0.33240223">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node-spi/node-spi.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node-spi/test/node_spi_test.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="20" selection-start="42" selection-end="42" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/include/node/node.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="229" column="8" selection-start="7392" selection-end="7392" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node-spi/src/runtime_exception.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="0" selection-start="298" selection-end="298" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node-spi/src/wrapped_spi.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="32" selection-start="32" selection-end="32" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/include/node/node_object_wrap.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="18" selection-start="1669" selection-end="1669" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node-spi/src/spi.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="32" selection-start="343" selection-end="347" vertical-scroll-proportion="0.44692737">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node-spi/src/wrapped_spi.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="82" column="1" selection-start="2083" selection-end="2083" vertical-scroll-proportion="0.66480446">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>JsTD Assertion Framework</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>Cpp SDK</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>node-spi</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>
 
