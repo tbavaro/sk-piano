@@ -66,35 +66,38 @@ class Colors
   @green: (c) -> greenPart(c) / 127.0
   @blue: (c) -> bluePart(c) / 127.0
 
-exports.Colors = Colors
+  @BLACK: 0
+  @WHITE: 0x7f7f7f
 
-perfTest = () ->
-  iterations = 100000
-  n = iterations
-  start_time = (new Date()).getTime()
-  x = 0
-  xr = 0
-  xg = 0
-  xb = 0
-  while (n > 0)
-    h = Math.random() * 360.0
-    s = Math.random()
-    v = Math.random()
-    c = Colors.hsv(h, s, v)
-    r = Colors.red(c)
-    g = Colors.green(c)
-    b = Colors.blue(c)
-    x = c if (c > x)
-    xr = r if (r > xr)
-    xg = g if (g > xg)
-    xb = b if (b > xb)
-    n -= 1
-  end_time = (new Date()).getTime()
-  duration_ms = (end_time - start_time)
-  console.log("total time: " + duration_ms + "ms")
-  console.log(
-    "time per iteration: " + (duration_ms / iterations).toFixed(6) + "ms")
-  console.log(x, xr, xg, xb)
-
-perfTest()
+#perfTest = () ->
+#  iterations = 100000
+#  n = iterations
+#  start_time = (new Date()).getTime()
+#  x = 0
+#  xr = 0
+#  xg = 0
+#  xb = 0
+#  while (n > 0)
+#    h = Math.random() * 360.0
+#    s = Math.random()
+#    v = Math.random()
+#    c = Colors.hsv(h, s, v)
+#    r = Colors.red(c)
+#    g = Colors.green(c)
+#    b = Colors.blue(c)
+#    x = c if (c > x)
+#    xr = r if (r > xr)
+#    xg = g if (g > xg)
+#    xb = b if (b > xb)
+#    n -= 1
+#  end_time = (new Date()).getTime()
+#  duration_ms = (end_time - start_time)
+#  console.log("total time: " + duration_ms + "ms")
+#  console.log(
+#    "time per iteration: " + (duration_ms / iterations).toFixed(6) + "ms")
+#  console.log(x, xr, xg, xb)
+#
+#perfTest()
 #console.log("rgb: " + Colors.toHex(Colors.rgb(0.5, 0, 0)))
+
+module.exports = Colors

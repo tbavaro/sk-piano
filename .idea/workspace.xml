@@ -1,13 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="be487878-5b0d-4c99-bf75-7fc2c6a3210b" name="Default" comment="" />
+    <list default="true" id="be487878-5b0d-4c99-bf75-7fc2c6a3210b" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/.gitignore" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/AmplitudeVisualizer.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/CompositeVisualizer.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/FrameBufferLightStrip.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/KeyUpDownVisualizer.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/LightStrip.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/LogicalLightStrip.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/Main.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/Piano.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/PianoLocations.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/Simulator.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/TwinkleVisualizer.coffee" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/piano/Visualizer.coffee" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/piano/Colors.js" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/piano/Colors.coffee" afterPath="$PROJECT_DIR$/piano/Colors.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/driver/main.cpp" afterPath="$PROJECT_DIR$/driver/main.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="piano.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1375405265413" ignored="false" />
+    <file path="/Dummy.txt" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1376107852135" ignored="false" />
     <file path="/temp.rb" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365283208619" ignored="false" />
     <file path="/TwinkleVisualizer.rb" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365283888635" ignored="false" />
-    <file path="/a.dummy" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365207597851" ignored="false" />
+    <file path="/a.dummy" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1376011124358" ignored="false" />
     <file path="/main.rb" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1364866267799" ignored="false" />
     <file path="/Piano.rb" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1364886680347" ignored="false" />
     <file path="/*.regexp" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365112147199" ignored="false" />
@@ -15,7 +33,7 @@
     <file path="/TestVisualizer.rb" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365216909326" ignored="false" />
     <file path="/Colors.rb" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365284446535" ignored="false" />
     <file path="/sim.rb" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365284542394" ignored="false" />
-    <file path="$USER_HOME$/Workspaces/asana/luna/common/model/user.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365183405147" ignored="false" />
+    <file path="$USER_HOME$/Workspaces/asana/luna/common/model/user.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1376009093763" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/luna/common/model/domain.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365025978060" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/docs/toc.rb" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1364933800850" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365202438874" ignored="false" />
@@ -60,7 +78,7 @@
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/model/join_team_request.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365025978059" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/navigation_dock_title_bar_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365025978059" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/model/add_email_verification_workflow.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365025978059" ignored="false" />
-    <file path="$USER_HOME$/Workspaces/asana/luna/temp/luna_model.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365025978059" ignored="false" />
+    <file path="$USER_HOME$/Workspaces/asana/luna/temp/luna_model.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1376009093763" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/model/domain_invite.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365025978059" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/jobs/set_verified_emails_remote_job.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365025978059" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/jobs/find_and_autojoin_users_remote_job.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365025978059" ignored="false" />
@@ -93,7 +111,7 @@
     <file path="/user.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365040558295" ignored="false" />
     <file path="/verified_email.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365112198437" ignored="false" />
     <file path="/test_user.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365033740643" ignored="false" />
-    <file path="$USER_HOME$/Workspaces/asana/luna/common/model/pot.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365045408932" ignored="false" />
+    <file path="$USER_HOME$/Workspaces/asana/luna/common/model/pot.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1376009093763" ignored="false" />
     <file path="/pot.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365034161712" ignored="false" />
     <file path="/uinode.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365043156502" ignored="false" />
     <file path="/luna_session.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365043272397" ignored="false" />
@@ -101,7 +119,7 @@
     <file path="/backfill_zombie_users_one_off.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365059419190" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/model/task.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365103517864" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/asana_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365103517864" ignored="false" />
-    <file path="$USER_HOME$/Workspaces/asana/apps/shared/asana_helpers.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365103517864" ignored="false" />
+    <file path="$USER_HOME$/Workspaces/asana/apps/shared/asana_helpers.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1376009093763" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/test_ui_navigation_dock_network_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365183405146" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/model/test_domain_invite.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365183405147" ignored="false" />
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/dialog/test_manage_workspace_dialog.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365183405147" ignored="false" />
@@ -128,7 +146,31 @@
     <file path="$USER_HOME$/Workspaces/asana/apps/asana/jobs/test_notification_remote_job.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365364478449" ignored="false" />
     <file path="/Colors.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365381359560" ignored="false" />
     <file path="/a.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365380719975" ignored="false" />
-    <file path="/Colors.coffee" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1365404282067" ignored="false" />
+    <file path="/Colors.coffee" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1375462442768" ignored="false" />
+    <file path="/Simulator.coffee" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1375418910772" ignored="false" />
+    <file path="/Piano.coffee" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1375471627206" ignored="false" />
+    <file path="/Main.coffee" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1375471984146" ignored="false" />
+    <file path="/LightStrip.coffee" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1375463538866" ignored="false" />
+    <file path="/FrameBufferLightStrip.coffee" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1375471147976" ignored="false" />
+    <file path="/Visualizer.coffee" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1375465894561" ignored="false" />
+    <file path="/CompositeVisualizer.coffee" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1375464376167" ignored="false" />
+    <file path="/KeyUpDownVisualizer.coffee" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1375465305464" ignored="false" />
+    <file path="/AmplitudeVisualizer.coffee" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1375468844318" ignored="false" />
+    <file path="/TwinkleVisualizer.coffee" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1375468999247" ignored="false" />
+    <file path="/LogicalLightStrip.coffee" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1375469020332" ignored="false" />
+    <file path="/PianoLocations.coffee" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1375468381408" ignored="false" />
+    <file path="/asana_helpers.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1376003085155" ignored="false" />
+    <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/details_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1376009093763" ignored="false" />
+    <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/dialog/available_apps_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1376009093763" ignored="false" />
+    <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/merge_duplicate_select_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1376009093763" ignored="false" />
+    <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/widgets/tokenizer_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1376009089744" ignored="false" />
+    <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/task_pot_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1376009093762" ignored="false" />
+    <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/redesign_task_followers_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1376009093763" ignored="false" />
+    <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/redesign_task_assigned_to_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1376009093763" ignored="false" />
+    <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/redesign_task_due_date_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1376009093763" ignored="false" />
+    <file path="$USER_HOME$/Workspaces/asana/admin/authorized_keys.py" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1376009093763" ignored="false" />
+    <file path="$USER_HOME$/Workspaces/asana/apps/asana/view/widgets/details_pane_project_tokenizer_view.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1376009093763" ignored="false" />
+    <file path="$USER_HOME$/Workspaces/asana/luna/temp/migrations/distributed_jobs/2013_04_23_send_tag_guest_privacy_email.js" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1376009318459" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,44 +228,106 @@
     <favorites_list name="piano" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="main.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/piano/main.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="19" selection-start="19" selection-end="19" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TwinkleVisualizer.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/piano/TwinkleVisualizer.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="63" column="37" selection-start="1749" selection-end="1749" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Colors.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/piano/Colors.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="82" column="18" selection-start="1773" selection-end="1773" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Colors.coffee" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/piano/Colors.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="23" selection-start="341" selection-end="341" vertical-scroll-proportion="0.29310346">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.554693">
+      <split-first>
+        <leaf>
+          <file leaf-file-name="LogicalLightStrip.coffee" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/piano/LogicalLightStrip.coffee">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="0" column="7" selection-start="7" selection-end="7" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="LightStrip.coffee" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/piano/LightStrip.coffee">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="19" column="19" selection-start="351" selection-end="351" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Main.coffee" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/piano/Main.coffee">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="29" column="31" selection-start="744" selection-end="744" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="TwinkleVisualizer.coffee" pinned="false" current="true" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/piano/TwinkleVisualizer.coffee">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="47" column="10" selection-start="1497" selection-end="1497" vertical-scroll-proportion="0.63297874">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Piano.coffee" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/piano/Piano.coffee">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="21" column="0" selection-start="475" selection-end="475" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="main.rb" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/piano_rb/main.rb">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="59" column="0" selection-start="1326" selection-end="1646" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="TwinkleVisualizer.rb" pinned="false" current="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/piano_rb/TwinkleVisualizer.rb">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="58" column="9" selection-start="1642" selection-end="1642" vertical-scroll-proportion="0.026536312">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Visualizers.rb" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/piano_rb/Visualizers.rb">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="58" column="6" selection-start="1048" selection-end="1048" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="LightStrips.rb" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/piano_rb/LightStrips.rb">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="38" column="26" selection-start="634" selection-end="634" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="CompositeVisualizer.coffee" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/piano/CompositeVisualizer.coffee">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="12" column="36" selection-start="327" selection-end="327" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -241,20 +345,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/driver/main.cpp" />
-        <option value="$PROJECT_DIR$/piano/main.rb" />
-        <option value="$PROJECT_DIR$/piano/PianoLocations.rb" />
-        <option value="$PROJECT_DIR$/piano/Visualizers.rb" />
-        <option value="$PROJECT_DIR$/piano/LightStrips.rb" />
-        <option value="$PROJECT_DIR$/piano/Colors.py" />
-        <option value="$PROJECT_DIR$/piano/Colors2.rb" />
-        <option value="$PROJECT_DIR$/piano/TestVisualizer.rb" />
-        <option value="$PROJECT_DIR$/piano/Piano.rb" />
-        <option value="$PROJECT_DIR$/piano/Colors.rb" />
         <option value="$PROJECT_DIR$/piano/sim.rb" />
         <option value="$PROJECT_DIR$/piano/TwinkleVisualizer.rb" />
         <option value="$PROJECT_DIR$/piano/Colors.js" />
+        <option value="$PROJECT_DIR$/piano/Simulator.coffee" />
         <option value="$PROJECT_DIR$/piano/Colors.coffee" />
+        <option value="$PROJECT_DIR$/piano/CompositeVisualizer.coffee" />
+        <option value="$PROJECT_DIR$/piano/KeyUpDownVisualizer.coffee" />
+        <option value="$PROJECT_DIR$/piano/Visualizer.coffee" />
+        <option value="$PROJECT_DIR$/piano/PianoLocations.coffee" />
+        <option value="$PROJECT_DIR$/piano/TwinkleVisualizer.coffee" />
+        <option value="$PROJECT_DIR$/piano/LogicalLightStrip.coffee" />
+        <option value="$PROJECT_DIR$/piano/AmplitudeVisualizer.coffee" />
+        <option value="$PROJECT_DIR$/piano/FrameBufferLightStrip.coffee" />
+        <option value="$PROJECT_DIR$/piano/LightStrip.coffee" />
+        <option value="$PROJECT_DIR$/piano/Piano.coffee" />
+        <option value="$PROJECT_DIR$/piano/Main.coffee" />
       </list>
     </option>
   </component>
@@ -317,6 +423,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="piano_rb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="piano" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="piano" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="piano" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -360,14 +480,6 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
-      <method />
-    </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -381,6 +493,14 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="" />
       <option name="PARAMETERS" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
       <method />
     </configuration>
     <configuration default="true" type="RubyRunConfigurationType" factoryName="Ruby">
@@ -469,7 +589,7 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24911785" sideWeight="0.66923076" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24911785" sideWeight="0.66923076" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -543,104 +663,106 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/piano/Piano.rb">
+    <entry file="file://$PROJECT_DIR$/piano/Visualizer.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="32" selection-start="1050" selection-end="1063" vertical-scroll-proportion="0.0">
+        <state line="4" column="27" selection-start="132" selection-end="132" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/piano/KeyUpDownVisualizer.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="33" selection-start="734" selection-end="734" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/piano_rb/Colors.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/piano/Colors.rb">
+    <entry file="file://$PROJECT_DIR$/piano_rb/PianoLocations.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="5" selection-start="476" selection-end="476" vertical-scroll-proportion="0.0">
+        <state line="95" column="5" selection-start="3688" selection-end="3688" vertical-scroll-proportion="0.4567039">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/driver/main.cpp">
+    <entry file="file://$PROJECT_DIR$/piano_rb/LightStrips.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="6" selection-start="2031" selection-end="2031" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Library/Application Support/IntelliJIdea12/ruby/rubystubs/rubystubs18/kernel.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="230" column="8" selection-start="7926" selection-end="7926" vertical-scroll-proportion="-0.08097166" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/piano/LightStrips.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="58" selection-start="329" selection-end="329" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/piano/Visualizers.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="24" selection-start="1582" selection-end="1582" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/piano/TestVisualizer.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="44" selection-start="444" selection-end="444" vertical-scroll-proportion="0.0">
+        <state line="38" column="26" selection-start="634" selection-end="634" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/piano/PianoLocations.rb">
+    <entry file="file://$PROJECT_DIR$/piano/CompositeVisualizer.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="21" selection-start="1967" selection-end="1967" vertical-scroll-proportion="0.0">
+        <state line="12" column="36" selection-start="327" selection-end="327" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/piano.iml">
+    <entry file="file://$PROJECT_DIR$/piano/PianoLocations.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+        <state line="90" column="13" selection-start="3649" selection-end="3649" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/piano/Piano.rb">
+    <entry file="file://$PROJECT_DIR$/piano/AmplitudeVisualizer.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="15" selection-start="97" selection-end="97" vertical-scroll-proportion="0.0">
+        <state line="27" column="19" selection-start="740" selection-end="740" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/piano/FrameBufferLightStrip.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="0" selection-start="222" selection-end="222" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/piano/main.rb">
+    <entry file="file://$PROJECT_DIR$/piano/LightStrip.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="19" selection-start="19" selection-end="19" vertical-scroll-proportion="0.0">
+        <state line="19" column="19" selection-start="351" selection-end="351" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/piano/sim.rb">
+    <entry file="file://$PROJECT_DIR$/piano/LogicalLightStrip.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="44" selection-start="446" selection-end="446" vertical-scroll-proportion="0.0">
+        <state line="0" column="7" selection-start="7" selection-end="7" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/piano/Colors.rb">
+    <entry file="file://$PROJECT_DIR$/piano/Piano.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="0" selection-start="0" selection-end="3835" vertical-scroll-proportion="0.0">
+        <state line="21" column="0" selection-start="475" selection-end="475" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/piano/TwinkleVisualizer.rb">
+    <entry file="file://$PROJECT_DIR$/piano_rb/main.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="37" selection-start="1749" selection-end="1749" vertical-scroll-proportion="0.0">
+        <state line="59" column="0" selection-start="1326" selection-end="1646" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/piano/Colors.js">
+    <entry file="file://$PROJECT_DIR$/piano_rb/TwinkleVisualizer.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="18" selection-start="1773" selection-end="1773" vertical-scroll-proportion="0.0">
+        <state line="58" column="9" selection-start="1642" selection-end="1642" vertical-scroll-proportion="0.026536312">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/piano/Colors.coffee">
+    <entry file="file://$PROJECT_DIR$/piano/Main.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="23" selection-start="341" selection-end="341" vertical-scroll-proportion="0.29310346">
+        <state line="29" column="31" selection-start="744" selection-end="744" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/piano/TwinkleVisualizer.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="10" selection-start="1497" selection-end="1497" vertical-scroll-proportion="0.63297874">
           <folding />
         </state>
       </provider>

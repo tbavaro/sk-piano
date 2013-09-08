@@ -1,9 +1,12 @@
 #include "BeagleBone.h"
 #include "PhysicalPiano.h"
 
+#include <sys/socket.h>
+#include <sys/un.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 
 using namespace std;
@@ -37,35 +40,36 @@ class Message {
     const uint32_t length;
     const uint8_t* buffer;
     
-    static Message* read(FILE* f);
+    static Message* read(unsigned int socket);
 };
 
-Message* Message::read(FILE* f) {
+Message* Message::read(unsigned int socket) {
   uint32_t length;
-  if (fread(&length, sizeof(length), 1, f) != 1) {
-    fatal("EOF reading length");
+  if (recv(socket, &length, sizeof(length), 0) < 1) {
+    return NULL;
   }
 
+  printf("read length: %d\n", length);
+
   uint8_t* buffer = new uint8_t[length];
-  if (fread(buffer, length, 1, f) != 1) {
+  if (recv(socket, buffer, length, 0) < 1) {
     fatal("EOF reading message");
   }
 
   return new Message(length, buffer);
 }
 
-static FILE* outPipe = NULL;
+static unsigned int remoteSocket;
 static SPI* spi = NULL;
 static PhysicalPiano* piano = NULL;
 
 static void sendMessage(Command cmd, const uint8_t* body, uint32_t bodyLength) {
   uint32_t totalLength = bodyLength + sizeof(cmd);
-  if (fwrite(&totalLength, sizeof(totalLength), 1, outPipe) != 1 ||
-      fwrite(&cmd, sizeof(cmd), 1, outPipe) != 1 ||
-      (bodyLength > 0 && fwrite(body, bodyLength, 1, outPipe) != 1)) {
+  if (send(remoteSocket, &totalLength, sizeof(totalLength), 0) == -1 ||
+      send(remoteSocket, &cmd, sizeof(cmd), 0) == -1 ||
+      (bodyLength > 0 && send(remoteSocket, body, bodyLength, 0) == -1)) {
     fatal("error sending message");
   }
-  fflush(outPipe);
 }
 
 static void sendMessage(Command cmd) {
@@ -101,6 +105,7 @@ static void processShowMessage(const uint8_t* body, uint32_t bodyLength) {
 }
 
 static void processMessage(Command cmd, const uint8_t* body, uint32_t bodyLength) {
+  printf("processing message!\n");
   if (cmd == CMD_SCAN) {
     processScanMessage();
   } else if (cmd == CMD_SHOW) {
@@ -124,6 +129,7 @@ static void processMessage(const Message& message) {
  * Simple binary message format in both directions: 4 bytes for length 
  * of message followed by that many bytes of message body
  */
+/*
 int main(int argc, char** argv) {
   if (argc < 3) {
     fatal("need to specify pipe names");
@@ -143,6 +149,57 @@ int main(int argc, char** argv) {
     processMessage(*msg);
     delete msg;
   }
+
+  return 0;
+}
+*/
+
+int main(int argc, char** argv) {
+  if (argc < 2) {
+    fatal("need to specify socket name");
+  }
+
+#ifndef NOT_BEAGLEBONE
+  spi = new SPI(4e6);
+  piano = new PhysicalPiano();
+#endif
+
+  unsigned int s = socket(AF_UNIX, SOCK_STREAM, 0);
+  struct sockaddr_un local;
+  local.sun_family = AF_UNIX;
+  strcpy(local.sun_path, argv[1]);
+  unlink(local.sun_path);
+  socklen_t len = strlen(local.sun_path) + sizeof(local.sun_family) + 1;
+  bind(s, (struct sockaddr*)&local, len);
+  listen(s, 5);
+
+  log("Waiting for connection...");
+
+  struct sockaddr_un remote;
+  len = sizeof(struct sockaddr_un);
+  remoteSocket = accept(s, (struct sockaddr*)&remote, &len);
+
+  log("Connected!");
+
+  sendMessage(CMD_OK);
+  while(1) {
+    Message* msg = Message::read(remoteSocket);
+    if (msg == NULL) {
+      log("Disconnected!");
+      break;
+    }
+    printf("got something\n");
+    processMessage(*msg);
+    delete msg;
+  }
+
+//  char buf[4096];
+//  while(len = recv(remoteSocket, &buf, sizeof(buf), 0), len > 0) {
+//    printf("[echo] %.*s\n", len, buf);
+//    send(remoteSocket, &buf, len, 0);
+//  }
+
+  close(remoteSocket);
 
   return 0;
 }
