@@ -2,22 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="be487878-5b0d-4c99-bf75-7fc2c6a3210b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node-spi/Makefile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node-spi/node-spi.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node-spi/src/runtime_exception.cpp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node-spi/src/runtime_exception.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node-spi/src/spi.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node-spi/src/wrapped_spi.cpp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node-spi/src/wrapped_spi.h" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/piano_node/node-spi/Makefile" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/piano_node/node-spi/binding.gyp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/piano_node/node-spi/spi-test.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/piano_node/node-spi/spi.cpp" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node-spi/src/spi.cpp" afterPath="$PROJECT_DIR$/node-spi/src/spi.cpp" />
     </list>
     <ignored path="piano.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -176,7 +161,7 @@
     <file path="/binding.gyp" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1378670587972" ignored="false" />
     <file path="/a.java" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1378670818865" ignored="false" />
     <file path="/runtime_exception.h" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1378671091820" ignored="false" />
-    <file path="/spi.cpp" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1378672849843" ignored="false" />
+    <file path="/spi.cpp" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1378675487302" ignored="false" />
     <file path="/node_spi_test.coffee" changelist="be487878-5b0d-4c99-bf75-7fc2c6a3210b" time="1378673168865" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -235,7 +220,7 @@
     <favorites_list name="piano" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.44360903">
+    <splitter split-orientation="horizontal" split-proportion="0.7011278">
       <split-first>
         <leaf>
           <file leaf-file-name="node-spi.iml" pinned="false" current="false" current-in-tab="false">
@@ -247,10 +232,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="spi.cpp" pinned="false" current="false" current-in-tab="true">
+          <file leaf-file-name="spi.cpp" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/node-spi/src/spi.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="20" column="32" selection-start="343" selection-end="347" vertical-scroll-proportion="0.44692737">
+                <state line="4" column="16" selection-start="65" selection-end="65" vertical-scroll-proportion="0.08510638">
                   <folding>
                     <element signature="n#!!doc" expanded="true" />
                   </folding>
@@ -280,10 +265,10 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="wrapped_spi.cpp" pinned="false" current="true" current-in-tab="true">
+          <file leaf-file-name="wrapped_spi.cpp" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/node-spi/src/wrapped_spi.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="82" column="1" selection-start="2083" selection-end="2083" vertical-scroll-proportion="0.66480446">
+                <state line="82" column="1" selection-start="2083" selection-end="2083" vertical-scroll-proportion="0.7641791">
                   <folding />
                 </state>
               </provider>
@@ -359,8 +344,8 @@
         <option value="$PROJECT_DIR$/node-spi/test/node_spi_test.coffee" />
         <option value="$PROJECT_DIR$/node-spi/src/wrapped_spi.h" />
         <option value="/usr/local/include/node/node_object_wrap.h" />
-        <option value="$PROJECT_DIR$/node-spi/src/spi.cpp" />
         <option value="$PROJECT_DIR$/node-spi/src/wrapped_spi.cpp" />
+        <option value="$PROJECT_DIR$/node-spi/src/spi.cpp" />
       </list>
     </option>
   </component>
@@ -905,19 +890,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node-spi/src/spi.cpp">
+    <entry file="file://$PROJECT_DIR$/node-spi/src/wrapped_spi.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="32" selection-start="343" selection-end="347" vertical-scroll-proportion="0.44692737">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state line="82" column="1" selection-start="2083" selection-end="2083" vertical-scroll-proportion="0.7641791">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node-spi/src/wrapped_spi.cpp">
+    <entry file="file://$PROJECT_DIR$/node-spi/src/spi.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="1" selection-start="2083" selection-end="2083" vertical-scroll-proportion="0.66480446">
-          <folding />
+        <state line="4" column="16" selection-start="65" selection-end="65" vertical-scroll-proportion="0.08510638">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
