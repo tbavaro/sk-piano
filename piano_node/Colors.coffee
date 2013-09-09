@@ -46,28 +46,26 @@ redPart = (c) -> colorPart(c, 8)
 greenPart = (c) -> colorPart(c, 16)
 bluePart = (c) -> colorPart(c, 0)
 
-class Colors
-  constructor: () -> throw "static only"
-
-  @rgb: (r, g, b) ->
+Colors =
+  rgb:(r, g, b) ->
     rgbUnchecked(
       Math.floor(bracket01(r) * 127),
       Math.floor(bracket01(g) * 127),
       Math.floor(bracket01(b) * 127))
 
-  @hsv: (h, s, v) ->
+  hsv: (h, s, v) ->
     hsvUnchecked(h % 360.0, bracket01(s), bracket01(v))
 
-  @toHex: (c) ->
+  toHex: (c) ->
     res = c.toString(16)
     "000000".substr(0, if res.length < 6 then 6 - res.length else 0) + res
 
-  @red: (c) -> redPart(c) / 127.0
-  @green: (c) -> greenPart(c) / 127.0
-  @blue: (c) -> bluePart(c) / 127.0
+  red: (c) -> redPart(c) / 127.0
+  green: (c) -> greenPart(c) / 127.0
+  blue: (c) -> bluePart(c) / 127.0
 
-  @BLACK: 0
-  @WHITE: 0x7f7f7f
+  BLACK: 0
+  WHITE: 0x7f7f7f
 
 #perfTest = () ->
 #  iterations = 100000
