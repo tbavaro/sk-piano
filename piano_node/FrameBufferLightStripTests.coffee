@@ -13,7 +13,7 @@ assertBufferEquals = (expectedArray, buffer) ->
     array[i] = buffer[i]
   assert.deepEqual(expectedArray, array)
 
-testCorrectness = () ->
+exports.testCorrectness = (test) ->
   strip = new FrameBufferLightStrip(3)
 
   assert.equal(3, strip.numPixels)
@@ -60,24 +60,24 @@ testCorrectness = () ->
     [0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x00],
     strip.buffer())
 
-testPerformance = () ->
-  NUM_PIXELS = 1000
-  NUM_FRAMES = 60
-  MAX_DURATION = 100
-  strip = new FrameBufferLightStrip(NUM_PIXELS)
+  test.done()
 
-  duration = runTimed () ->
-    for _ in [0...NUM_FRAMES] by 1
-      for pixel in [0...NUM_PIXELS] by 1
-        strip.setPixel(pixel, pixel)
-      strip.buffer()
-    return
+exports.testPerformance = (test) ->
+    NUM_PIXELS = 1000
+    NUM_FRAMES = 60
+    MAX_DURATION = 100
+    strip = new FrameBufferLightStrip(NUM_PIXELS)
 
-#  console.log("FrameBufferLightStrip perf test: " + duration + " ms")
+    duration = runTimed () ->
+      for _ in [0...NUM_FRAMES] by 1
+        for pixel in [0...NUM_PIXELS] by 1
+          strip.setPixel(pixel, pixel)
+        strip.buffer()
+      return
 
-  assert(duration < MAX_DURATION,
-      "expected duration < " + MAX_DURATION + ", was: " + duration)
+  #  console.log("FrameBufferLightStrip perf test: " + duration + " ms")
 
-# run tests
-testCorrectness()
-testPerformance()
+    assert(duration < MAX_DURATION,
+        "expected duration < " + MAX_DURATION + ", was: " + duration)
+
+    test.done()
