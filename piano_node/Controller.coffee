@@ -1,33 +1,23 @@
 Colors = require("./Colors")
 FrameBufferLightStrip = require("./FrameBufferLightStrip")
+MasterVisualizer = require("./MasterVisualizer")
+PianoKeys = require("./PianoKeys")
 Spi = require("../node-spi/build/Release/spi")
 
 SPI_DEVICE = "/dev/spidev2.0"
 SPI_FREQUENCY_HZ = 4e6
-TARGET_FPS = 50
+TARGET_FPS = 30
 LOG_EVERY_N_FRAMES = TARGET_FPS * 3
 NUM_PIXELS = 1000
 IS_SIMULATOR = (process.arch != "arm")
 
-class Renderer
-  constructor: (strip) ->
-    @strip = strip
-
-  render: (interval) -> throw "abstract"
-
-class TestRenderer extends Renderer
-  constructor: (strip) ->
-    super(strip)
-    @phase = 0
-
-  render: (interval) ->
-    @phase = (@phase + interval / 5.0) % 1.0
-    for i in [0...@strip.numPixels] by 1
-      color = Colors.hsv((@phase * 360.0 + i) % 360, 1, Math.random())
-      @strip.setPixel(i, color)
+# TODO separate this out to RealController and SimulatorController
 
 class Controller
-  constructor: (@strip, @renderer) ->
+  constructor: (strip, pianoKeys, visualizer) ->
+    @strip = strip
+    @pianoKeys = pianoKeys
+    @visualizer = visualizer
     @spi = new Spi(SPI_DEVICE, SPI_FREQUENCY_HZ)
     @targetFrameDuration = 1000.0 / TARGET_FPS
     @prevFrameTime = Date.now()
@@ -39,7 +29,9 @@ class Controller
     secondsSinceLastFrame = (startTime - @prevFrameTime) / 1000.0
     @prevFrameTime = startTime
 
-    @renderer.render(secondsSinceLastFrame)
+    # TODO update piano keys
+
+    @visualizer.render(secondsSinceLastFrame)
 
     @sendBuffer()
 
@@ -101,8 +93,9 @@ class Controller
     return
 
 strip = new FrameBufferLightStrip(NUM_PIXELS)
-renderer = new TestRenderer(strip)
-ctrl = new Controller(strip, renderer)
+pianoKeys = new PianoKeys()
+visualizer = new MasterVisualizer(strip, pianoKeys)
+ctrl = new Controller(strip, pianoKeys, visualizer)
 
 if IS_SIMULATOR
   ctrl.runLoopAsync()

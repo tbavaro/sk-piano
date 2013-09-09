@@ -6,6 +6,9 @@
 # "Above keys" refers to the lights directly above the keyboard, not counting
 #     the lights on the front that are beyond the keyboard to the left or right
 
+# TODO just make this a JS object, not a class
+# TODO camelcase
+
 class PianoLocations
   # Individual LED numbers:
   @TOP_LEFT_JUST_BEHIND_HINGE: 0

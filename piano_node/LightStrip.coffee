@@ -1,7 +1,8 @@
 Colors = require("./Colors")
 
 class LightStrip
-  constructor: (@numPixels) ->
+  constructor: (numPixels) ->
+    @numPixels = numPixels
 
   reset: () ->
     for i in [0...@numPixels] by 1
