@@ -24,6 +24,7 @@ static const bool IS_STUB = false;
 #endif
 
 static const int BITS_PER_WORD = 8;
+static const int DELAY_USECS = 5;
 
 // NB: in the old environment this was 0, but now it seems to always be 1
 static const int EXPECTED_READ_MODE = 1;
@@ -94,7 +95,7 @@ void Spi::send(void* buf, int numBytes) {
   tr.tx_buf = (unsigned long)buf;
   tr.rx_buf = (unsigned long)rx_buf;
   tr.len = numBytes;
-  tr.delay_usecs = 5;
+  tr.delay_usecs = DELAY_USECS;
   tr.speed_hz = maxSpeedHz;
   tr.bits_per_word = BITS_PER_WORD;
 
