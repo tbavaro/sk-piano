@@ -1,6 +1,7 @@
 #include "runtime_exception.h"
 
 #include <stdarg.h>
+#include <stdio.h>
 
 using namespace std;
 

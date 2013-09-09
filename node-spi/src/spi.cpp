@@ -101,7 +101,7 @@ void Spi::send(void* buf, int numBytes) {
   if (IS_STUB) {
     printf("SEND %d BYTES:", numBytes);
     for (int i = 0; i < numBytes; ++i) {
-      printf(" %02x", ((const char*)buf)[i]);
+      printf(" %02x", ((const unsigned char*)buf)[i]);
     }
     printf("\n");
     return;
@@ -116,4 +116,3 @@ void Spi::send(void* buf, int numBytes) {
     throw RuntimeException("unable to send SPI message: %d", ret);
   }
 }
-

@@ -3,6 +3,7 @@
 
 #include <v8.h>
 
+#include <node_buffer.h>
 #include <node_object_wrap.h>
 
 using namespace node;
@@ -78,7 +79,16 @@ static Handle<Value> wrappedClose(const Arguments& args) {
 
 static Handle<Value> wrappedSend(const Arguments& args) {
   HandleScope scope;
-  callMethod(send, NULL, 0);
+
+  int argc = args.Length();
+
+  if (argc < 1 || !Buffer::HasInstance(args[0])) {
+    return NodeError("buffer required");
+  }
+  const Handle<Value>& bufferArg = args[0];
+  size_t bufferLength = Buffer::Length(bufferArg);
+
+  callMethod(send, Buffer::Data(bufferArg), bufferLength);
   return Undefined();
 }
 
@@ -88,16 +98,19 @@ static void initModule(Handle<Object> exports, Handle<Object> module) {
   HandleScope scope;
 
   // see http://syskall.com/how-to-write-your-own-native-nodejs-extension/index.html/
-  Local<FunctionTemplate> localFunctionTemplate = FunctionTemplate::New(WrappedSpi::wrappedNew);
-  persistentFunctionTemplate = Persistent<FunctionTemplate>::New(localFunctionTemplate);
+  Local<FunctionTemplate> localFunctionTemplate =
+      FunctionTemplate::New(WrappedSpi::wrappedNew);
+  persistentFunctionTemplate =
+      Persistent<FunctionTemplate>::New(localFunctionTemplate);
   persistentFunctionTemplate->InstanceTemplate()->SetInternalFieldCount(1);
   persistentFunctionTemplate->SetClassName(String::NewSymbol("Spi"));
 
   NODE_SET_PROTOTYPE_METHOD(persistentFunctionTemplate, "close", &wrappedClose);
   NODE_SET_PROTOTYPE_METHOD(persistentFunctionTemplate, "send", &wrappedSend);
 
-  //exports->Set(String::NewSymbol("spi"), persistentFunctionTemplate->GetFunction());
-  module->Set(String::NewSymbol("exports"), persistentFunctionTemplate->GetFunction());
+  module->Set(
+      String::NewSymbol("exports"),
+      persistentFunctionTemplate->GetFunction());
 }
 
 NODE_MODULE(spi, initModule);
