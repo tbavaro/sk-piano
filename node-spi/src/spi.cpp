@@ -100,11 +100,11 @@ void Spi::send(void* buf, int numBytes) {
   tr.bits_per_word = BITS_PER_WORD;
 
   if (IS_STUB) {
-    printf("SEND %d BYTES:", numBytes);
-    for (int i = 0; i < numBytes; ++i) {
-      printf(" %02x", ((const unsigned char*)buf)[i]);
-    }
-    printf("\n");
+//    printf("SEND %d BYTES:", numBytes);
+//    for (int i = 0; i < numBytes; ++i) {
+//      printf(" %02x", ((const unsigned char*)buf)[i]);
+//    }
+//    printf("\n");
     return;
   }
 
