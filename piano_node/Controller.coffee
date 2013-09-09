@@ -8,7 +8,7 @@ SPI_DEVICE = "/dev/spidev2.0"
 SPI_FREQUENCY_HZ = 4e6
 TARGET_FPS = 30
 LOG_EVERY_N_FRAMES = TARGET_FPS * 3
-NUM_PIXELS = 1000
+NUM_PIXELS = 686
 IS_SIMULATOR = (process.arch != "arm")
 
 # TODO separate this out to RealController and SimulatorController

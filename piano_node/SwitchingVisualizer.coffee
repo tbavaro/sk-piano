@@ -1,18 +1,16 @@
 Visualizer = require("./Visualizer")
 PianoKeys = require("./PianoKeys")
+TestUtils = require("./TestUtils")
 assert = require("assert")
 
 # switch whenever the leftmost key is pressed
 SWITCH_KEY = 0
 
-# TODO maybe make the visualizers on-the fly (e.g. w/ functors)
-# so we can GC the ones we're not using?
-
 class SwitchingVisualizer extends Visualizer
-  constructor: (pianoKeys, visualizers) ->
+  constructor: (pianoKeys, visualizerFunctors) ->
     super
-    assert(visualizers.length > 0)
-    @visualizers = visualizers
+    assert(visualizerFunctors.length > 0)
+    @visualizerFunctors = visualizerFunctors
     @pianoKeys = pianoKeys
     @reset()
 
@@ -23,9 +21,12 @@ class SwitchingVisualizer extends Visualizer
 
   switchToNextVisualizer: () ->
     @currentVisualizerIndex =
-        ((@currentVisualizerIndex + 1) % @visualizers.length)
-    @currentVisualizer = @visualizers[@currentVisualizerIndex]
-    console.log("Switching to visualizer: " + @currentVisualizer)
+        ((@currentVisualizerIndex + 1) % @visualizerFunctors.length)
+    duration = TestUtils.runTimed () =>
+      @currentVisualizer = (@visualizerFunctors[@currentVisualizerIndex])()
+    console.log([
+      "Switching to visualizer: ", @currentVisualizer, " (", duration, "ms)"
+    ].join(""))
     @currentVisualizer.reset()
     @currentVisualizer.render(0)
 
