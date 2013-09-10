@@ -1,6 +1,9 @@
 LightStrip = require("./LightStrip")
 Colors = require("./Colors")
 
+# TODO maybe split out PhysicalLightStrip and move the SPI/buffer
+# stuff into that?
+
 class FrameBufferLightStrip extends LightStrip
   constructor: (numPixels) ->
     super(numPixels)
@@ -30,24 +33,5 @@ class FrameBufferLightStrip extends LightStrip
       @_buffer[1] = (firstPixel >> 8) & 0xff
       @_buffer[2] = (firstPixel >> 0) & 0xff
     @_buffer
-
-#class FrameBufferLightStrip extends LightStrip
-#  constructor: (numPixels) ->
-#    super(numPixels)
-#    @buffer = new Buffer(3 * @numPixels + 1)
-#    @buffer[@buffer.length - 1] = 0
-#    @reset()
-#
-#  reset: () ->
-#    @buffer.fill(0x80, 0, @buffer.length - 1)
-#    return
-#
-#  getPixel: (i) ->
-#    (@buffer.readInt32BE(i * 3) >> 8) & 0x007f7f7f
-#
-#  setPixel: (i, color) ->
-#    word = (((color | 0x808080) & 0xffffff) << 8) + @buffer.readUInt8(i * 3 + 3)
-#    @buffer.writeInt32BE(word, i * 3)
-#    return
 
 module.exports = FrameBufferLightStrip

@@ -1,8 +1,8 @@
+BeagleBone = require("./BeagleBone")
 Colors = require("./Colors")
 FrameBufferLightStrip = require("./FrameBufferLightStrip")
 MasterVisualizer = require("./MasterVisualizer")
 PianoKeys = require("./PianoKeys")
-Spi = require("../node-spi/build/Release/spi")
 
 SPI_DEVICE = "/dev/spidev2.0"
 SPI_FREQUENCY_HZ = 4e6
@@ -18,7 +18,7 @@ class Controller
     @strip = strip
     @pianoKeys = pianoKeys
     @visualizer = visualizer
-    @spi = new Spi(SPI_DEVICE, SPI_FREQUENCY_HZ)
+    @spi = new BeagleBone.Spi(SPI_DEVICE, SPI_FREQUENCY_HZ)
     @targetFrameDuration = 1000.0 / TARGET_FPS
     @prevFrameTime = Date.now()
     @nextFrameTime = @prevFrameTime
