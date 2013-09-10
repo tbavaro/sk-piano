@@ -1,0 +1,1 @@
+piano ALL=(root) NOPASSWD: /usr/local/bin/allow_nonroot_gpio_pin_access.sh

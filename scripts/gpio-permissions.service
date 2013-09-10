@@ -1,0 +1,10 @@
+[Unit]
+Description=Make the GPIO devices accessable to non-root users
+After=syslog.target network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/gpio_permissions.sh
+
+[Install]
+WantedBy=multi-user.target

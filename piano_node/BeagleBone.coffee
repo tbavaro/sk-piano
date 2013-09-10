@@ -1,5 +1,6 @@
 fs = require("fs")
 assert = require("assert")
+ExecSync = require("execSync")
 
 BYTE_ZERO = "0".charCodeAt(0)
 BYTE_ONE = "1".charCodeAt(0)
@@ -15,6 +16,54 @@ openAndReadOneByteSync = (filename) ->
 writeOneByteSync = (fd, value) ->
   byteBuffer.writeUInt8(value, 0)
   fs.writeSync(fd, byteBuffer, 0, 1, null)
+  return
+
+pinNumbersWithNonRootAccess = []
+pinsAwaitingNonRootAccess = []
+
+PIN_METHODS_TO_WRAP = ["read", "write"]
+
+setPinDirection = (pin) ->
+  fs.writeFileSync(pin._gpioPath + "/direction", pin.mode.direction)
+
+setPinDirectionMaybeDeferred = (pin) ->
+  if pin.number in pinNumbersWithNonRootAccess
+    # already has non-root access, set direction now
+    setPinDirection(pin)
+  else if pin in pinsAwaitingNonRootAccess
+    # already deferred; it will get the right direction when
+    # it gets set up
+  else
+    pinsAwaitingNonRootAccess.push(pin)
+
+    # wrap access methods so the next time any awaiting pin
+    # gets accessed we will first grant non-root access to all
+    # awaiting pins
+    for method in PIN_METHODS_TO_WRAP
+      pin[method] = () ->
+        processPinsAwaitingNonRootAccess()
+        Pin.prototype[method].apply(this, arguments)
+  return
+
+processPinsAwaitingNonRootAccess = () ->
+  if pinsAwaitingNonRootAccess.length > 0
+    cmd =
+      [
+        "sudo",
+        "/usr/local/bin/allow_nonroot_gpio_pin_access.sh"
+      ].concat(pin.number for pin in pinsAwaitingNonRootAccess)
+       .join(" ")
+    rc = ExecSync.run(cmd)
+    throw "unable to set up non-root access for pins" if rc != 0
+    for pin in pinsAwaitingNonRootAccess
+      pinNumbersWithNonRootAccess.push(pin.number)
+      setPinDirection(pin)
+
+      # revert to the implementations from the prototype
+      for method in PIN_METHODS_TO_WRAP
+        delete pin[method]
+
+    pinsAwaitingNonRootAccess = []
   return
 
 class Pin
@@ -43,14 +92,15 @@ class Pin
     # close the value file if it's open
     @close()
 
+    @mode = mode
+
     # export the pin if necessary
     if !fs.existsSync(@_gpioPath)
       fs.writeFileSync("/sys/class/gpio/export", @number.toString())
       assert(fs.existsSync(@_gpioPath))
 
-    # set the direction and mode
-    fs.writeFileSync(@_gpioPath + "/direction", mode.direction)
-    #fs.writeFileSync("/sys/kernel/debug/omap_mux/" + @name, mode.mode.toString())
+    setPinDirectionMaybeDeferred(this)
+
     return
 
   read: () ->
@@ -71,6 +121,7 @@ class Pin
     #@close()
 
     return
+
 
 Pins =
   _headers:

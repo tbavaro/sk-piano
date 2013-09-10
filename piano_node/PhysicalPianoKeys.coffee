@@ -30,13 +30,12 @@ class PhysicalPianoKeys extends PianoKeys
     @_notePins = (BeagleBone.Pins.pin(PIN_HEADER, n) for n in NOTE_PINS)
     @_octavePins = (BeagleBone.Pins.pin(PIN_HEADER, n) for n in OCTAVE_PINS)
 
-    # set up note pins as INPUT pins
+    # set up note pins for INPUT pins and octave pins for OTPUT
     pin.setMode(BeagleBone.Pin.INPUT) for pin in @_notePins
+    pin.setMode(BeagleBone.Pin.OUTPUT) for pin in @_octavePins
 
-    # set up octave pins as OUTPUT pins and turn them all off
-    for pin in @_octavePins
-      pin.setMode(BeagleBone.Pin.OUTPUT)
-      pin.write(false)
+    # turn off all of the octave pins
+    pin.write(false) for pin in @_octavePins
 
   scan: () ->
     pressedKeys = []

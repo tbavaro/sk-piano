@@ -1,0 +1,10 @@
+[Unit]
+Description=Initialize SPIDEV devices
+After=syslog.target network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/spidev_init.sh
+
+[Install]
+WantedBy=multi-user.target
