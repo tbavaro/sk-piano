@@ -1,5 +1,9 @@
 NUM_KEYS = 88
 
+NOTE_NAMES = [
+  "a", "A", "b", "c", "C", "d", "D", "e", "f", "F", "g", "G"
+]
+
 class PianoKeys
   @NUM_KEYS: NUM_KEYS
 
@@ -38,5 +42,17 @@ class PianoKeys
     @keys = newKeys
 
     return
+
+  note: (key) ->
+    NOTE_NAMES[key % NOTE_NAMES.length]
+
+  octave: (key) ->
+    Math.floor(key / NOTE_NAMES.length)
+
+  keyName: (key) ->
+    @note(key) + @octave(key)
+
+  pressedKeyNames: () ->
+    @keyName(key) for key in @pressedKeys
 
 module.exports = PianoKeys

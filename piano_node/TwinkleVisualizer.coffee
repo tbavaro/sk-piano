@@ -47,7 +47,7 @@ class TwinkleVisualizerHelper extends AmplitudeVisualizer
 
       # set saturations for pressed keys
       radius = Math.floor(2.0 * @strip.numPixels / PianoKeys.NUM_KEYS)
-      @pianoKeys.pressedKeys.forEach (key) ->
+      for key in @pianoKeys.pressedKeys
         pixel = @pixelForKey(key)
         leftPixel = Math.max(0, pixel - radius)
         rightPixel = Math.min(@strip.numPixels - 1, pixel + radius)

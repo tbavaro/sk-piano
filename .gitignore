@@ -4,6 +4,7 @@
 *.o
 *.pyc
 *~
+.swp
 beaglebone/piano
 out/
 .idea/workspace.xml

@@ -1,7 +1,8 @@
 fs = require("fs")
+assert = require("assert")
 
 BYTE_ZERO = "0".charCodeAt(0)
-BYTE_ONE = "1".charCodeAt(1)
+BYTE_ONE = "1".charCodeAt(0)
 
 byteBuffer = new Buffer(1)
 
@@ -9,22 +10,28 @@ openAndReadOneByteSync = (filename) ->
   fd = fs.openSync(filename, "r")
   fs.readSync(fd, byteBuffer, 0, 1, null)
   fs.closeSync(fd)
-  byteBuffer.readUInt8()
+  byteBuffer.readUInt8(0)
+
+writeOneByteSync = (fd, value) ->
+  byteBuffer.writeUInt8(value, 0)
+  fs.writeSync(fd, byteBuffer, 0, 1, null)
+  return
 
 class Pin
   @INPUT:
     direction: "in"
-    mode: "27"
+    mode: 27
 
   @OUTPUT:
     direction: "out"
-    mode: "7"
+    mode: 7
 
   constructor: (name, number) ->
     @name = name
     @number = number
     @_gpioPath = "/sys/class/gpio/gpio" + number
     @_valueFileName = @_gpioPath + "/value"
+    @_valueFile = null
 
   close: () ->
     if @_valueFile != null
@@ -36,12 +43,14 @@ class Pin
     # close the value file if it's open
     @close()
 
-    # export the pin
-    fs.writeFileSync("/sys/class/gpio/export", @number.toString())
+    # export the pin if necessary
+    if !fs.existsSync(@_gpioPath)
+      fs.writeFileSync("/sys/class/gpio/export", @number.toString())
+      assert(fs.existsSync(@_gpioPath))
 
     # set the direction and mode
     fs.writeFileSync(@_gpioPath + "/direction", mode.direction)
-    fs.writeFileSync("/sys/kernel/debug/omap_mux/" + @name, mode.mode)
+    #fs.writeFileSync("/sys/kernel/debug/omap_mux/" + @name, mode.mode.toString())
     return
 
   read: () ->
@@ -54,7 +63,13 @@ class Pin
       @_valueFile = fd = fs.openSync(@_valueFileName, "w")
 
     writeOneByteSync(fd, if value then BYTE_ONE else BYTE_ZERO)
-    fs.fsyncSync(fd)
+
+    # NB this doesn't seem to work...
+    #fs.fsyncSync(fd)
+
+    # ...so I guess just close the file to force the flush?
+    #@close()
+
     return
 
 Pins =
