@@ -2,7 +2,7 @@ require("coffee-script")
 
 // TODO build this programmatically by looking at the filesystem
 testClassNames = [
-  "FrameBufferLightStripTests",
+  "PhysicalLightStripTests",
   "PianoKeysTests"
 ]
 

@@ -1,7 +1,7 @@
 BeagleBone = require("./BeagleBone")
 Colors = require("./Colors")
-FrameBufferLightStrip = require("./FrameBufferLightStrip")
 MasterVisualizer = require("./MasterVisualizer")
+PhysicalLightStrip = require("./PhysicalLightStrip")
 PianoKeys = require("./PianoKeys")
 
 SPI_DEVICE = "/dev/spidev2.0"
@@ -18,7 +18,6 @@ class Controller
     @strip = strip
     @pianoKeys = pianoKeys
     @visualizer = visualizer
-    @spi = new BeagleBone.Spi(SPI_DEVICE, SPI_FREQUENCY_HZ)
     @targetFrameDuration = 1000.0 / TARGET_FPS
     @prevFrameTime = Date.now()
     @nextFrameTime = @prevFrameTime
@@ -33,7 +32,7 @@ class Controller
 
     @visualizer.render(secondsSinceLastFrame)
 
-    @sendBuffer()
+    @strip.display()
 
     endTime = Date.now()
 
@@ -92,7 +91,8 @@ class Controller
     ].join(" "))
     return
 
-strip = new FrameBufferLightStrip(NUM_PIXELS)
+spi = new BeagleBone.Spi(SPI_DEVICE, SPI_FREQUENCY_HZ)
+strip = new PhysicalLightStrip(spi, NUM_PIXELS)
 pianoKeys = new PianoKeys()
 visualizer = new MasterVisualizer(strip, pianoKeys)
 ctrl = new Controller(strip, pianoKeys, visualizer)
