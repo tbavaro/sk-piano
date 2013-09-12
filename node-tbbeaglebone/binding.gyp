@@ -1,10 +1,12 @@
 {
   "targets": [
     {
-      "target_name": "spi",
+      "target_name": "tbbeaglebone",
       "sources": [
         "src/runtime_exception.cpp",
+        "src/pin.cpp",
         "src/spi.cpp",
+        "src/tbbeaglebone.cpp",
         "src/wrapped_spi.cpp"
       ],
       "cflags": [ "-fexceptions" ],

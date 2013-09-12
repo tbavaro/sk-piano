@@ -9,10 +9,16 @@
 
 class WrappedSpi : public Spi, node::ObjectWrap {
   public:
+    static const v8::Persistent<v8::FunctionTemplate>&
+        constructorFunctionTemplate();
+
+  public:
     WrappedSpi(const char* spiDevice, uint32_t maxSpeedHz);
     ~WrappedSpi();
 
     static v8::Handle<v8::Value> wrappedNew(const v8::Arguments& args);
+    static v8::Handle<v8::Value> wrappedClose(const v8::Arguments& args);
+    static v8::Handle<v8::Value> wrappedSend(const v8::Arguments& args);
 };
 
 #endif

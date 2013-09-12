@@ -71,13 +71,13 @@ Handle<Value> WrappedSpi::wrappedNew(const Arguments& args) {
   return args.This();
 }
 
-static Handle<Value> wrappedClose(const Arguments& args) {
+Handle<Value> WrappedSpi::wrappedClose(const Arguments& args) {
   HandleScope scope;
   callMethod(close);
   return Undefined();
 }
 
-static Handle<Value> wrappedSend(const Arguments& args) {
+Handle<Value> WrappedSpi::wrappedSend(const Arguments& args) {
   HandleScope scope;
 
   int argc = args.Length();
@@ -92,25 +92,24 @@ static Handle<Value> wrappedSend(const Arguments& args) {
   return Undefined();
 }
 
-static void initModule(Handle<Object> exports, Handle<Object> module) {
+const Persistent<FunctionTemplate>& WrappedSpi::constructorFunctionTemplate() {
   static Persistent<FunctionTemplate> persistentFunctionTemplate;
+  static bool initialized = false;
 
-  HandleScope scope;
+  if (!initialized) {
+    // see http://syskall.com/how-to-write-your-own-native-nodejs-extension/index.html/
+    Local<FunctionTemplate> localFunctionTemplate =
+        FunctionTemplate::New(WrappedSpi::wrappedNew);
+    persistentFunctionTemplate =
+        Persistent<FunctionTemplate>::New(localFunctionTemplate);
+    persistentFunctionTemplate->InstanceTemplate()->SetInternalFieldCount(1);
+    persistentFunctionTemplate->SetClassName(String::NewSymbol("Spi"));
 
-  // see http://syskall.com/how-to-write-your-own-native-nodejs-extension/index.html/
-  Local<FunctionTemplate> localFunctionTemplate =
-      FunctionTemplate::New(WrappedSpi::wrappedNew);
-  persistentFunctionTemplate =
-      Persistent<FunctionTemplate>::New(localFunctionTemplate);
-  persistentFunctionTemplate->InstanceTemplate()->SetInternalFieldCount(1);
-  persistentFunctionTemplate->SetClassName(String::NewSymbol("Spi"));
+    NODE_SET_PROTOTYPE_METHOD(persistentFunctionTemplate,
+        "close", &WrappedSpi::wrappedClose);
+    NODE_SET_PROTOTYPE_METHOD(persistentFunctionTemplate,
+        "send", &WrappedSpi::wrappedSend);
+  }
 
-  NODE_SET_PROTOTYPE_METHOD(persistentFunctionTemplate, "close", &wrappedClose);
-  NODE_SET_PROTOTYPE_METHOD(persistentFunctionTemplate, "send", &wrappedSend);
-
-  module->Set(
-      String::NewSymbol("exports"),
-      persistentFunctionTemplate->GetFunction());
+  return persistentFunctionTemplate;
 }
-
-NODE_MODULE(spi, initModule);
