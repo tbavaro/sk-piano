@@ -1,7 +1,7 @@
 #ifndef __INCLUDED_WRAPPED_SPI_H
 #define __INCLUDED_WRAPPED_SPI_H
 
-#include "spi.h"
+#include "Spi.h"
 
 #include <node.h>
 #include <node_object_wrap.h>
@@ -12,7 +12,7 @@ class WrappedSpi : public Spi, node::ObjectWrap {
     static const v8::Persistent<v8::FunctionTemplate>&
         constructorFunctionTemplate();
 
-  public:
+  private:
     WrappedSpi(const char* spiDevice, uint32_t maxSpeedHz);
     ~WrappedSpi();
 

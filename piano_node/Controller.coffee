@@ -1,4 +1,4 @@
-BeagleBone = require("./BeagleBone")
+TBBeagleBone = require("./TBBeagleBone")
 Colors = require("./Colors")
 MasterVisualizer = require("./MasterVisualizer")
 PhysicalLightStrip = require("./PhysicalLightStrip")
@@ -89,7 +89,7 @@ class Controller
     ].join(" "))
     return
 
-spi = new BeagleBone.Spi(SPI_DEVICE, SPI_FREQUENCY_HZ)
+spi = new TBBeagleBone.Spi(SPI_DEVICE, SPI_FREQUENCY_HZ)
 strip = new PhysicalLightStrip(spi, NUM_PIXELS)
 pianoKeys = new PhysicalPianoKeys()
 visualizer = new MasterVisualizer(strip, pianoKeys)

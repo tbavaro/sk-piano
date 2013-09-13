@@ -1,4 +1,4 @@
-#include "runtime_exception.h"
+#include "RuntimeException.h"
 
 #include <stdarg.h>
 #include <stdio.h>

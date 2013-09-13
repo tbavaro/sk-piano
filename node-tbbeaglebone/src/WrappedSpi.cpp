@@ -1,5 +1,6 @@
-#include "wrapped_spi.h"
-#include "runtime_exception.h"
+#include "WrappedSpi.h"
+#include "WrapUtils.h"
+#include "RuntimeException.h"
 
 #include <v8.h>
 
@@ -10,39 +11,10 @@ using namespace node;
 using namespace std;
 using namespace v8;
 
-static inline Handle<Value> NodeError(const char* msg) {
-  Local<String> msgString = String::New(msg);
-  Local<Value> exception = Exception::Error(msgString);
-  return ThrowException(exception);
-}
-
 WrappedSpi::WrappedSpi(const char* spiDevice, uint32_t maxSpeedHz)
     : Spi(spiDevice, maxSpeedHz) {}
 
 WrappedSpi::~WrappedSpi() {}
-
-#define returnExceptionsAsNodeErrors(block) \
-  try { \
-    block \
-  } catch (const exception& e) { \
-    return NodeError(e.what()); \
-  }
-
-#define callMethod(method, methodArgs...) \
-  { \
-    WrappedSpi* instance = ObjectWrap::Unwrap<WrappedSpi>(args.This()); \
-    returnExceptionsAsNodeErrors({ \
-      instance->method(methodArgs); \
-    }) \
-  }
-
-#define callMethodWithReturn(returnVar, method, methodArgs...) \
-  { \
-    WrappedSpi* instance = ObjectWrap::Unwrap<WrappedSpi>(args.This()); \
-    returnExceptionsAsNodeErrors({ \
-      returnVar = instance->method(methodArgs); \
-    }) \
-  }
 
 Handle<Value> WrappedSpi::wrappedNew(const Arguments& args) {
   HandleScope scope;
@@ -51,20 +23,20 @@ Handle<Value> WrappedSpi::wrappedNew(const Arguments& args) {
 
   // read spiDevice argument
   if (argc < 1 || !args[0]->IsString()) {
-    return NodeError("spiDevice required");
+    return WrapUtils::makeErrorValue("spiDevice required");
   }
   const Handle<Value>& spiDeviceArg = args[0];
   String::AsciiValue spiDevice(spiDeviceArg);
 
   // read maxSpeedHz argument
   if (argc < 2 || !args[1]->IsNumber()) {
-    return NodeError("maxSpeedHz required");
+    return WrapUtils::makeErrorValue("maxSpeedHz required");
   }
   const Handle<Value>& maxSpeedHzArg = args[1];
   uint32_t maxSpeedHz = maxSpeedHzArg->Uint32Value();
 
   WrappedSpi* instance;
-  returnExceptionsAsNodeErrors({
+  RETURN_EXCEPTIONS_AS_NODE_ERRORS({
     instance = new WrappedSpi(*spiDevice, maxSpeedHz);
   });
   instance->Wrap(args.This());
@@ -73,7 +45,7 @@ Handle<Value> WrappedSpi::wrappedNew(const Arguments& args) {
 
 Handle<Value> WrappedSpi::wrappedClose(const Arguments& args) {
   HandleScope scope;
-  callMethod(close);
+  CALL_WRAPPED_METHOD(WrappedSpi, close);
   return Undefined();
 }
 
@@ -83,12 +55,12 @@ Handle<Value> WrappedSpi::wrappedSend(const Arguments& args) {
   int argc = args.Length();
 
   if (argc < 1 || !Buffer::HasInstance(args[0])) {
-    return NodeError("buffer required");
+    return WrapUtils::makeErrorValue("buffer required");
   }
   const Handle<Value>& bufferArg = args[0];
   size_t bufferLength = Buffer::Length(bufferArg);
 
-  callMethod(send, Buffer::Data(bufferArg), bufferLength);
+  CALL_WRAPPED_METHOD(WrappedSpi, send, Buffer::Data(bufferArg), bufferLength);
   return Undefined();
 }
 
@@ -109,6 +81,8 @@ const Persistent<FunctionTemplate>& WrappedSpi::constructorFunctionTemplate() {
         "close", &WrappedSpi::wrappedClose);
     NODE_SET_PROTOTYPE_METHOD(persistentFunctionTemplate,
         "send", &WrappedSpi::wrappedSend);
+
+    initialized = true;
   }
 
   return persistentFunctionTemplate;

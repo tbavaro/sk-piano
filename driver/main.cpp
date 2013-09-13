@@ -138,7 +138,7 @@ int main(int argc, char** argv) {
   FILE* inPipe = fopen(argv[1], "rb+");
   outPipe = fopen(argv[2], "wb+");
 
-#ifndef NOT_BEAGLEBONE
+#ifndef IS_SIMULATOR
   spi = new SPI(4e6);
   piano = new PhysicalPiano();
 #endif
@@ -159,7 +159,7 @@ int main(int argc, char** argv) {
     fatal("need to specify socket name");
   }
 
-#ifndef NOT_BEAGLEBONE
+#ifndef IS_SIMULATOR
   spi = new SPI(4e6);
   piano = new PhysicalPiano();
 #endif

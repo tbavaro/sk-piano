@@ -1,5 +1,5 @@
 PianoKeys = require("./PianoKeys")
-BeagleBone = require("./BeagleBone")
+TBBeagleBone = require("./TBBeagleBone")
 assert = require("assert")
 Sleep = require("sleep")
 
@@ -27,12 +27,12 @@ KEY_MAPPINGS = [
 class PhysicalPianoKeys extends PianoKeys
   constructor: () ->
     super
-    @_notePins = (BeagleBone.Pins.pin(PIN_HEADER, n) for n in NOTE_PINS)
-    @_octavePins = (BeagleBone.Pins.pin(PIN_HEADER, n) for n in OCTAVE_PINS)
+    @_notePins = (TBBeagleBone.Pins.pin(PIN_HEADER, n) for n in NOTE_PINS)
+    @_octavePins = (TBBeagleBone.Pins.pin(PIN_HEADER, n) for n in OCTAVE_PINS)
 
     # set up note pins for INPUT pins and octave pins for OTPUT
-    pin.setMode(BeagleBone.Pin.INPUT) for pin in @_notePins
-    pin.setMode(BeagleBone.Pin.OUTPUT) for pin in @_octavePins
+    pin.setMode(TBBeagleBone.Pin.Modes.INPUT) for pin in @_notePins
+    pin.setMode(TBBeagleBone.Pin.Modes.OUTPUT) for pin in @_octavePins
 
     # turn off all of the octave pins
     pin.write(false) for pin in @_octavePins

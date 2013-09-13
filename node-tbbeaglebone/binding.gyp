@@ -3,18 +3,21 @@
     {
       "target_name": "tbbeaglebone",
       "sources": [
-        "src/runtime_exception.cpp",
-        "src/pin.cpp",
-        "src/spi.cpp",
-        "src/tbbeaglebone.cpp",
-        "src/wrapped_spi.cpp"
+        "src/Pin.cpp",
+        "src/PinScanner.cpp",
+        "src/RuntimeException.cpp",
+        "src/Spi.cpp",
+        "src/TBBeagleBone.cpp",
+        "src/WrappedPin.cpp",
+        "src/WrappedSpi.cpp",
+        "src/WrapUtils.cpp"
       ],
       "cflags": [ "-fexceptions" ],
       "cflags_cc": [ "-fexceptions" ],
       "conditions": [
         [
           "OS=='mac'", {
-            "defines": [ "NOT_BEAGLEBONE" ],
+            "defines": [ "IS_SIMULATOR" ],
             "include_dirs": [ "./stubs" ],
             "xcode_settings": {
               "GCC_ENABLE_CPP_EXCEPTIONS": "YES"
