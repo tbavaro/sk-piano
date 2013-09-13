@@ -20,6 +20,8 @@ class Pin {
     bool read();
     void write(bool value);
 
+    const std::string& getName() const;
+
   private:
     std::string name;
     int number;

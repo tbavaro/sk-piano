@@ -9,6 +9,7 @@
         "src/Spi.cpp",
         "src/TBBeagleBone.cpp",
         "src/WrappedPin.cpp",
+        "src/WrappedPinScanner.cpp",
         "src/WrappedSpi.cpp",
         "src/WrapUtils.cpp"
       ],

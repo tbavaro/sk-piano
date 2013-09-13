@@ -1,5 +1,6 @@
 #include "TBBeagleBone.h"
 #include "WrappedPin.h"
+#include "WrappedPinScanner.h"
 #include "WrappedSpi.h"
 
 #include <node.h>
@@ -14,6 +15,10 @@ void TBBeagleBone::initModule(
   exports->Set(
       String::NewSymbol("Pin"),
       WrappedPin::constructorFunctionTemplate()->GetFunction());
+
+  exports->Set(
+      String::NewSymbol("PinScanner"),
+      WrappedPinScanner::constructorFunctionTemplate()->GetFunction());
 
   exports->Set(
       String::NewSymbol("Spi"),

@@ -10,7 +10,10 @@
 
 using namespace std;
 
+//#define NOISY
+
 #ifdef IS_SIMULATOR
+#define NOISY
 static set<string> existingFilenames;
 #endif
 
@@ -30,8 +33,10 @@ static inline bool fileExists(const string& filename) {
 }
 
 static void writeFile(const char* filename, const string& contents) {
-#ifdef IS_SIMULATOR
+#ifdef NOISY
   printf("writing [%s]: %s\n", filename, contents.c_str());
+#endif
+#ifdef IS_SIMULATOR
   return;
 #endif
 
@@ -123,9 +128,10 @@ static void processPinsAwaitingNonRootAccess() {
        i != pinsAwaitingNonRootAccess.end(); ++i) {
     ss << " " << toString(i->number);
   }
-#ifdef IS_SIMULATOR
+#ifdef NOISY
   printf("exec: %s\n", ss.str().c_str());
-#else
+#endif
+#ifndef IS_SIMULATOR
   int rc = system(ss.str().c_str());
   bool success = (rc == 0);
   if (!success) {
@@ -185,6 +191,9 @@ void Pin::setMode(Mode mode) {
   setPinDirectionMaybeDeferred(number, mode);
 }
 
+// TODO check this out for being faster
+// http://stackoverflow.com/questions/13124271/driving-beaglebone-gpio-through-dev-mem
+
 bool Pin::read() {
   if (mode != INPUT) {
     throw RuntimeException("pin is not set to INPUT mode: %d", number);
@@ -192,22 +201,22 @@ bool Pin::read() {
 
   processPinsAwaitingNonRootAccess();
 
-  FILE* f = fopen(valueFilename.c_str(), "r");
+  FILE* f = fopen(valueFilename.c_str(), "rb");
   if (f == NULL) {
     throw RuntimeException("unable to open file for reading: %s",
         valueFilename.c_str());
   }
 
-  uint8_t value;
-  bool success = (fread(&value, sizeof(value), 1, f) > 0);
-
+  char value = fgetc(f);
   fclose(f);
 
-  if (!success) {
-    throw RuntimeException("unable to read file: %s", valueFilename.c_str());
-  }
+  bool result = (value == '1');
 
-  return (value == '1');
+#ifdef NOISY
+  printf("read pin %d: %d\n", number, result);
+#endif
+
+  return result;
 }
 
 void Pin::write(bool value) {
@@ -217,6 +226,10 @@ void Pin::write(bool value) {
 
   processPinsAwaitingNonRootAccess();
 
+#ifdef NOISY
+  printf("writing pin %d: %d\n", number, value);
+#endif
+
   if (valueFile == NULL) {
     valueFile = fopen(valueFilename.c_str(), "w");
     if (valueFile == NULL) {
@@ -225,11 +238,10 @@ void Pin::write(bool value) {
     }
   }
 
-  uint8_t valueByte = (value ? '1' : '0');
-  bool success = (fwrite(&valueByte, sizeof(valueByte), 1, valueFile) > 0);
-  if (!success) {
-    throw RuntimeException("unable to write file: %s", valueFilename.c_str());
-  }
-
+  fputc(value ? '1' : '0', valueFile);
   fflush(valueFile);
+}
+
+const string& Pin::getName() const {
+  return name;
 }

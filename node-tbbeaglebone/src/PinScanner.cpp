@@ -1,5 +1,7 @@
 #include "PinScanner.h"
 
+#include <stdint.h>
+#include <sys/time.h>
 #include <unistd.h>
 
 using namespace std;
@@ -30,11 +32,19 @@ void PinScanner::reset() {
   // disable pins; doing it after we set all the modes lets us be more efficient
   // if we have to shell out to make the pins accessible to non-root users
   FOR_EACH_PIN(pin, outputPins, {
-    pin.setMode(Pin::OUTPUT);
+    pin.write(false);
   });
 }
 
+static inline uint32_t now() {
+  struct timeval tv;
+  gettimeofday(&tv, NULL);
+  return ((tv.tv_sec % 86400) * 1000 + tv.tv_usec / 1000);
+}
+
 vector<int> PinScanner::scan() {
+  uint32_t startTime = now();
+
   vector<int> results;
 
   int index = 0;
@@ -43,7 +53,8 @@ vector<int> PinScanner::scan() {
 
     // wait 1ms to give it time to take effect
     // TODO see if we can make this shorter
-    usleep(500);
+//    usleep(500);
+    uint32_t readStartTime = now();
 
     FOR_EACH_PIN(inputPin, inputPins, {
       if (inputPin.read()) {
@@ -52,7 +63,17 @@ vector<int> PinScanner::scan() {
 
       ++index;
     });
+
+    uint32_t readEndTime = now();
+
+    printf("read took %d ms\n", readEndTime - readStartTime);
+
+    outputPin.write(false);
   });
+
+  uint32_t endTime = now();
+
+  printf("took %d ms\n", endTime - startTime);
 
   return results;
 }
