@@ -1,7 +1,6 @@
 #ifndef __INCLUDED_PIN_H
 #define __INCLUDED_PIN_H
 
-#include <stdio.h>
 #include <string>
 
 class Pin {
@@ -12,25 +11,24 @@ class Pin {
       OUTPUT
     };
 
-    Pin(const std::string& name, int number);
-    ~Pin();
+    static const std::string& modeName(Mode mode);
 
-    void close();
-    void setMode(Mode mode);
-    bool read();
-    void write(bool value);
+    Pin(int number);
+    virtual ~Pin();
 
-    const std::string& getName() const;
+    virtual void close();
+    virtual void setMode(Mode mode);
+    virtual bool read() = 0;
+    virtual void write(bool value) = 0;
+
+    std::string toString() const;
+
+  protected:
+    const int number;
+    Mode getMode() const { return mode; }
 
   private:
-    std::string name;
-    int number;
     Mode mode;
-    std::string gpioPath;
-    std::string valueFilename;
-    FILE* valueFile;
-
-    FILE* getOrOpenValueFile();
 };
 
 #endif

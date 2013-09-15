@@ -6,6 +6,7 @@
         "src/Pin.cpp",
         "src/PinScanner.cpp",
         "src/RuntimeException.cpp",
+        "src/SlowPin.cpp",
         "src/Spi.cpp",
         "src/TBBeagleBone.cpp",
         "src/WrappedPin.cpp",

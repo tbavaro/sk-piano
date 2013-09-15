@@ -7,7 +7,7 @@ using namespace std;
 using namespace v8;
 
 WrappedPin::WrappedPin(const string& name, int number)
-    : Pin(name, number) {}
+    : SlowPin(name, number) {}
 
 WrappedPin::~WrappedPin() {}
 

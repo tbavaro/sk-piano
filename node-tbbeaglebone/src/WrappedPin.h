@@ -1,13 +1,13 @@
 #ifndef __INCLUDED_WRAPPED_PIN_H
 #define __INCLUDED_WRAPPED_PIN_H
 
-#include "Pin.h"
+#include "SlowPin.h"
 
 #include <node.h>
 #include <node_object_wrap.h>
 #include <v8.h>
 
-class WrappedPin : public Pin, node::ObjectWrap {
+class WrappedPin : public SlowPin, node::ObjectWrap {
   public:
     static const v8::Persistent<v8::FunctionTemplate>&
         constructorFunctionTemplate();
