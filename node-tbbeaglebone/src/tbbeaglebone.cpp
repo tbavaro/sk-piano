@@ -3,6 +3,9 @@
 #include "WrappedPinScanner.h"
 #include "WrappedSpi.h"
 
+//xcxc
+#include "MmapGpio.h"
+
 #include <node.h>
 
 using namespace v8;
@@ -23,6 +26,9 @@ void TBBeagleBone::initModule(
   exports->Set(
       String::NewSymbol("Spi"),
       WrappedSpi::constructorFunctionTemplate()->GetFunction());
+
+  //xcxc
+  MmapGpio::test();
 }
 
 NODE_MODULE(tbbeaglebone, TBBeagleBone::initModule);

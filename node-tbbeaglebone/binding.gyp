@@ -3,6 +3,7 @@
     {
       "target_name": "tbbeaglebone",
       "sources": [
+        "src/MmapGpio.cpp",
         "src/Pin.cpp",
         "src/PinScanner.cpp",
         "src/RuntimeException.cpp",
