@@ -1,6 +1,7 @@
 #include "NodeModule.h"
 #include "WrappedMMap.h"
 #include "WrappedSpi.h"
+#include "WrapUtils.h"
 
 #include <node.h>
 #include <unistd.h>
@@ -24,8 +25,8 @@ void NodeModule::initModule(
     v8::Handle<v8::Object> module) {
   HandleScope scope;
 
-  exports->Set(String::NewSymbol("Spi"), WrappedSpi::init());
-  exports->Set(String::NewSymbol("MMap"), WrappedMMap::init());
+  SET_MEMBER(exports, "Spi", WrappedSpi::init());
+  SET_MEMBER(exports, "MMap", WrappedMMap::init());
 
   test();
 }

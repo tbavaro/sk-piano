@@ -10,6 +10,9 @@ class WrapUtils {
     static v8::Handle<v8::Value> makeErrorValue(const char* fmt, ...);
     static v8::Handle<v8::Value> makeErrorValue(const std::exception& e);
 
+    static v8::Persistent<v8::FunctionTemplate> wrapConstructor(
+        const char* className, v8::InvocationCallback newFunc);
+
   private:
     WrapUtils(); // static only
 };
@@ -36,5 +39,21 @@ class WrapUtils {
       returnVar = instance->method(methodArgs); \
     }) \
   }
+
+#define SET_MEMBER_WITH_ATTRIBS(target, name, value, attribs) \
+  target->Set(v8::String::NewSymbol(name), value, attribs)
+
+#define SET_MEMBER(target, name, value) \
+  SET_MEMBER_WITH_ATTRIBS(target, name, value, (PropertyAttribute)None)
+
+#define SET_INT_MEMBER_WITH_ATTRIBS(target, name, value, attribs) \
+  SET_MEMBER_WITH_ATTRIBS(target, name, v8::Integer::New(value), attribs)
+
+#define SET_INT_MEMBER(target, name, value) \
+  SET_INT_MEMBER_WITH_ATTRIBS(target, name, value, (PropertyAttribute)None)
+
+#define SET_FUNCTION_MEMBER(target, name, value) \
+  SET_MEMBER( \
+      target, name, v8::FunctionTemplate::New(value)->GetFunction())
 
 #endif

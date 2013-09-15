@@ -65,25 +65,16 @@ Handle<Value> WrappedSpi::wrappedSend(const Arguments& args) {
 }
 
 Handle<Value> WrappedSpi::init() {
-  static Persistent<FunctionTemplate> persistentFunctionTemplate;
+  static Persistent<FunctionTemplate> ft;
   static bool initialized = false;
 
   if (!initialized) {
-    // see http://syskall.com/how-to-write-your-own-native-nodejs-extension/index.html/
-    Local<FunctionTemplate> localFunctionTemplate =
-        FunctionTemplate::New(WrappedSpi::wrappedNew);
-    persistentFunctionTemplate =
-        Persistent<FunctionTemplate>::New(localFunctionTemplate);
-    persistentFunctionTemplate->InstanceTemplate()->SetInternalFieldCount(1);
-    persistentFunctionTemplate->SetClassName(String::NewSymbol("Spi"));
-
-    NODE_SET_PROTOTYPE_METHOD(persistentFunctionTemplate,
-        "close", &WrappedSpi::wrappedClose);
-    NODE_SET_PROTOTYPE_METHOD(persistentFunctionTemplate,
-        "send", &WrappedSpi::wrappedSend);
+    ft = WrapUtils::wrapConstructor("Spi", WrappedSpi::wrappedNew);
+    NODE_SET_PROTOTYPE_METHOD(ft, "close", &WrappedSpi::wrappedClose);
+    NODE_SET_PROTOTYPE_METHOD(ft, "send", &WrappedSpi::wrappedSend);
 
     initialized = true;
   }
 
-  return persistentFunctionTemplate->GetFunction();
+  return ft->GetFunction();
 }

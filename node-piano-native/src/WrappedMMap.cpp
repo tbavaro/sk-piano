@@ -54,16 +54,15 @@ Handle<Value> WrappedMMap::init() {
   
   const PropertyAttribute attribs = (PropertyAttribute) (ReadOnly | DontDelete);
 
-  result->Set(String::New("PROT_READ"), Integer::New(PROT_READ), attribs);
-  result->Set(String::New("PROT_WRITE"), Integer::New(PROT_WRITE), attribs);
-  result->Set(String::New("PROT_EXEC"), Integer::New(PROT_EXEC), attribs);
-  result->Set(String::New("PROT_NONE"), Integer::New(PROT_NONE), attribs);
-  result->Set(String::New("MAP_SHARED"), Integer::New(MAP_SHARED), attribs);
-  result->Set(String::New("MAP_PRIVATE"), Integer::New(MAP_PRIVATE), attribs);
-  result->Set(String::New("PAGESIZE"), Integer::New(sysconf(_SC_PAGESIZE)),
-      attribs);
+  SET_INT_MEMBER_WITH_ATTRIBS(result, "PROT_READ", PROT_READ, attribs);
+  SET_INT_MEMBER_WITH_ATTRIBS(result, "PROT_WRITE", PROT_WRITE, attribs);
+  SET_INT_MEMBER_WITH_ATTRIBS(result, "PROT_EXEC", PROT_EXEC, attribs);
+  SET_INT_MEMBER_WITH_ATTRIBS(result, "PROT_NONE", PROT_NONE, attribs);
+  SET_INT_MEMBER_WITH_ATTRIBS(result, "MAP_SHARED", MAP_SHARED, attribs);
+  SET_INT_MEMBER_WITH_ATTRIBS(result, "MAP_PRIVATE", MAP_PRIVATE, attribs);
+  SET_INT_MEMBER_WITH_ATTRIBS(result, "PAGESIZE", sysconf(_SC_PAGESIZE), attribs);
 
-  result->Set(String::NewSymbol("map"), FunctionTemplate::New(map)->GetFunction());
+  SET_FUNCTION_MEMBER(result, "map", map);
 
   return result;
 }

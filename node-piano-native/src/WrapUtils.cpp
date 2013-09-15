@@ -25,3 +25,14 @@ Handle<Value> WrapUtils::makeErrorValue(const char* fmt, ...) {
 Handle<Value> WrapUtils::makeErrorValue(const exception& e) {
   return makeErrorValueImpl(e.what());
 }
+
+Persistent<FunctionTemplate> WrapUtils::wrapConstructor(
+    const char* className, v8::InvocationCallback newFunc) {
+  // see http://syskall.com/how-to-write-your-own-native-nodejs-extension/index.html/
+  Local<FunctionTemplate> lft = FunctionTemplate::New(newFunc);
+  Persistent<FunctionTemplate>result = Persistent<FunctionTemplate>::New(lft);
+  result->InstanceTemplate()->SetInternalFieldCount(1);
+  result->SetClassName(String::NewSymbol(className));
+
+  return result;
+}
