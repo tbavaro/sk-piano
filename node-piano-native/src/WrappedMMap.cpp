@@ -1,4 +1,4 @@
-#include "WrappedMmap.h"
+#include "WrappedMMap.h"
 
 #include <v8.h>
 #include <node.h>
@@ -45,19 +45,23 @@ static Handle<Value> Map(const Arguments& args) {
 	}
 }
 
-void WrappedMmap::init(Handle<Object> target) {
-	HandleScope scope;
+Handle<Value> WrappedMMap::init() {
+  HandleScope scope;
 
-	const PropertyAttribute attribs = (PropertyAttribute) (ReadOnly | DontDelete);
+  Local<Object> result = Object::New();
+  
+  const PropertyAttribute attribs = (PropertyAttribute) (ReadOnly | DontDelete);
 
-	target->Set(String::New("PROT_READ"), Integer::New(PROT_READ), attribs);
-	target->Set(String::New("PROT_WRITE"), Integer::New(PROT_WRITE), attribs);
-	target->Set(String::New("PROT_EXEC"), Integer::New(PROT_EXEC), attribs);
-	target->Set(String::New("PROT_NONE"), Integer::New(PROT_NONE), attribs);
-	target->Set(String::New("MAP_SHARED"), Integer::New(MAP_SHARED), attribs);
-	target->Set(String::New("MAP_PRIVATE"), Integer::New(MAP_PRIVATE), attribs);
-	target->Set(String::New("PAGESIZE"), Integer::New(sysconf(_SC_PAGESIZE)),
-			attribs);
+  result->Set(String::New("PROT_READ"), Integer::New(PROT_READ), attribs);
+  result->Set(String::New("PROT_WRITE"), Integer::New(PROT_WRITE), attribs);
+  result->Set(String::New("PROT_EXEC"), Integer::New(PROT_EXEC), attribs);
+  result->Set(String::New("PROT_NONE"), Integer::New(PROT_NONE), attribs);
+  result->Set(String::New("MAP_SHARED"), Integer::New(MAP_SHARED), attribs);
+  result->Set(String::New("MAP_PRIVATE"), Integer::New(MAP_PRIVATE), attribs);
+  result->Set(String::New("PAGESIZE"), Integer::New(sysconf(_SC_PAGESIZE)),
+      attribs);
 
-	target->Set(String::NewSymbol("map"), FunctionTemplate::New(Map)->GetFunction());
+  result->Set(String::NewSymbol("map"), FunctionTemplate::New(Map)->GetFunction());
+
+  return result;
 }

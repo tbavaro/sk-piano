@@ -1,16 +1,16 @@
-#ifndef __INCLUDED_TBBEAGLEBONE_H
-#define __INCLUDED_TBBEAGLEBONE_H
+#ifndef __INCLUDED_NODE_MODULE_H
+#define __INCLUDED_NODE_MODULE_H
 
 #include <v8.h>
 
-class TBBeagleBone {
+class NodeModule {
   public:
     static void initModule(
         v8::Handle<v8::Object> exports,
         v8::Handle<v8::Object> module);
 
   private:
-    TBBeagleBone(); // static only
+    NodeModule(); // static only
 };
 
 #endif

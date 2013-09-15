@@ -1,4 +1,4 @@
-Spi = require("spi")
+Spi = require("../build/Release/piano_native").Spi
 
 spi = new Spi("/dev/spidev2.0", 4e6)
 buf = new Buffer(32)

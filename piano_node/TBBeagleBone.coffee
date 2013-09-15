@@ -1,5 +1,5 @@
 fs = require("fs")
-TBBeagleBoneNative = require("../node-tbbeaglebone/build/Release/tbbeaglebone")
+PianoNative = require("../node-tbbeaglebone/build/Release/piano_native")
 
 Mmap =
   map: TBBeagleBoneNative.map

@@ -64,7 +64,7 @@ Handle<Value> WrappedSpi::wrappedSend(const Arguments& args) {
   return Undefined();
 }
 
-const Persistent<FunctionTemplate>& WrappedSpi::constructorFunctionTemplate() {
+Handle<Value> WrappedSpi::init() {
   static Persistent<FunctionTemplate> persistentFunctionTemplate;
   static bool initialized = false;
 
@@ -85,5 +85,5 @@ const Persistent<FunctionTemplate>& WrappedSpi::constructorFunctionTemplate() {
     initialized = true;
   }
 
-  return persistentFunctionTemplate;
+  return persistentFunctionTemplate->GetFunction();
 }

@@ -3,12 +3,14 @@
 
 #include <v8.h>
 
-class WrappedMmap {
+class WrappedMMap {
   public:
     static void init(v8::Handle<v8::Object> target);
 
+    static v8::Handle<v8::Value> init();
+
   private:
-    WrappedMmap(); // static only
+    WrappedMMap(); // static only
 };
 
 #endif

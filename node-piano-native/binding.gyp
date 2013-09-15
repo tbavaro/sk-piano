@@ -1,20 +1,12 @@
 {
   "targets": [
     {
-      "target_name": "tbbeaglebone",
+      "target_name": "piano_native",
       "sources": [
-        "src/GpioConfig.cpp",
-        "src/MmapGpioBank.cpp",
-        "src/MmapPin.cpp",
-        "src/Pin.cpp",
-        "src/PinScanner.cpp",
         "src/RuntimeException.cpp",
-        "src/SlowPin.cpp",
         "src/Spi.cpp",
-        "src/TBBeagleBone.cpp",
-        "src/WrappedMmap.cpp",
-        "src/WrappedPin.cpp",
-        "src/WrappedPinScanner.cpp",
+        "src/NodeModule.cpp",
+        "src/WrappedMMap.cpp",
         "src/WrappedSpi.cpp",
         "src/WrapUtils.cpp"
       ],
