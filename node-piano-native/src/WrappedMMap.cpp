@@ -1,4 +1,11 @@
+/**
+ * adapted from no-longer-maintained node-mmap:
+ * https://github.com/bnoordhuis/node-mmap
+ */
+
 #include "WrappedMMap.h"
+
+#include "WrapUtils.h"
 
 #include <v8.h>
 #include <node.h>
@@ -12,16 +19,16 @@
 using namespace v8;
 using namespace node;
 
-static void Unmap(char* data, void* hint) {
-	munmap(data, (size_t) hint);
+static void unmap(char* data, void* size) {
+	munmap(data, (size_t)size);
 }
 
-static Handle<Value> Map(const Arguments& args) {
+static Handle<Value> map(const Arguments& args) {
 	HandleScope scope;
 
-	if (args.Length() <= 3) {
-		return ThrowException(Exception::Error(
-				String::New("Constructor takes 4 arguments: size, protection, flags, fd and offset.")));
+	if (args.Length() <= 5) {
+		return WrapUtils::makeErrorValue(
+		    "map takes 5 arguments: size, protection, flags, fd and offset.");
 	}
 
 	const size_t size = args[0]->ToInteger()->Value();
@@ -30,17 +37,12 @@ static Handle<Value> Map(const Arguments& args) {
 	const int fd = args[3]->ToInteger()->Value();
 	const off_t offset = args[4]->ToInteger()->Value();
 
-	char* data = (char *) mmap(
-			0, size, protection, flags, fd, offset);
+	char* data = (char*)mmap(0, size, protection, flags, fd, offset);
 
 	if (data == MAP_FAILED) {
-		return ThrowException(
-				ErrnoException(errno, "mmap", ""));
-	}
-	else {
-		Buffer* buffer = Buffer::New(
-				data, size, Unmap, (void *) size);
-
+		return ThrowException(ErrnoException(errno, "mmap", ""));
+	} 	else {
+		Buffer* buffer = Buffer::New(data, size, unmap, (void*)size);
 		return buffer->handle_;
 	}
 }
@@ -61,7 +63,7 @@ Handle<Value> WrappedMMap::init() {
   result->Set(String::New("PAGESIZE"), Integer::New(sysconf(_SC_PAGESIZE)),
       attribs);
 
-  result->Set(String::NewSymbol("map"), FunctionTemplate::New(Map)->GetFunction());
+  result->Set(String::NewSymbol("map"), FunctionTemplate::New(map)->GetFunction());
 
   return result;
 }
