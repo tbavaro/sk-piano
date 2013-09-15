@@ -1,6 +1,7 @@
 #ifndef __INCLUDE_NODE_UTILS_H
 #define __INCLUDE_NODE_UTILS_H
 
+#include "Log.h"
 #include <stdexcept>
 #include <v8.h>
 
@@ -15,7 +16,7 @@ class WrapUtils {
 
 #define RETURN_EXCEPTIONS_AS_NODE_ERRORS(block) \
   try { \
-    block \
+    RUN_LOGGING_EXCEPTION(block) \
   } catch (const exception& e) { \
     return WrapUtils::makeErrorValue(e); \
   }

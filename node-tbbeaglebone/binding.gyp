@@ -3,13 +3,16 @@
     {
       "target_name": "tbbeaglebone",
       "sources": [
-        "src/MmapGpio.cpp",
+        "src/GpioConfig.cpp",
+        "src/MmapGpioBank.cpp",
+        "src/MmapPin.cpp",
         "src/Pin.cpp",
         "src/PinScanner.cpp",
         "src/RuntimeException.cpp",
         "src/SlowPin.cpp",
         "src/Spi.cpp",
         "src/TBBeagleBone.cpp",
+        "src/WrappedMmap.cpp",
         "src/WrappedPin.cpp",
         "src/WrappedPinScanner.cpp",
         "src/WrappedSpi.cpp",

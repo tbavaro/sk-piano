@@ -6,8 +6,8 @@ using namespace node;
 using namespace std;
 using namespace v8;
 
-WrappedPin::WrappedPin(const string& name, int number)
-    : SlowPin(name, number) {}
+WrappedPin::WrappedPin(const GpioConfig& pinConfig)
+    : MmapPin(pinConfig) {}
 
 WrappedPin::~WrappedPin() {}
 
@@ -16,23 +16,28 @@ Handle<Value> WrappedPin::wrappedNew(const Arguments& args) {
 
   int argc = args.Length();
 
-  // read name argument
-  if (argc < 1 || !args[0]->IsString()) {
-    return WrapUtils::makeErrorValue("name required");
+  // read headerNumber argument
+  if (argc < 1 || !args[0]->IsNumber()) {
+    return WrapUtils::makeErrorValue("headerNumber required");
   }
-  const Handle<Value>& nameArg = args[0];
-  String::AsciiValue name(nameArg);
+  const Handle<Value>& headerNumberArg = args[0];
+  uint32_t headerNumber = headerNumberArg->Uint32Value();
 
-  // read number argument
+  // read pinNumber argument
   if (argc < 2 || !args[1]->IsNumber()) {
-    return WrapUtils::makeErrorValue("number required");
+    return WrapUtils::makeErrorValue("pinNumber required");
   }
-  const Handle<Value>& numberArg = args[1];
-  uint32_t number = numberArg->Uint32Value();
+  const Handle<Value>& pinNumberArg = args[1];
+  uint32_t pinNumber = pinNumberArg->Uint32Value();
+
+  const GpioConfig* pinConfig = GpioConfig::lookup(headerNumber, pinNumber);
+  if (pinConfig == NULL) {
+    return WrapUtils::makeErrorValue("unsupported header/pin");
+  }
 
   WrappedPin* instance;
   RETURN_EXCEPTIONS_AS_NODE_ERRORS({
-    instance = new WrappedPin(*name, number);
+    instance = new WrappedPin(*pinConfig);
   });
   instance->Wrap(args.This());
   return args.This();
@@ -63,7 +68,10 @@ Handle<Value> WrappedPin::wrappedSetMode(const Arguments& args) {
       return WrapUtils::makeErrorValue("invalid mode: %d", modeInt);
   }
 
-  CALL_WRAPPED_METHOD(WrappedPin, setMode, mode);
+  printf("setting mode!\n");
+
+//  CALL_WRAPPED_METHOD(WrappedPin, setMode, mode);
+  CALL_WRAPPED_METHOD(WrappedPin, close);
   return Undefined();
 }
 

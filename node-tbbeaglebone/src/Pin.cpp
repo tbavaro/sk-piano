@@ -4,6 +4,7 @@
 #include <set>
 #include <sstream>
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <vector>
 #include <sys/stat.h>
