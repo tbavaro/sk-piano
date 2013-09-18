@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="codemirror.css" />
     <link rel="stylesheet" type="text/css" href="sim.css" />
+    <script type="text/javascript" src="codemirror-compressed.js"></script>
     <script type="text/javascript" src="sim_generated.js"></script>
     <script type="text/javascript" src="sim.js"></script>
 </head>
-<body>
-    Hello
+<body onload="onLoad()">
+    <div class="piano viewport">
+        viewport
+    </div>
+    <div class="code viewport">
+        <textarea id="editor" class="editor"></textarea>
+    </div>
 </body>
 </html>

@@ -9,3 +9,8 @@
     }
   }
 })();
+
+function onLoad() {
+  var Simulator = require("sim/Simulator");
+  window.simulator = new Simulator();
+}
