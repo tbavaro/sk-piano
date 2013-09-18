@@ -1,5 +1,6 @@
 class Visualizer
-  reset: () -> setPressedKeys([])
-  setPressedKeys: (pressed_keys) -> throw "abstract"
+  reset: () ->
+
+  render: (secondsSinceLastFrame) -> throw "abstract"
 
 module.exports = Visualizer
