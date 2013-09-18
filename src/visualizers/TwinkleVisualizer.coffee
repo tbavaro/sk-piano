@@ -1,9 +1,9 @@
-AmplitudeVisualizer = require("AmplitudeVisualizer")
-Colors = require("Colors")
-CompositeVisualizer = require("CompositeVisualizer")
-LogicalLightStrip = require("LogicalLightStrip")
-PianoKeys = require("PianoKeys")
-PianoLocations = require("PianoLocations")
+AmplitudeVisualizer = require("base/AmplitudeVisualizer")
+Colors = require("base/Colors")
+CompositeVisualizer = require("base/CompositeVisualizer")
+LogicalLightStrip = require("base/LogicalLightStrip")
+PianoKeys = require("base/PianoKeys")
+PianoLocations = require("base/PianoLocations")
 
 SPARKLE_RATE_BASE = 0.001
 

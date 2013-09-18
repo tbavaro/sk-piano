@@ -1,5 +1,5 @@
-LightStrip = require("LightStrip")
-Colors = require("Colors")
+LightStrip = require("base/LightStrip")
+Colors = require("base/Colors")
 
 class FrameBufferLightStrip extends LightStrip
   constructor: (numPixels) ->

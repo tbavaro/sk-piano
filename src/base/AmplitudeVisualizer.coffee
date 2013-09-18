@@ -1,5 +1,5 @@
-Visualizer = require("Visualizer")
-PianoKeys = require("PianoKeys")
+Visualizer = require("base/Visualizer")
+PianoKeys = require("base/PianoKeys")
 
 class AmplitudeVisualizer extends Visualizer
   constructor: (pianoKeys, noteIncrease, decreaseRate, maxValue) ->

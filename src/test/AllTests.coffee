@@ -11,6 +11,11 @@ findFilesRecursively = (rootPath, pattern) ->
       results.push(path)
   results
 
-for testSuite in findFilesRecursively(".", /.*Tests\.coffee$/)
-  testSuiteName = testSuite.replace(/^.*\//, "")
-  exports[testSuiteName] = require("../" + testSuite)
+originalDir = process.cwd()
+process.chdir(__dirname)
+testSuiteSources = findFilesRecursively("..", /.*Tests\.coffee$/)
+process.chdir(originalDir)
+
+for testSuiteSource in testSuiteSources
+  testSuiteName = testSuiteSource.replace(/^.*\//, "")
+  exports[testSuiteName] = require(testSuiteSource)

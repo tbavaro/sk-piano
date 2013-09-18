@@ -1,4 +1,4 @@
-PianoKeys = require("PianoKeys")
+PianoKeys = require("base/PianoKeys")
 TestUtils = require("test/TestUtils")
 assert = require("assert")
 

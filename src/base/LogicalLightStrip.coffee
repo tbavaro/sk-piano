@@ -1,5 +1,5 @@
-LightStrip = require("LightStrip")
-Colors = require("Colors")
+LightStrip = require("base/LightStrip")
+Colors = require("base/Colors")
 
 class LogicalLightStrip extends LightStrip
   constructor: (delegate, pixelMapping) ->

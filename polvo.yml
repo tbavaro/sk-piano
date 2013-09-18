@@ -1,0 +1,12 @@
+input:
+  - ./src/sim
+
+output:
+  js: ./sim_www/sim_generated.js
+
+boot: ./src/sim/SimulatorPiano
+
+alias:
+  base: src/base
+  test: src/test
+  visualizers: src/visualizers

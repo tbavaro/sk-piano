@@ -1,5 +1,5 @@
-Colors = require("Colors")
-MasterVisualizer = require("MasterVisualizer")
+Colors = require("base/Colors")
+MasterVisualizer = require("visualizers/MasterVisualizer")
 
 class Piano
   @TARGET_FPS: 30

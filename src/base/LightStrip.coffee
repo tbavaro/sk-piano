@@ -1,4 +1,4 @@
-Colors = require("Colors")
+Colors = require("base/Colors")
 
 class LightStrip
   constructor: (numPixels) ->

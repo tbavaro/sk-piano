@@ -1,5 +1,5 @@
-Visualizer = require("Visualizer")
-PianoKeys = require("PianoKeys")
+Visualizer = require("base/Visualizer")
+PianoKeys = require("base/PianoKeys")
 TestUtils = require("test/TestUtils")
 assert = require("assert")
 
