@@ -14,24 +14,31 @@ export NODE_PATH
 
 .PHONY: all native clean run test
 
-all: native
+all: native node_modules
 
 native:
 	( cd ${PIANO_NATIVE_ROOT} && node-gyp configure build )
 
 clean:
+	rm -rf node_modules
 	( cd ${PIANO_NATIVE_ROOT} && node-gyp clean )
 
-run:
+run: node_modules
 	coffee beaglebone/RealPiano
 
-test:
+sim: node_modules
+	coffee --compile .
+
+test: node_modules
 	nodeunit test/AllTests.js
 
 #xcxc
-coffee:
+coffee: node_modules
 	coffee
 
 #xcxc
-node:
+node: node_modules
 	node
+
+node_modules:
+	npm install

@@ -8,4 +8,5 @@
 beaglebone/piano
 out/
 .idea/workspace.xml
+node_modules/
 
