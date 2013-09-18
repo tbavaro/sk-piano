@@ -1,5 +1,5 @@
-PianoKeys = require("./PianoKeys")
-TestUtils = require("./TestUtils")
+PianoKeys = require("PianoKeys")
+TestUtils = require("test/TestUtils")
 assert = require("assert")
 
 # NB: assumes pianoKeys.pressedKeys is sorted

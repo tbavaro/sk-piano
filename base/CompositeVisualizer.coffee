@@ -1,4 +1,4 @@
-Visualizer = require("./Visualizer")
+Visualizer = require("Visualizer")
 
 class CompositeVisualizer extends Visualizer
   constructor: (delegates) ->

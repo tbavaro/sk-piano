@@ -1,7 +1,7 @@
-SwitchingVisualizer = require("./SwitchingVisualizer")
-PianoKeys = require("./PianoKeys")
+SwitchingVisualizer = require("SwitchingVisualizer")
+PianoKeys = require("PianoKeys")
 
-TwinkleVisualizer = require("./TwinkleVisualizer")
+TwinkleVisualizer = require("TwinkleVisualizer")
 
 class MasterVisualizer extends SwitchingVisualizer
   constructor: (strip, pianoKeys) ->

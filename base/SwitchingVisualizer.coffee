@@ -1,6 +1,6 @@
-Visualizer = require("./Visualizer")
-PianoKeys = require("./PianoKeys")
-TestUtils = require("./TestUtils")
+Visualizer = require("Visualizer")
+PianoKeys = require("PianoKeys")
+TestUtils = require("test/TestUtils")
 assert = require("assert")
 
 # switch whenever the leftmost key is pressed

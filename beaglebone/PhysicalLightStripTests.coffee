@@ -1,6 +1,6 @@
 PhysicalLightStrip = require("./PhysicalLightStrip")
-Colors = require("./Colors")
-TestUtils = require("./TestUtils")
+Colors = require("Colors")
+TestUtils = require("test/TestUtils")
 assert = require("assert")
 
 exports.testCorrectness = (test) ->

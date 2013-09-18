@@ -1,5 +1,7 @@
 fs = require("fs")
-PianoNative = require("../node-piano-native/build/Release/piano_native")
+PianoNative = require("piano_native")
+
+IS_BEAGLEBONE = (process.arch == "arm")
 
 MMap = PianoNative.MMap
 
@@ -32,8 +34,8 @@ bset = (buffer, offset, bit) ->
 
 Gpio =
   Mode:
-    INPUT: 0,
-    OUTPUT: 1
+    INPUT: "INPUT",
+    OUTPUT: "OUTPUT"
 
 GPIO_BANK_CACHE = {}
 getOrCreateBankMmap = (bankNumber) ->
@@ -75,6 +77,24 @@ class GpioPin
 
   read: () ->
     !!(@_mmap.readInt32LE(GPIO_DATAIN) & @_pinMask)
+
+# to run _most_ of the beaglebone env on mac
+class FakeGpioPin
+  constructor: (id) ->
+    @id = id
+
+  setMode: (mode) ->
+    console.log("Setting pin #{@id} to mode #{mode}")
+    return
+
+  write: (value) ->
+    valueStr = (if value then "ON" else "OFF")
+    console.log("Writing pin #{@id} -> #{valueStr}")
+    return
+
+  read: () ->
+    console.log("Reading pin #{@id}")
+    false
     
 HEADER_8_PIN_IDS = [
   null,
@@ -97,13 +117,17 @@ HEADER_8_PIN_IDS = [
   # 26:
     61
 ]
-    
-getOrCreatePinByHeaderAndPinNumber = (headerNumber, pinNumber) ->
-  id = (if headerNumber != 8 then null else HEADER_8_PIN_IDS[pinNumber])
-  throw ("invalid header/pin: " + headerNumber + "/" + pinNumber) if !id
-  bankNumber = Math.floor(id / 32)
-  bankPinNumber = id % 32
-  GpioPin.getOrCreate(bankNumber, bankPinNumber)
+
+if IS_BEAGLEBONE
+  getOrCreatePinByHeaderAndPinNumber = (headerNumber, pinNumber) ->
+    id = (if headerNumber != 8 then null else HEADER_8_PIN_IDS[pinNumber])
+    throw ("invalid header/pin: " + headerNumber + "/" + pinNumber) if !id
+    bankNumber = Math.floor(id / 32)
+    bankPinNumber = id % 32
+    GpioPin.getOrCreate(bankNumber, bankPinNumber)
+else
+  getOrCreatePinByHeaderAndPinNumber = (headerNumber, pinNumber) ->
+    new FakeGpioPin("#{headerNumber}:#{pinNumber}")
 
 module.exports =
   Spi: PianoNative.Spi

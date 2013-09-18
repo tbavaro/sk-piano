@@ -1,4 +1,4 @@
-FrameBufferLightStrip = require("./FrameBufferLightStrip")
+FrameBufferLightStrip = require("FrameBufferLightStrip")
 
 class PhysicalLightStrip extends FrameBufferLightStrip
   constructor: (spi, numPixels) ->

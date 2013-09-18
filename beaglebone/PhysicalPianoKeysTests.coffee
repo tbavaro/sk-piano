@@ -1,5 +1,5 @@
 PhysicalPianoKeys = require("./PhysicalPianoKeys")
-TestUtils = require("./TestUtils")
+TestUtils = require("test/TestUtils")
 
 exports.testPerformance = (test) ->
   pianoKeys = new PhysicalPianoKeys()
