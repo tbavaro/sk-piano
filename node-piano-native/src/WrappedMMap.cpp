@@ -26,7 +26,7 @@ static void unmap(char* data, void* size) {
 static Handle<Value> map(const Arguments& args) {
 	HandleScope scope;
 
-	if (args.Length() <= 5) {
+	if (args.Length() < 5) {
 		return WrapUtils::makeErrorValue(
 		    "map takes 5 arguments: size, protection, flags, fd and offset.");
 	}

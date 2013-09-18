@@ -1,15 +1,7 @@
 fs = require("fs")
-PianoNative = require("../node-tbbeaglebone/build/Release/piano_native")
+PianoNative = require("../node-piano-native/build/Release/piano_native")
 
-Mmap =
-  map: TBBeagleBoneNative.map
-  PROT_READ: TBBeagleBoneNative.PROT_READ
-  PROT_WRITE: TBBeagleBoneNative.PROT_WRITE
-  PROT_EXEC: TBBeagleBoneNative.PROT_EXEC
-  PROT_NONE: TBBeagleBoneNative.PROT_NONE
-  MAP_SHARED: TBBeagleBoneNative.MAP_SHARED
-  MAP_PRIVATE: TBBeagleBoneNative.MAP_PRIVATE
-  PAGESIZE: TBBeagleBoneNative.PAGESIZE
+MMap = PianoNative.MMap
 
 GPIO_BANK_OFFSETS = [
   0x44E07000,
@@ -45,10 +37,10 @@ Gpio =
 
 GPIO_BANK_CACHE = {}
 getOrCreateBankMmap = (bankNumber) ->
-  GPIO_BANK_CACHE[bankNumber] ||= Mmap.map(
+  GPIO_BANK_CACHE[bankNumber] ||= MMap.map(
       GPIO_SIZE,
-      Mmap.PROT_READ | Mmap.PROT_WRITE,
-      Mmap.MAP_SHARED,
+      MMap.PROT_READ | MMap.PROT_WRITE,
+      MMap.MAP_SHARED,
       getOrOpenDevMem(),
       GPIO_BANK_OFFSETS[bankNumber] || (throw "invalid bank number"))
 
@@ -83,10 +75,39 @@ class GpioPin
 
   read: () ->
     !!(@_mmap.readInt32LE(GPIO_DATAIN) & @_pinMask)
+    
+HEADER_8_PIN_IDS = [
+  null,
+
+  # 1:
+  null, null,   38,   39,   34,
+
+  # 6:
+  null,   66,   67,   69,   68,
+
+  # 11:
+    45,   44,   23,   26,   47,
+
+  # 16:
+    46,   27,   65,   22,   63,
+
+  # 21:
+    62,   37,   36,   33,   32,
+
+  # 26:
+    61
+]
+    
+getOrCreatePinByHeaderAndPinNumber = (headerNumber, pinNumber) ->
+  id = (if headerNumber != 8 then null else HEADER_8_PIN_IDS[pinNumber])
+  throw ("invalid header/pin: " + headerNumber + "/" + pinNumber) if !id
+  bankNumber = Math.floor(id / 32)
+  bankPinNumber = id % 32
+  GpioPin.getOrCreate(bankNumber, bankPinNumber)
 
 module.exports =
-  Spi: TBBeagleBoneNative.Spi
-  Pin: GpioPin.getOrCreate
+  Spi: PianoNative.Spi
+  Pin: getOrCreatePinByHeaderAndPinNumber
 
 module.exports.Pin.INPUT = Gpio.Mode.INPUT
 module.exports.Pin.OUTPUT = Gpio.Mode.OUTPUT

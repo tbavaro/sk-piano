@@ -27,12 +27,12 @@ KEY_MAPPINGS = [
 class PhysicalPianoKeys extends PianoKeys
   constructor: () ->
     super
-    @_notePins = (TBBeagleBone.Pins.pin(PIN_HEADER, n) for n in NOTE_PINS)
-    @_octavePins = (TBBeagleBone.Pins.pin(PIN_HEADER, n) for n in OCTAVE_PINS)
+    @_notePins = (TBBeagleBone.Pin(PIN_HEADER, n) for n in NOTE_PINS)
+    @_octavePins = (TBBeagleBone.Pin(PIN_HEADER, n) for n in OCTAVE_PINS)
 
     # set up note pins for INPUT pins and octave pins for OTPUT
-    pin.setMode(TBBeagleBone.Pin.Modes.INPUT) for pin in @_notePins
-    pin.setMode(TBBeagleBone.Pin.Modes.OUTPUT) for pin in @_octavePins
+    pin.setMode(TBBeagleBone.Pin.INPUT) for pin in @_notePins
+    pin.setMode(TBBeagleBone.Pin.OUTPUT) for pin in @_octavePins
 
     # turn off all of the octave pins
     pin.write(false) for pin in @_octavePins
@@ -44,7 +44,7 @@ class PhysicalPianoKeys extends PianoKeys
     for octavePin in @_octavePins
       # turn on the current octave and give it 1 ms to take effect
       octavePin.write(true)
-      Sleep.usleep(1000)
+      Sleep.usleep(100)
 
       for notePin in @_notePins
         if notePin.read()
