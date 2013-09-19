@@ -7,3 +7,4 @@ class Simulator
     @viewPort = new ViewPort(document.getElementById("canvas"))
 
 module.exports = Simulator
+
