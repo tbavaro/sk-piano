@@ -6,7 +6,6 @@ class SimulatorCodeEditor
       autofocus: true
       indentWithTabs: true
       highlightSelectionMatches: {}
-      #        showToken: true
     })
 
 module.exports = SimulatorCodeEditor

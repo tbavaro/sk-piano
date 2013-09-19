@@ -4,9 +4,10 @@ input:
 output:
   js: ./sim_www/sim_generated.js
 
-boot: ./src/sim/SimulatorPiano
+boot: ./src/sim/Simulator
 
 alias:
   base: src/base
+  sim: src/sim
   test: src/test
   visualizers: src/visualizers
