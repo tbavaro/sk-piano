@@ -1,162 +1,102 @@
 Shaders = require("sim/webgl/Shaders")
 
-gl = null
-
-initWebGL = (canvas) ->
-  gl = canvas.getContext("webgl")
-  gl.viewportWidth = canvas.width
-  gl.viewportHeight = canvas.height
-
-`
-var shaderProgram;
-
-function initShaders() {
-    var fragmentShader = Shaders.initShader(gl, "shader-fs");
-    var vertexShader = Shaders.initShader(gl, "shader-vs");
-
-    shaderProgram = gl.createProgram();
-    gl.attachShader(shaderProgram, vertexShader);
-    gl.attachShader(shaderProgram, fragmentShader);
-    gl.linkProgram(shaderProgram);
-
-    if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-        alert("Could not initialise shaders");
-    }
-
-    gl.useProgram(shaderProgram);
-
-    shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
-    gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
-
-    shaderProgram.vertexColorAttribute = gl.getAttribLocation(shaderProgram, "aVertexColor");
-    gl.enableVertexAttribArray(shaderProgram.vertexColorAttribute);
-
-    shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
-    shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
-}
-
-
-var mvMatrix = mat4.create();
-var pMatrix = mat4.create();
-
-function setMatrixUniforms() {
-    gl.uniformMatrix4fv(shaderProgram.pMatrixUniform, false, pMatrix);
-    gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, mvMatrix);
-}
-
-
-
-var triangleVertexPositionBuffer;
-var triangleVertexColorBuffer;
-var squareVertexPositionBuffer;
-var squareVertexColorBuffer;
-
-function initBuffers() {
-    triangleVertexPositionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer);
-    var vertices = [
-         0.0,  1.0,  0.0,
-        -1.0, -1.0,  0.0,
-         1.0, -1.0,  0.0
-    ];
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
-    triangleVertexPositionBuffer.itemSize = 3;
-    triangleVertexPositionBuffer.numItems = 3;
-
-    triangleVertexColorBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexColorBuffer);
-    var colors = [
-        1.0, 0.0, 0.0, 1.0,
-        1.0, 1.0, 0.0, 1.0,
-        0.0, 0.0, 1.0, 1.0
-    ];
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
-    triangleVertexColorBuffer.itemSize = 4;
-    triangleVertexColorBuffer.numItems = 3;
-
-    squareVertexPositionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer);
-    vertices = [
-         1.0,  1.0,  0.0,
-        -1.0,  1.0,  0.0,
-         1.0, -1.0,  0.0,
-        -1.0, -1.0,  0.0
-    ];
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
-    squareVertexPositionBuffer.itemSize = 3;
-    squareVertexPositionBuffer.numItems = 4;
-
-    squareVertexColorBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexColorBuffer);
-    colors = []
-    for (var i=0; i < 4; i++) {
-      colors = colors.concat([0.5, 0.5, 1.0, 1.0]);
-    }
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
-    squareVertexColorBuffer.itemSize = 4;
-    squareVertexColorBuffer.numItems = 4;
-}
-
-
-function drawScene() {
-    gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
-    mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
-
-    mat4.identity(mvMatrix);
-
-    mat4.translate(mvMatrix, [-1.5, 0.0, -7.0]);
-    gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer);
-    gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, triangleVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
-
-    gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexColorBuffer);
-    gl.vertexAttribPointer(shaderProgram.vertexColorAttribute, triangleVertexColorBuffer.itemSize, gl.FLOAT, false, 0, 0);
-
-    setMatrixUniforms();
-    gl.drawArrays(gl.TRIANGLES, 0, triangleVertexPositionBuffer.numItems);
-
-    mat4.translate(mvMatrix, [3.0, 0.0, 0.0]);
-    gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer);
-    gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, squareVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
-
-    gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexColorBuffer);
-    gl.vertexAttribPointer(shaderProgram.vertexColorAttribute, squareVertexColorBuffer.itemSize, gl.FLOAT, false, 0, 0);
-
-    setMatrixUniforms();
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, squareVertexPositionBuffer.numItems);
-}
-`
+XCXC = null
 
 class ViewPort
-  constructor: (canvas) ->
-    @canvas = canvas
-    initWebGL(canvas)
-    initShaders()
-    initBuffers()
-    gl.clearColor(0.0, 0.0, 0.0, 1.0)
-    gl.enable(gl.DEPTH_TEST)
-    @onResize()
+  constructor: (parentDomElement) ->
+    @parentDomElement = parentDomElement
+    @camera = new THREE.PerspectiveCamera(75, 1, 1, 10000)
+    @camera.position.z = 200
 
-    # when the window resizes we want to adjust the GL viewport and re-render,
-    # but wait until it has stopped being resized for a short while before we
-    # react
-    @pendingTimeoutId = null
-    window.addEventListener "resize", () =>
-      if @pendingTimeoutId
-        clearTimeout(@pendingTimeoutId)
-        @pendingTimeoutId = null
-      @pendingTimeoutId = setTimeout((() =>
-          @onResize()
-          @pendingTimeoutId = null),
-        100)
+    @scene = new THREE.Scene()
+
+    ambientLight = new THREE.AmbientLight(0xffffff)
+    @scene.add(ambientLight)
+
+    directionalLight = new THREE.DirectionalLight(0xffeedd)
+    directionalLight.position.set(0, -70, 100).normalize()
+    @scene.add(directionalLight)
+
+    @renderer = new THREE.WebGLRenderer()
+
+    # set the size and aspect ratio, and update that if the window ever resizes
+    @onResize()
+    window.addEventListener "resize", @onResize.bind(this)
+
+    parentDomElement.appendChild(@renderer.domElement)
+
+    loader = new THREE.JSONLoader()
+    loader.load "models/piano.js", (model) =>
+      @mesh = new THREE.Mesh(model, new THREE.MeshNormalMaterial())
+      @mesh.material.side = THREE.DoubleSide
+      @mesh.geometry.computeBoundingBox()
+      box = @mesh.geometry.boundingBox
+      @mesh.position.x = -1 * (box.max.x + box.min.x) / 2
+      @mesh.position.y = -1 * (box.max.y + box.min.y) / 2
+      @mesh.position.z = -1 * (box.max.z + box.min.z) / 2
+      @scene.add(@mesh)
+      @camera.position
+
+    @angle = 0
+
+    console.log(@camera)
+    @animate()
+
+
+#
+#    @scene = new THREE.Scene()
+#    geometry = new THREE.CubeGeometry(200, 200, 200)
+#    material = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
+##    @mesh = new THREE.Mesh(geometry, material)
+##    @mesh.scale.x = @mesh.scale.y = @mesh.scale.z = 5
+#    console.log(@mesh)
+#    @scene.add(@mesh)
+#
+#    loader = new THREE.ColladaLoader()
+#    scene = @scene
+#    me = this
+#    loader.load "models/piano.dae", (result) ->
+#      mesh = result.scene
+#      mesh.scale.x = mesh.scale.y = mesh.scale.z = 10
+#      me.mesh = mesh
+#      scene.add(mesh)
+#
+##
+##    # Add some lights to the scene
+##    directionalLight = new THREE.DirectionalLight(0xeeeeee , 1.0)
+##    directionalLight.position.x = 1
+##    directionalLight.position.y = 0
+##    directionalLight.position.z = 0
+##    scene.add(directionalLight)
+#
+#    @renderer = new THREE.CanvasRenderer()
+#    @renderer.setClearColorHex(0x00ff00, 1)
+#
+#
+#    parentDomElement.appendChild(@renderer.domElement)
+#    @animate()
 
   onResize: () ->
-    @canvas.height = @canvas.clientHeight
-    @canvas.width = @canvas.clientWidth
-    @refresh()
+    @camera.aspect = @parentDomElement.clientWidth / @parentDomElement.clientHeight
+    @camera.updateProjectionMatrix()
+    @renderer.setSize(@parentDomElement.clientWidth, @parentDomElement.clientHeight)
 
-  refresh: () ->
-    drawScene()
+  animate: () ->
+    # note: three.js includes requestAnimationFrame shim
+    requestAnimationFrame(@animate.bind(this))
+    @render()
+
+  render: () ->
+    radius = 100
+    @camera.position.x = Math.cos(@angle) * 100
+    @camera.position.z = Math.sin(@angle) * 100
+    @angle += -0.01
+    @camera.lookAt(new THREE.Vector3(0, 0, 0))
+#    if @mesh
+#      @mesh.rotation.z += 0.01
+#      @mesh.rotation.y += 0.02
+    @renderer.render(@scene, @camera)
+
 
 module.exports = ViewPort
+module.exports.xcxc = XCXC
