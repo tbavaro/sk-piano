@@ -65,6 +65,7 @@ class ViewPort
         @radius += e.originalEvent.wheelDelta * 0.1
         @radius = 75 if @radius < 75
         @radius = 300 if @radius > 300
+        e.preventDefault()
     )()
 
     # set the size and aspect ratio, and update that if the window ever resizes
