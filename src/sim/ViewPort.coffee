@@ -3,7 +3,7 @@ LedLocations = require("sim/LedLocations")
 modelToMesh = (model) ->
   material =
     new THREE.MeshLambertMaterial(
-      {color:0x665522, side:THREE.DoubleSide})
+      {color:0x221711, side:THREE.DoubleSide})
   mesh = new THREE.Mesh(model, material)
   mesh.material.shading = THREE.FlatShading
   mesh.geometry.computeBoundingBox()
@@ -17,33 +17,6 @@ modelToMesh = (model) ->
   mesh.position.z = -1 * (box.max.z + box.min.z) / 2
   mesh
 
-fillScene = (scene) ->
-  loader = new THREE.JSONLoader()
-  loader.load "models/piano.js", (model) =>
-    mesh = modelToMesh(model)
-    scene.add(mesh)
-  
-    # lights
-    particles = new THREE.Geometry()
-    pMaterial =
-      new THREE.ParticleBasicMaterial({
-        color: 0xFFFFFF,
-        size: 1
-      })
-
-    particleAdjustment = mesh.position
-    for p in LedLocations by 1
-      p = p.clone().add(particleAdjustment)
-      particle = new THREE.Vertex(p)
-      particles.vertices.push(particle)
-
-    particleSystem =
-      new THREE.ParticleSystem(
-        particles,
-      pMaterial)
-
-    scene.add(particleSystem)
-
 class ViewPort
   constructor: (parentDomElement) ->
     @parentDomElement = parentDomElement
@@ -51,20 +24,11 @@ class ViewPort
 
     @scene = new THREE.Scene()
 
-    ambientLight = new THREE.AmbientLight(0x333333)
-    @scene.add(ambientLight)
+    # will be replaced when scene gets filled
+    @particleSystem = null
 
-    directionalLight = new THREE.DirectionalLight(0xaaaaaa)
-    directionalLight.position.set(-20, -70, 100).normalize()
-    @scene.add(directionalLight)
-
-    directionalLight = new THREE.DirectionalLight(0x888888)
-    directionalLight.position.set(60, -70, 100).normalize()
-    @scene.add(directionalLight)
-
-    directionalLight = new THREE.DirectionalLight(0x444444)
-    directionalLight.position.set(60, 0, -100).normalize()
-    @scene.add(directionalLight)
+    @fillScene()
+    @addLights()
 
     @renderer = new THREE.WebGLRenderer({ antialias: true })
 
@@ -108,10 +72,51 @@ class ViewPort
 
     parentDomElement.appendChild(@renderer.domElement)
 
-    fillScene(@scene)
-
     console.log(@camera)
     @animate()
+
+  fillScene: () ->
+    loader = new THREE.JSONLoader()
+    loader.load "models/piano.js", (model) =>
+      mesh = modelToMesh(model)
+      @scene.add(mesh)
+
+      particles = new THREE.Geometry()
+      pMaterial =
+        new THREE.ParticleBasicMaterial({
+          vertexColors: true
+          map: THREE.ImageUtils.loadTexture("textures/led.png")
+          transparent: true
+          size: 1.25
+        })
+
+      particleAdjustment = mesh.position
+      for p in LedLocations by 1
+        p = p.clone().add(particleAdjustment)
+        particle = new THREE.Vertex(p)
+        particles.vertices.push(particle)
+        c = new THREE.Color()
+        c.setHSL(Math.random(), 1.0, 0.5)
+        particles.colors.push(c)
+
+      @particleSystem = new THREE.ParticleSystem(particles, pMaterial)
+      @scene.add(@particleSystem)
+
+  addLights: () ->
+    ambientLight = new THREE.AmbientLight(0x222222)
+    @scene.add(ambientLight)
+
+    directionalLight = new THREE.DirectionalLight(0xaaaaaa)
+    directionalLight.position.set(-20, -70, 100).normalize()
+    @scene.add(directionalLight)
+
+    directionalLight = new THREE.DirectionalLight(0x888888)
+    directionalLight.position.set(60, -70, 100).normalize()
+    @scene.add(directionalLight)
+
+    directionalLight = new THREE.DirectionalLight(0x444444)
+    directionalLight.position.set(60, 0, -100).normalize()
+    @scene.add(directionalLight)
 
   onResize: () ->
     @camera.aspect = @parentDomElement.clientWidth / @parentDomElement.clientHeight
@@ -121,6 +126,12 @@ class ViewPort
   animate: () ->
     # note: three.js includes requestAnimationFrame shim
     requestAnimationFrame(@animate.bind(this))
+
+    if @particleSystem != null
+      for c in @particleSystem.geometry.colors
+        c.setHSL(Math.random(), 1.0, 0.5)
+      @particleSystem.geometry.colorsNeedUpdate = true
+
     @render()
 
   render: () ->
