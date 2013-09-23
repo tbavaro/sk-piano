@@ -14,7 +14,7 @@ class ViewPort
     directionalLight.position.set(0, -70, 100).normalize()
     @scene.add(directionalLight)
 
-    @renderer = new THREE.WebGLRenderer()
+    @renderer = new THREE.WebGLRenderer({ antialias: true })
 
     @rotationX = Math.PI * 0.15
     @rotationY = Math.PI * 0.4
@@ -25,11 +25,15 @@ class ViewPort
       prevY = null
       $(@renderer.domElement).bind "mousedown", (e) =>
         buttonDown = (e.which == 1)
-        prevX = e.offsetX
-        prevY = e.offsetY
+        if e.which == 1
+          prevX = e.offsetX
+          prevY = e.offsetY
+
+          # don't take focus
+          e.preventDefault()
       $(window).bind "mouseup", (e) =>
         buttonDown = false if e.which == 1
-      $(@renderer.domElement).bind "mousemove", (e) =>
+      $(window).bind "mousemove", (e) =>
         return if !buttonDown
         deltaX = e.offsetX - prevX
         deltaY = e.offsetY - prevY
@@ -39,6 +43,11 @@ class ViewPort
         @rotationY -= (deltaY * 0.01)
         @rotationY = 0.001 if @rotationY < 0.001
         @rotationY = Math.PI - 0.001 if @rotationY > (Math.PI - 0.001)
+      $(@renderer.domElement).bind "mousewheel", (e) =>
+        console.log(e)
+        @radius += e.originalEvent.wheelDelta * 0.1
+        @radius = 75 if @radius < 75
+        @radius = 300 if @radius > 300
     )()
 
     # set the size and aspect ratio, and update that if the window ever resizes
@@ -47,6 +56,7 @@ class ViewPort
 
     parentDomElement.appendChild(@renderer.domElement)
 
+    # piano model
     loader = new THREE.JSONLoader()
     loader.load "models/piano.js", (model) =>
       @mesh = new THREE.Mesh(model, new THREE.MeshNormalMaterial())
@@ -58,6 +68,31 @@ class ViewPort
       @mesh.position.z = -1 * (box.max.z + box.min.z) / 2
       @scene.add(@mesh)
       @camera.position
+
+    # lights
+    particleCount = 10000
+    particles = new THREE.Geometry()
+    pMaterial =
+      new THREE.ParticleBasicMaterial({
+      color: 0xFFFFFF,
+      size: 1
+      })
+
+    for p in [0...particleCount] by 1
+      pX = Math.random() * 500 - 250
+      pY = Math.random() * 500 - 250
+      pZ = Math.random() * 500 - 250
+      particle = new THREE.Vertex(
+        new THREE.Vector3(pX, pY, pZ))
+
+      particles.vertices.push(particle)
+
+    particleSystem =
+      new THREE.ParticleSystem(
+        particles,
+      pMaterial)
+
+    @scene.add(particleSystem);
 
     console.log(@camera)
     @animate()
