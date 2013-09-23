@@ -1,3 +1,38 @@
 Piano = require("base/Piano")
+FrameBufferLightStrip = require("base/FrameBufferLightStrip")
+LedLocations = require("sim/LedLocations")
+PianoKeys = require("base/PianoKeys")
 
-module.exports = {}
+convertColor = (pianoColor) ->
+  new THREE.Color(pianoColor * 2).convertLinearToGamma()
+
+class SimulatorLightStrip extends FrameBufferLightStrip
+  constructor: (numPixels) ->
+    super(numPixels)
+    @cachedColors = null
+    @reset()
+
+  reset: () ->
+    super
+    @cachedColors = null
+
+  display: () ->
+    @cachedColors = null
+
+  colors: () ->
+    @cachedColors = (convertColor(c) for c in @pixels) if @cachedColors == null
+    @cachedColors
+
+class SimulatorPianoKeys extends PianoKeys
+  constructor: () -> super
+
+  scan: () ->
+    # no-op
+
+class SimulatorPiano extends Piano
+  constructor: () ->
+    @strip = new SimulatorLightStrip(LedLocations.length)
+    pianoKeys = new SimulatorPianoKeys()
+    super(@strip, pianoKeys)
+
+module.exports = SimulatorPiano

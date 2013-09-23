@@ -12,4 +12,5 @@
 function onLoad() {
   var Simulator = require("sim/Simulator");
   window.simulator = new Simulator();
+  window.simulator.piano.run();
 }

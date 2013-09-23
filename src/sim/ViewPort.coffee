@@ -18,8 +18,10 @@ modelToMesh = (model) ->
   mesh
 
 class ViewPort
-  constructor: (parentDomElement) ->
+  constructor: (parentDomElement, strip) ->
     @parentDomElement = parentDomElement
+    @strip = strip
+
     @camera = new THREE.PerspectiveCamera(45, 1, 1, 10000)
 
     @scene = new THREE.Scene()
@@ -60,7 +62,6 @@ class ViewPort
         @rotationY = 0.001 if @rotationY < 0.001
         @rotationY = Math.PI - 0.001 if @rotationY > (Math.PI - 0.001)
       $(@renderer.domElement).bind "mousewheel", (e) =>
-        console.log(e)
         @radius += e.originalEvent.wheelDelta * 0.1
         @radius = 75 if @radius < 75
         @radius = 300 if @radius > 300
@@ -72,7 +73,6 @@ class ViewPort
 
     parentDomElement.appendChild(@renderer.domElement)
 
-    console.log(@camera)
     @animate()
 
   fillScene: () ->
@@ -103,18 +103,18 @@ class ViewPort
       @scene.add(@particleSystem)
 
   addLights: () ->
-    ambientLight = new THREE.AmbientLight(0x222222)
+    ambientLight = new THREE.AmbientLight(0x111111)
     @scene.add(ambientLight)
 
-    directionalLight = new THREE.DirectionalLight(0xaaaaaa)
+    directionalLight = new THREE.DirectionalLight(0x888888)
     directionalLight.position.set(-20, -70, 100).normalize()
     @scene.add(directionalLight)
 
-    directionalLight = new THREE.DirectionalLight(0x888888)
+    directionalLight = new THREE.DirectionalLight(0x555555)
     directionalLight.position.set(60, -70, 100).normalize()
     @scene.add(directionalLight)
 
-    directionalLight = new THREE.DirectionalLight(0x444444)
+    directionalLight = new THREE.DirectionalLight(0x222222)
     directionalLight.position.set(60, 0, -100).normalize()
     @scene.add(directionalLight)
 
@@ -128,8 +128,7 @@ class ViewPort
     requestAnimationFrame(@animate.bind(this))
 
     if @particleSystem != null
-      for c in @particleSystem.geometry.colors
-        c.setHSL(Math.random(), 1.0, 0.5)
+      @particleSystem.geometry.colors = @strip.colors()
       @particleSystem.geometry.colorsNeedUpdate = true
 
     @render()

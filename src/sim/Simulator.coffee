@@ -1,10 +1,11 @@
 SimulatorCodeEditor = require("sim/SimulatorCodeEditor")
+SimulatorPiano = require("sim/SimulatorPiano")
 ViewPort = require("sim/ViewPort")
 
 class Simulator
   constructor: () ->
     @editor = new SimulatorCodeEditor(document.getElementById("editor"))
-    @viewPort = new ViewPort(document.getElementById("piano_viewport"))
+    @piano = new SimulatorPiano()
+    @viewPort = new ViewPort(document.getElementById("piano_viewport"), @piano.strip)
 
 module.exports = Simulator
-
