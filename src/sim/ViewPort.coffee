@@ -139,9 +139,6 @@ class ViewPort
         if e.which == 1
           prevX = e.offsetX
           prevY = e.offsetY
-
-          # don't take focus
-          e.preventDefault()
       $(window).bind "mouseup", (e) =>
         buttonDown = false if e.which == 1
       $(window).bind "mousemove", (e) =>
