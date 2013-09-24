@@ -17,6 +17,99 @@ modelToMesh = (model) ->
   mesh.position.z = -1 * (box.max.z + box.min.z) / 2
   mesh
 
+class LedRenderer
+  setColors: (colors) -> throw "abstract"
+
+class ParticleLedRenderer extends LedRenderer
+  constructor: (scene, locations) ->
+    super
+
+    particles = new THREE.Geometry()
+    pMaterial =
+      new THREE.ParticleBasicMaterial({
+        vertexColors: true
+        map: THREE.ImageUtils.loadTexture("textures/led.png")
+        transparent: true
+        size: 1.25
+        blending: THREE.AdditiveBlending
+      })
+
+    for p in locations
+      particle = new THREE.Vertex(p)
+      particles.vertices.push(particle)
+      c = new THREE.Color()
+      c.setHSL(Math.random(), 1.0, 0.5)
+      particles.colors.push(c)
+
+    @particleSystem = new THREE.ParticleSystem(particles, pMaterial)
+    scene.add(@particleSystem)
+
+  setColors: (colors) ->
+    @particleSystem.geometry.colors = colors
+    @particleSystem.geometry.colorsNeedUpdate = true
+
+class SphereLedRenderer extends LedRenderer
+  constructor: (scene, locations) ->
+    super
+
+    makeLed = (p) ->
+      material = new THREE.MeshBasicMaterial({
+        color: 0xCC0000
+      })
+
+      led = new THREE.Mesh(new THREE.SphereGeometry(0.125, 6, 6), material)
+      led.position = p
+      led
+
+    @leds = (makeLed(p) for p in locations)
+    scene.add(led) for led in @leds
+
+  setColors: (colors) ->
+    for i in [0...(colors.length)] by 1
+      @leds[i].material.color = colors[i]
+
+class SphereWithGlowLedRenderer extends LedRenderer
+  constructor: (scene, locations) ->
+    super
+
+    makeLed = (p) ->
+      material = new THREE.MeshBasicMaterial({
+      color: 0xCC0000
+      })
+
+      led = new THREE.Mesh(new THREE.SphereGeometry(0.125, 4, 4), material)
+      led.position = p
+      led
+
+    @leds = (makeLed(p) for p in locations)
+    scene.add(led) for led in @leds
+
+    particles = new THREE.Geometry()
+    pMaterial =
+      new THREE.ParticleBasicMaterial({
+      vertexColors: true
+      map: THREE.ImageUtils.loadTexture("textures/glow.png")
+      transparent: true
+      size: 3
+      blending: THREE.AdditiveBlending
+      })
+
+    for p in locations
+      particle = new THREE.Vertex(p)
+      particles.vertices.push(particle)
+      c = new THREE.Color()
+      c.setHSL(Math.random(), 1.0, 0.5)
+      particles.colors.push(c)
+
+    @particleSystem = new THREE.ParticleSystem(particles, pMaterial)
+    scene.add(@particleSystem)
+
+  setColors: (colors) ->
+    for i in [0...(colors.length)] by 1
+      @leds[i].material.color = colors[i]
+    @particleSystem.geometry.colors = colors
+    @particleSystem.geometry.colorsNeedUpdate = true
+
 class ViewPort
   constructor: (parentDomElement, strip) ->
     @parentDomElement = parentDomElement
@@ -27,7 +120,7 @@ class ViewPort
     @scene = new THREE.Scene()
 
     # will be replaced when scene gets filled
-    @particleSystem = null
+    @leds = null
 
     @fillScene()
     @addLights()
@@ -82,26 +175,8 @@ class ViewPort
       mesh = modelToMesh(model)
       @scene.add(mesh)
 
-      particles = new THREE.Geometry()
-      pMaterial =
-        new THREE.ParticleBasicMaterial({
-          vertexColors: true
-          map: THREE.ImageUtils.loadTexture("textures/led.png")
-          transparent: true
-          size: 1.25
-        })
-
-      particleAdjustment = mesh.position
-      for p in LedLocations by 1
-        p = p.clone().add(particleAdjustment)
-        particle = new THREE.Vertex(p)
-        particles.vertices.push(particle)
-        c = new THREE.Color()
-        c.setHSL(Math.random(), 1.0, 0.5)
-        particles.colors.push(c)
-
-      @particleSystem = new THREE.ParticleSystem(particles, pMaterial)
-      @scene.add(@particleSystem)
+      led_locations = (p.clone().add(mesh.position) for p in LedLocations)
+      @leds = new SphereWithGlowLedRenderer(@scene, led_locations)
 
   addLights: () ->
     ambientLight = new THREE.AmbientLight(0x111111)
@@ -128,10 +203,7 @@ class ViewPort
     # note: three.js includes requestAnimationFrame shim
     requestAnimationFrame(@animate.bind(this))
 
-    if @particleSystem != null
-      @particleSystem.geometry.colors = @strip.colors()
-      @particleSystem.geometry.colorsNeedUpdate = true
-
+    @leds.setColors(@strip.colors()) if @leds != null
     @render()
 
   render: () ->
