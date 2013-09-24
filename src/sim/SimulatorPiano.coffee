@@ -24,15 +24,18 @@ class SimulatorLightStrip extends FrameBufferLightStrip
     @cachedColors
 
 class SimulatorPianoKeys extends PianoKeys
-  constructor: () -> super
+  constructor: () ->
+    super
+    @keyStates = (false for _ in [0...88] by 1)
 
   scan: () ->
-    # no-op
+    pressedKeys = (i for i in [0...88] by 1 when @keyStates[i])
+    @setPressedKeys(pressedKeys)
 
 class SimulatorPiano extends Piano
   constructor: () ->
     @strip = new SimulatorLightStrip(LedLocations.length)
-    pianoKeys = new SimulatorPianoKeys()
-    super(@strip, pianoKeys)
+    @pianoKeys = new SimulatorPianoKeys()
+    super(@strip, @pianoKeys)
 
 module.exports = SimulatorPiano
