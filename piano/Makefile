@@ -6,7 +6,7 @@ NODE_MODULE_ROOTS=${ASANA_NODE_ROOT}/lib/node_modules:/usr/local/lib/node_module
 
 run:
 	NODE_PATH=${NODE_PATH}:${NODE_MODULE_ROOTS} \
-	coffee Controller.coffee
+	coffee -w Controller.coffee
 
 test:
 	PATH=${PATH}:${NODE_ROOTS} \

@@ -67,6 +67,7 @@ class TwinkleVisualizerHelper extends AmplitudeVisualizer
 
       @strip.setPixel(i, Colors.hsv(hue, saturation, brightness))
 
+
     return
 
 class TwinkleVisualizer extends CompositeVisualizer

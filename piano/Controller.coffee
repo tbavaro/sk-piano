@@ -47,12 +47,20 @@ class Controller
     (@nextFrameTime - endTime)
 
   # blocks forever but is considerably faster on the actual device
-  runLoopSync: () ->
+  runLoopSync: (optNumCycles) ->
     Sleep = require("sleep")
-    while true
+    count = 0
+    while !optNumCycles || (optNumCycles > (++count))
       delay = @runLoopOnce()
       if delay > 0
         Sleep.usleep(delay * 1000)
+    return
+
+  runLoopMostlySync: () ->
+    @runLoopSync(100)
+    # TODO the last time we have a delay we should just return the delay
+    # and use that as the timeout delay
+    setTimeout(@runLoopMostlySync.bind(this), 0)
     return
 
   runLoopAsync: () ->
