@@ -1,14 +1,13 @@
 Colors = require("base/Colors")
-MasterVisualizer = require("visualizers/MasterVisualizer")
 
 class Piano
   @TARGET_FPS: 30
   @NUM_PIXELS: 686
 
-  constructor: (strip, pianoKeys) ->
+  constructor: (strip, pianoKeys, visualizer) ->
     @strip = strip
     @pianoKeys = pianoKeys
-    @visualizer = new MasterVisualizer(strip, pianoKeys)
+    @visualizer = visualizer
     @targetFrameDuration = 1000.0 / Piano.TARGET_FPS
     @prevFrameTime = Date.now()
     @nextFrameTime = @prevFrameTime

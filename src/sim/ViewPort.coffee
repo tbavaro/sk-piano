@@ -1,11 +1,8 @@
 LedLocations = require("sim/LedLocations")
+GlowComposer = require("sim/GlowComposer")
 
-modelToMesh = (model) ->
-  material =
-    new THREE.MeshLambertMaterial(
-      {color:0x221711, side:THREE.DoubleSide})
+modelToMesh = (model, material) ->
   mesh = new THREE.Mesh(model, material)
-  mesh.material.shading = THREE.FlatShading
   mesh.geometry.computeBoundingBox()
   mesh.geometry.mergeVertices()
   mesh.geometry.computeCentroids()
@@ -17,99 +14,6 @@ modelToMesh = (model) ->
   mesh.position.z = -1 * (box.max.z + box.min.z) / 2
   mesh
 
-class LedRenderer
-  setColors: (colors) -> throw "abstract"
-
-class ParticleLedRenderer extends LedRenderer
-  constructor: (scene, locations) ->
-    super
-
-    particles = new THREE.Geometry()
-    pMaterial =
-      new THREE.ParticleBasicMaterial({
-        vertexColors: true
-        map: THREE.ImageUtils.loadTexture("textures/led.png")
-        transparent: true
-        size: 1.25
-        blending: THREE.AdditiveBlending
-      })
-
-    for p in locations
-      particle = new THREE.Vertex(p)
-      particles.vertices.push(particle)
-      c = new THREE.Color()
-      c.setHSL(Math.random(), 1.0, 0.5)
-      particles.colors.push(c)
-
-    @particleSystem = new THREE.ParticleSystem(particles, pMaterial)
-    scene.add(@particleSystem)
-
-  setColors: (colors) ->
-    @particleSystem.geometry.colors = colors
-    @particleSystem.geometry.colorsNeedUpdate = true
-
-class SphereLedRenderer extends LedRenderer
-  constructor: (scene, locations) ->
-    super
-
-    makeLed = (p) ->
-      material = new THREE.MeshBasicMaterial({
-        color: 0xCC0000
-      })
-
-      led = new THREE.Mesh(new THREE.SphereGeometry(0.125, 6, 6), material)
-      led.position = p
-      led
-
-    @leds = (makeLed(p) for p in locations)
-    scene.add(led) for led in @leds
-
-  setColors: (colors) ->
-    for i in [0...(colors.length)] by 1
-      @leds[i].material.color = colors[i]
-
-class SphereWithGlowLedRenderer extends LedRenderer
-  constructor: (scene, locations) ->
-    super
-
-    makeLed = (p) ->
-      material = new THREE.MeshBasicMaterial({
-      color: 0xCC0000
-      })
-
-      led = new THREE.Mesh(new THREE.SphereGeometry(0.125, 4, 4), material)
-      led.position = p
-      led
-
-    @leds = (makeLed(p) for p in locations)
-    scene.add(led) for led in @leds
-
-    particles = new THREE.Geometry()
-    pMaterial =
-      new THREE.ParticleBasicMaterial({
-      vertexColors: true
-      map: THREE.ImageUtils.loadTexture("textures/glow.png")
-      transparent: true
-      size: 3
-      blending: THREE.AdditiveBlending
-      })
-
-    for p in locations
-      particle = new THREE.Vertex(p)
-      particles.vertices.push(particle)
-      c = new THREE.Color()
-      c.setHSL(Math.random(), 1.0, 0.5)
-      particles.colors.push(c)
-
-    @particleSystem = new THREE.ParticleSystem(particles, pMaterial)
-    scene.add(@particleSystem)
-
-  setColors: (colors) ->
-    for i in [0...(colors.length)] by 1
-      @leds[i].material.color = colors[i]
-    @particleSystem.geometry.colors = colors
-    @particleSystem.geometry.colorsNeedUpdate = true
-
 class ViewPort
   constructor: (parentDomElement, strip) ->
     @parentDomElement = parentDomElement
@@ -118,14 +22,16 @@ class ViewPort
     @camera = new THREE.PerspectiveCamera(45, 1, 1, 10000)
 
     @scene = new THREE.Scene()
+    @glowScene = new THREE.Scene()
 
     # will be replaced when scene gets filled
-    @leds = null
+    @ledColors = null
 
     @fillScene()
     @addLights()
 
     @renderer = new THREE.WebGLRenderer({ antialias: true })
+    @renderer.autoClear = false
 
     @rotationX = Math.PI * 0.15
     @rotationY = Math.PI * 0.4
@@ -139,6 +45,7 @@ class ViewPort
         if e.which == 1
           prevX = e.offsetX
           prevY = e.offsetY
+        e.preventDefault()
       $(window).bind "mouseup", (e) =>
         buttonDown = false if e.which == 1
       $(window).bind "mousemove", (e) =>
@@ -151,6 +58,7 @@ class ViewPort
         @rotationY -= (deltaY * 0.01)
         @rotationY = 0.001 if @rotationY < 0.001
         @rotationY = Math.PI - 0.001 if @rotationY > (Math.PI - 0.001)
+        e.preventDefault()
       $(@renderer.domElement).bind "mousewheel", (e) =>
         @radius += e.originalEvent.wheelDelta * 0.1
         @radius = 75 if @radius < 75
@@ -158,57 +66,106 @@ class ViewPort
         e.preventDefault()
     )()
 
+    parentDomElement.appendChild(@renderer.domElement)
+
+    @glowComposer = new GlowComposer(@renderer, @camera, @scene, @glowScene)
+
     # set the size and aspect ratio, and update that if the window ever resizes
     @onResize()
     $(window).bind "resize", @onResize.bind(this)
-
-    parentDomElement.appendChild(@renderer.domElement)
 
     @animate()
 
   fillScene: () ->
     loader = new THREE.JSONLoader()
     loader.load "models/piano.js", (model) =>
-      mesh = modelToMesh(model)
+      # add full-black piano model to the glow scene
+      flatBlackMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 })
+      @glowScene.add(modelToMesh(model.clone(), flatBlackMaterial))
+
+      material = new THREE.MeshLambertMaterial({
+        color:0x222222
+        side: THREE.DoubleSide
+        shading: THREE.FlatShading
+      })
+      mesh = modelToMesh(model, material)
       @scene.add(mesh)
 
-      led_locations = (p.clone().add(mesh.position) for p in LedLocations)
-      @leds = new SphereWithGlowLedRenderer(@scene, led_locations)
+      geometry = new THREE.SphereGeometry(0.2, 4, 4)
+      glowLedGeometry = new THREE.SphereGeometry(0.66, 6, 6)
+
+      ledMaterial = new THREE.MeshBasicMaterial({})
+      glowLedMaterial = new THREE.MeshBasicMaterial({
+        blending:THREE.AdditiveBlending
+        transparent:true
+      })
+
+      ledLocations = (p.clone().add(mesh.position) for p in LedLocations)
+      @ledColors = []
+      for p in ledLocations
+        material = ledMaterial.clone()
+        glowMaterial = glowLedMaterial.clone()
+        glowMaterial.color = material.color
+        @ledColors.push(material.color)
+
+        led = new THREE.Mesh(geometry, material)
+        led.position = p
+        @scene.add(led)
+
+        led = new THREE.Mesh(glowLedGeometry, glowMaterial)
+        led.position = p
+        @glowScene.add(led)
+      return
+
+  setLedColors: (colors) ->
+    if @ledColors != null
+      for color, i in colors
+        @ledColors[i].set(color)
+    return
 
   addLights: () ->
-    ambientLight = new THREE.AmbientLight(0x111111)
+    ambientLight = new THREE.AmbientLight(0x090909)
     @scene.add(ambientLight)
 
-    directionalLight = new THREE.DirectionalLight(0x888888)
+    directionalLight = new THREE.DirectionalLight(0x666644)
     directionalLight.position.set(-20, -70, 100).normalize()
     @scene.add(directionalLight)
 
-    directionalLight = new THREE.DirectionalLight(0x555555)
+    directionalLight = new THREE.DirectionalLight(0x444444)
     directionalLight.position.set(60, -70, 100).normalize()
     @scene.add(directionalLight)
 
-    directionalLight = new THREE.DirectionalLight(0x222222)
+    directionalLight = new THREE.DirectionalLight(0x444444)
     directionalLight.position.set(60, 0, -100).normalize()
     @scene.add(directionalLight)
+    return
 
   onResize: () ->
-    @camera.aspect = @parentDomElement.clientWidth / @parentDomElement.clientHeight
+    width = @parentDomElement.clientWidth
+    height = @parentDomElement.clientHeight
+    @camera.aspect = width / height
     @camera.updateProjectionMatrix()
-    @renderer.setSize(@parentDomElement.clientWidth, @parentDomElement.clientHeight)
+    @renderer.setSize(width, height)
+    @glowComposer.setSize(width, height)
+    return
 
   animate: () ->
     # note: three.js includes requestAnimationFrame shim
     requestAnimationFrame(@animate.bind(this))
 
-    @leds.setColors(@strip.colors()) if @leds != null
+    @setLedColors(@strip.colors())
     @render()
+    return
 
   render: () ->
     @camera.position.x = Math.sin(@rotationX) * Math.sin(@rotationY) * @radius
     @camera.position.z = Math.cos(@rotationX) * Math.sin(@rotationY) * @radius
     @camera.position.y = Math.cos(@rotationY) * @radius
     @camera.lookAt(new THREE.Vector3(0, 0, 0))
-    @renderer.render(@scene, @camera)
+
+    @glowComposer.render()
+
+    return
 
 
 module.exports = ViewPort

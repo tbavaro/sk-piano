@@ -47,7 +47,7 @@ class PianoKeyboard
       $(element).mousedown (e) =>
         mouseDown = true
         @onNoteDown(note)
-        $v(e.target).focus()
+        $(e.target).focus()
         e.preventDefault()
       $(element).mouseup (e) =>
         @onNoteUp(note) if mouseDown

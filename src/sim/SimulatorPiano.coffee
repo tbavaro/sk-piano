@@ -1,6 +1,7 @@
 Piano = require("base/Piano")
 FrameBufferLightStrip = require("base/FrameBufferLightStrip")
 LedLocations = require("sim/LedLocations")
+MasterVisualizer = require("visualizers/MasterVisualizer")
 PianoKeys = require("base/PianoKeys")
 
 convertColor = (pianoColor) ->
@@ -34,8 +35,9 @@ class SimulatorPianoKeys extends PianoKeys
 
 class SimulatorPiano extends Piano
   constructor: () ->
-    @strip = new SimulatorLightStrip(LedLocations.length)
-    @pianoKeys = new SimulatorPianoKeys()
-    super(@strip, @pianoKeys)
+    strip = new SimulatorLightStrip(LedLocations.length)
+    pianoKeys = new SimulatorPianoKeys()
+    visualizer = new MasterVisualizer(strip, pianoKeys)
+    super(strip, pianoKeys, visualizer)
 
 module.exports = SimulatorPiano

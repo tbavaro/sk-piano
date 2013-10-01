@@ -1,4 +1,5 @@
 Piano = require("Piano")
+MasterVisualizer = require("visualizers/MasterVisualizer")
 PhysicalLightStrip = require("./PhysicalLightStrip")
 PhysicalPianoKeys = require("./PhysicalPianoKeys")
 TBBeagleBone = require("./TBBeagleBone")
@@ -14,7 +15,8 @@ class RealPiano extends Piano
     spi = new TBBeagleBone.Spi(SPI_DEVICE, SPI_FREQUENCY_HZ)
     strip = new PhysicalLightStrip(spi, Piano.NUM_PIXELS)
     pianoKeys = new PhysicalPianoKeys()
-    super(strip, pianoKeys)
+    visualizer = new MasterVisualizer(strip, pianoKeys)
+    super(strip, pianoKeys, visualizer)
 
   # on the actual device, setTimeout is very imprecise; do a bunch of frames
   # synchronously and periodically reschedule with setTimeout so we're not
