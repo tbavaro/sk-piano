@@ -4,6 +4,7 @@
     <link rel="stylesheet" type="text/css" href="codemirror.css" />
     <link rel="stylesheet" type="text/css" href="sim.css" />
     <script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="coffee-script.js"></script>
     <script type="text/javascript" src="three.js"></script>
     <script type="text/javascript" src="CopyShader.js"></script>
     <script type="text/javascript" src="EffectComposer.js"></script>
@@ -19,8 +20,21 @@
 <body onload="onLoad()">
     <div id="piano_viewport" class="piano viewport"></div>
     <div id="piano_keys" class="piano-keys viewport"></div>
+    <div class="actions viewport no-selection">
+        <span class="title section">
+            TwinkleVisualizer
+        </span>
+        <a id="run_button" class="button section enabled">
+            Run
+        </a>
+        <a id="upload_button" class="button section">
+            Upload to Piano
+        </a>
+    </div>
     <div class="code viewport">
-        <textarea id="editor" class="editor"></textarea>
+        <div class="editor">
+            <textarea id="editor"></textarea>
+        </div>
     </div>
 </body>
 </html>

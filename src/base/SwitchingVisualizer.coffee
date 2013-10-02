@@ -1,4 +1,4 @@
-Visualizer = require("base/Visualizer")
+DelegatingVisualizer = require("base/DelegatingVisualizer")
 PianoKeys = require("base/PianoKeys")
 TestUtils = require("test/TestUtils")
 assert = require("assert")
@@ -6,7 +6,7 @@ assert = require("assert")
 # switch whenever the leftmost key is pressed
 SWITCH_KEY = 0
 
-class SwitchingVisualizer extends Visualizer
+class SwitchingVisualizer extends DelegatingVisualizer
   constructor: (pianoKeys, visualizerFunctors) ->
     super
     assert(visualizerFunctors.length > 0)
@@ -18,23 +18,22 @@ class SwitchingVisualizer extends Visualizer
     super
     @currentVisualizerIndex = -1
     @switchToNextVisualizer()
+    return
 
   switchToNextVisualizer: () ->
     @currentVisualizerIndex =
         ((@currentVisualizerIndex + 1) % @visualizerFunctors.length)
+    visualizer = null
     duration = TestUtils.runTimed () =>
-      @currentVisualizer = (@visualizerFunctors[@currentVisualizerIndex])()
+      visualizer = (@visualizerFunctors[@currentVisualizerIndex])()
     console.log([
-      "Switching to visualizer: ", @currentVisualizer, " (", duration, "ms)"
+      "Switching to visualizer: ", visualizer, " (", duration, "ms)"
     ].join(""))
-    @currentVisualizer.reset()
-    @currentVisualizer.render(0)
+    @setDelegate(visualizer)
+    return
 
   render: (secondsSinceLastFrame) ->
-    if SWITCH_KEY in @pianoKeys.pressedSinceLastFrame
-      @switchToNextVisualizer()
-    else
-      @currentVisualizer.render(secondsSinceLastFrame)
-    return
+    @switchToNextVisualizer() if SWITCH_KEY in @pianoKeys.pressedSinceLastFrame
+    super(secondsSinceLastFrame)
 
 module.exports = SwitchingVisualizer

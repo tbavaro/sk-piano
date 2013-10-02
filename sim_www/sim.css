@@ -1,6 +1,5 @@
 body {
     font-family: helvetica;
-    text-align: center;
     background-color: #080f08;
     background-image: linear-gradient(
         -45deg,
@@ -14,13 +13,13 @@ body {
     overflow: hidden;
 }
 
-div, textarea {
+div, textarea, span, a {
     box-sizing: border-box;
 }
 
 .viewport {
     position: absolute;
-    border: 1px solid rgba(255, 255, 255, .2);
+    border: 1px solid #384038;
 }
 
 .piano.viewport {
@@ -74,14 +73,91 @@ div, textarea {
     background-color: red;
 }
 
-.code.viewport {
-    background-color: #ccddcc;
-    color: black;
-    text-align: left;
+.no-selection {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.actions.viewport {
     top: 10px;
+    right: 10px;
+    width: calc((100% - 30px) * 0.45);
+    height: 40px;
+    line-height: 38px;
+    background-color: #556655;
+    vertical-align: middle;
+}
+
+.actions.viewport .section {
+    position: absolute;
+    display: inline-block;
+    border-left: 1px solid #384038;
+    border-right: 1px solid #384038;
+    top: 0px;
+    bottom: 0px;
+    padding-left: 8px;
+    padding-right: 8px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #eeffee;
+    cursor: pointer;
+}
+
+.actions.viewport .title.section {
+    left: -1px;
+    right: 70px;
+}
+
+.actions.viewport .button {
+    text-align: center;
+    background-color: #778877;
+    color: #556655;
+    font-weight: bold;
+}
+
+.actions.viewport .button.enabled {
+    color: #111811;
+}
+
+.actions.viewport .button.enabled:hover {
+    background-color: #99aa99;
+}
+
+.actions.viewport .button.enabled:active {
+    background-color: #aabbaa;
+}
+
+.actions.viewport #run_button {
+    right: 150px;
+    width: 72px;
+}
+
+.actions.viewport #upload_button {
+    right: -1px;
+    width: 152px;
+}
+
+.code.viewport {
+    top: 60px;
     right: 10px;
     bottom: 10px;
     width: calc((100% - 30px) * 0.45);
+}
+
+.editor {
+    background-color: #ccddcc;
+    color: black;
+    text-align: left;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
 }
 
 .CodeMirror {
@@ -89,7 +165,7 @@ div, textarea {
     font-size: 12px;
     width: 100%;
     height: 100%;
-    padding: 10px;
+    padding: 6px;
     resize: none;
     background-color: transparent;
     border: none;
@@ -100,6 +176,7 @@ div, textarea {
     white-space: nowrap;
     outline: none;
     -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
 }
 
 .cm-matchhighlight {
