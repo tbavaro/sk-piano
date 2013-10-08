@@ -84,6 +84,16 @@ class DataStore
     @setDocumentContent(id, "")
     id
 
+  duplicateDocument: (id) ->
+    metadata = loadDocumentMetadata(id)
+    content = @documentContent(id)
+
+    newId = @newDocument()
+    storeDocumentMetadata(newId, metadata)
+    @setDocumentContent(newId, content)
+
+    newId
+
   deleteDocument: (id) ->
     assertDocumentExists(id)
     localStorage.removeItem(documentMetadataKey(id))

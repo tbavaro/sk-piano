@@ -43,7 +43,7 @@ class Simulator
     @isDirty = false
     @saveChangeTimeoutId = null
     @editor.addOnChangeHandler () =>
-      console.log("changed")
+#      console.log("changed")
       @isDirty = true
       if @saveChangeTimeoutId != null then clearTimeout(@saveChangeTimeoutId)
       @saveChangeTimeoutId =
@@ -61,10 +61,17 @@ class Simulator
     $(document).on "keydown", (event) =>
       specialFunc = null
 
-      if (event.ctrlKey || event.metaKey) && event.shiftKey
-        switch event.which
-          when KEY_R then specialFunc = () => @runCode()
-          else null # no-op
+      if (event.ctrlKey || event.metaKey)
+        if event.shiftKey
+          switch event.which
+            # cmd + shift + r: RUN
+            when KEY_R then specialFunc = () => @runCode()
+            else null # no-op
+        else
+          switch event.which
+            # cmd + s: SAVE
+            when KEY_S then specialFunc = () => @saveDocumentIfDirty()
+            else null # no-op
 
       if specialFunc != null
         event.preventDefault()
@@ -98,7 +105,7 @@ class Simulator
     if @loadedDocumentId == null then throw "no document loaded"
     @dataStore.setDocumentContent(@loadedDocumentId, @editor.content())
     @isDirty = false
-    console.log("Saved document #{@loadedDocumentId}")
+#    console.log("Saved document #{@loadedDocumentId}")
 
   saveDocumentIfDirty: () ->
     if @loadedDocumentId != null && @isDirty then @saveDocument()
