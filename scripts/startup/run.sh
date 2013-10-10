@@ -9,8 +9,12 @@ cd ${PIANO_ROOT}/scripts/startup
 cd ${PIANO_ROOT}
 while [ true ]
 do
-  make run
-  
+  echo Starting piano...
+
+  # don't log anything (or log to ramdisk maybe? logging to SD card is bad)
+  make run 2>&1 > /dev/null
+ 
+  echo "Process exited (crashed?); waiting to restart..."
   # sleep so we don't thrash if there's a problem starting
   sleep 1
 done
