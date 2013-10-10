@@ -27,7 +27,7 @@ clean:
 	( cd ${PIANO_NATIVE_ROOT} && node-gyp clean )
 
 run: node_modules
-	coffee src/beaglebone/RealPiano
+	coffee src/beaglebone/RealPiano.coffee
 
 ${ASSERT_STUB_SYMLINK_PATH}: node_modules ${ASSERT_STUB_REAL_PATH}
 	cp ${ASSERT_STUB_REAL_PATH} ${ASSERT_STUB_SYMLINK_PATH}

@@ -1,0 +1,11 @@
+[Unit]
+Description=Run the Piano app
+After=syslog.target network.target
+
+[Service]
+Type=simple
+ExecStart=/home/piano/git/piano/scripts/startup/run.sh
+
+[Install]
+WantedBy=multi-user.target
+
