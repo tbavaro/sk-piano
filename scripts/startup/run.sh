@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PIANO_ROOT=/home/piano/git/piano
+PIANO_ROOT=/home/piano/git/sk-piano
 
 cd ${PIANO_ROOT}/scripts/startup
 ./export_gpio_pins.sh
