@@ -4,7 +4,8 @@ After=syslog.target network.target
 
 [Service]
 Type=simple
-ExecStart=/home/piano/git/piano/scripts/startup/run_simulator.sh
+User=piano
+ExecStart=/home/piano/git/sk-piano/scripts/startup/run_simulator.sh
 
 [Install]
 WantedBy=multi-user.target

@@ -13,7 +13,7 @@ COMPILED_SHADERS_PATH=${COMPILED_SHADERS_ROOT}/${COMPILED_SHADERS_FILENAME}
 
 SIM_GENERATED_JS=sim_www/sim_generated.js
 
-.PHONY: all native clean run sim sim-auto test ${SIM_GENERATED_JS}
+.PHONY: all native clean run sim sim-auto test sim-force
 
 all: native node_modules
 
@@ -35,8 +35,11 @@ ${ASSERT_STUB_SYMLINK_PATH}: node_modules ${ASSERT_STUB_REAL_PATH}
 ${COMPILED_SHADERS_PATH}: ${COMPILED_SHADERS_ROOT}/*.vert ${COMPILED_SHADERS_ROOT}/*.frag
 	( cd ${COMPILED_SHADERS_ROOT} && ./compile_shaders.rb > ${COMPILED_SHADERS_FILENAME} )
 
-${SIM_GENERATED_JS}:
+sim-force:
 	./node_modules/polvo/bin/polvo -c # -r
+
+${SIM_GENERATED_JS}:
+	make sim-force
 
 sim: node_modules ${ASSERT_STUB_SYMLINK_PATH} ${COMPILED_SHADERS_PATH} ${SIM_GENERATED_JS}
 
