@@ -43,6 +43,9 @@ sim: node_modules ${ASSERT_STUB_SYMLINK_PATH} ${COMPILED_SHADERS_PATH} ${SIM_GEN
 sim-auto:
 	coffee tools/AutoMakeSim.coffee
 
+run-sim: sim
+	coffee -w src/simws/SimulatorWebServer.coffee
+
 test: node_modules
 	./node_modules/nodeunit/bin/nodeunit src/test/AllTests.js
 

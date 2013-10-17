@@ -6,7 +6,8 @@ raise "Must run as root" unless Process.uid == 0
 
 # services, ordered by precedence
 services = [
-  "piano"
+  "piano",
+  "piano-simulator"
 ]
 SERVICES_DIR = "/lib/systemd/system"
 
