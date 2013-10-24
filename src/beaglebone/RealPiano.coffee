@@ -1,5 +1,5 @@
 Piano = require("Piano")
-MasterVisualizer = require("visualizers/MasterVisualizer")
+MasterVisualizer = require("./MasterVisualizer")
 PhysicalLightStrip = require("./PhysicalLightStrip")
 PhysicalPianoKeys = require("./PhysicalPianoKeys")
 TBBeagleBone = require("./TBBeagleBone")

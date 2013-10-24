@@ -1,14 +1,35 @@
 express = require("express")
 path = require("path")
+ServerDatastore = require("sim/ServerDatastore")
 
 PORT = 8380
 STATIC_DIR = path.join(__dirname, "../../sim_www")
-VISUALIZERS_DIR = path.join(__dirname, "../visualizers")
 
-server = express()
-server.use("/visualizers", express.static(VISUALIZERS_DIR))
-server.use(express.static(STATIC_DIR))
+class SimulatorWebServer
+  constructor: () ->
+    @datastore = new ServerDatastore()
+    @server = express()
 
-server.listen(PORT)
+    @server.use "/visualizers", (req, res) =>
+      returnCodeOrNull = (code) =>
+        if code == null
+          res.send 404, "Not found"
+        else
+          res.set "Content-Type", "text/coffeescript"
+          res.send code
 
-console.log "Listening on port #{PORT}..."
+      m = req.path.match(/^\/(.*)\.coffee$/)
+      if m == null
+        returnCodeOrNull(null)
+      else
+        @datastore.getCodeForDocumentOrNull m[1], returnCodeOrNull
+
+    @server.use(express.static(STATIC_DIR))
+
+  listen: (port) ->
+    @server.listen(port)
+    console.log "Listening on port #{port}..."
+
+
+ws = new SimulatorWebServer()
+ws.listen(PORT)
