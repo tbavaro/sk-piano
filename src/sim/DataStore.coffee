@@ -56,7 +56,7 @@ documentExists = (name) -> (localStorage.getItem(documentMetadataKey(name)) != n
 
 assertDocumentExists = (name) ->
   if !(documentExists(name))
-    throw "document does not exist: #{name} #{documentMetadataKey(name)}"
+    throw "document does not exist: #{name}"
 
 loadDocumentContent = (name) ->
   assertDocumentExists(name)
@@ -87,11 +87,11 @@ class DataStore
     storeDocumentContent(name, "")
     name
 
-  duplicateDocument: (name) ->
+  duplicateDocument: (name, opt_newName) ->
     metadata = loadDocumentMetadata(name)
     content = @documentContent(name)
 
-    newName = @_nextDocumentNameWithPrefix(name)
+    newName = @_nextDocumentNameWithPrefix(opt_newName || name)
     storeDocumentMetadata(newName, metadata)
     storeDocumentContent(newName, content)
 
@@ -119,5 +119,12 @@ class DataStore
   setLoadedDocumentName: (name) ->
     localStorage[LOADED_DOCUMENT_NAME_KEY] = name
     return
+
+  renameDocument: (oldName, desiredNewName) ->
+    wasLoadedDocument = (@loadedDocumentName() == oldName)
+    newName = @duplicateDocument(oldName, desiredNewName)
+    @deleteDocument(oldName)
+    if wasLoadedDocument then @setLoadedDocumentName(newName)
+    newName
 
 module.exports = DataStore
