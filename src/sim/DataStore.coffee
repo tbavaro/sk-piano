@@ -1,6 +1,10 @@
-DOCUMENT_METADATA_PREFIX = "docMeta:"
-DOCUMENT_CONTENT_PREFIX = "docContent:"
-LOADED_DOCUMENT_ID_KEY = "loadedDocumentId"
+DATASTORE_VERSION = 2
+
+KEY_PREFIX = "v#{DATASTORE_VERSION}:"
+
+DOCUMENT_METADATA_PREFIX = "#{KEY_PREFIX}docMeta:"
+DOCUMENT_CONTENT_PREFIX = "#{KEY_PREFIX}docContent:"
+LOADED_DOCUMENT_NAME_KEY = "#{KEY_PREFIX}loadedDocumentName"
 
 DEFAULT_DOCUMENT_NAME = "New Visualizer"
 
@@ -17,113 +21,103 @@ forEachEntry = (func) ->
 forEachEntryWithPrefix = (prefix, func) ->
   forEachEntry (key, value) =>
     if key.startsWith(prefix)
-      id = parseInt(key.substring(prefix.length), 10)
-      func(id, value)
+      name = key.substring(prefix.length)
+      func(name, value)
 
-forEachDocumentId = (func) ->
-  forEachEntryWithPrefix DOCUMENT_METADATA_PREFIX, (id) => func(id)
+forEachDocumentName = (func) ->
+  forEachEntryWithPrefix DOCUMENT_METADATA_PREFIX, (name) => func(name)
 
 forEachDocumentMetadata = (func) ->
-  forEachEntryWithPrefix DOCUMENT_METADATA_PREFIX, (id, value) =>
-    func(id, JSON.parse(value))
+  forEachEntryWithPrefix DOCUMENT_METADATA_PREFIX, (name, value) =>
+    func(name, JSON.parse(value))
 
-documentMetadataKey = (id) => "#{DOCUMENT_METADATA_PREFIX}#{id}"
-documentContentKey = (id) => "#{DOCUMENT_CONTENT_PREFIX}#{id}"
+documentMetadataKey = (name) => "#{DOCUMENT_METADATA_PREFIX}#{name}"
+documentContentKey = (name) => "#{DOCUMENT_CONTENT_PREFIX}#{name}"
 
-storeDocumentMetadata = (id, metadata) ->
-  key = documentMetadataKey(id)
+storeDocumentMetadata = (name, metadata) ->
+  key = documentMetadataKey(name)
   localStorage[key] = JSON.stringify(metadata)
   return
 
-loadDocumentMetadata = (id) ->
-  key = documentMetadataKey(id)
+loadDocumentMetadata = (name) ->
+  key = documentMetadataKey(name)
   value = localStorage[key]
   result = (if !value then null else JSON.parse(value))
   result
 
-updateDocumentMetadata = (id, updateFunc) ->
-  metadata = loadDocumentMetadata(id)
-  if metadata == null then throw "document does not exist: #{id}"
+updateDocumentMetadata = (name, updateFunc) ->
+  metadata = loadDocumentMetadata(name)
+  if metadata == null then throw "document does not exist: #{name}"
   updateFunc(metadata)
-  storeDocumentMetadata(id, metadata)
+  storeDocumentMetadata(name, metadata)
   return
 
-documentExists = (id) -> !!(localStorage[documentMetadataKey(id)])
+documentExists = (name) -> (localStorage.getItem(documentMetadataKey(name)) != null)
 
-assertDocumentExists = (id) ->
-  if !(documentExists(id))
-    throw "document does not exist: #{id} #{documentMetadataKey(id)}"
+assertDocumentExists = (name) ->
+  if !(documentExists(name))
+    throw "document does not exist: #{name} #{documentMetadataKey(name)}"
 
-loadDocumentContent = (id) ->
-  assertDocumentExists(id)
-  localStorage[documentContentKey(id)] || ""
+loadDocumentContent = (name) ->
+  assertDocumentExists(name)
+  localStorage[documentContentKey(name)] || ""
 
-storeDocumentContent = (id, content) ->
-  assertDocumentExists(id)
-  localStorage[documentContentKey(id)] = content
+storeDocumentContent = (name, content) ->
+  assertDocumentExists(name)
+  localStorage[documentContentKey(name)] = content
   return
 
 class DataStore
-  constructor: () ->
-    @_updateNextId()
-
-  _updateNextId: () ->
-    maxId = -1
-    forEachDocumentId (id) => (if id > maxId then maxId = id)
-    @nextId = (maxId + 1)
-    return
-
   documentNames: () ->
-    result = {}
-    forEachDocumentMetadata (id, metadata) => (result[id] = metadata.name)
+    result = []
+    forEachDocumentName (name) => (result.push(name))
     result
 
-  newDocument: () ->
-    id = (@nextId++)
-    storeDocumentMetadata(id, { name: DEFAULT_DOCUMENT_NAME })
-    @setDocumentContent(id, "")
-    id
+  _nextDocumentNameWithPrefix: (prefix) ->
+    i = 0
+    loop
+      name = prefix + (if i > 0 then " (#{i})" else "")
+      if !documentExists(name) then return name
+      ++i
 
-  duplicateDocument: (id) ->
-    metadata = loadDocumentMetadata(id)
-    content = @documentContent(id)
+  newDocument: (opt_name_prefix) ->
+    name = @_nextDocumentNameWithPrefix(opt_name_prefix || DEFAULT_DOCUMENT_NAME)
+    console.log("new document: #{name}")
+    storeDocumentMetadata(name, {})
+    storeDocumentContent(name, "")
+    name
 
-    newId = @newDocument()
-    storeDocumentMetadata(newId, metadata)
-    @setDocumentContent(newId, content)
+  duplicateDocument: (name) ->
+    metadata = loadDocumentMetadata(name)
+    content = @documentContent(name)
 
-    newId
+    newName = @_nextDocumentNameWithPrefix(name)
+    storeDocumentMetadata(newName, metadata)
+    storeDocumentContent(newName, content)
 
-  deleteDocument: (id) ->
-    assertDocumentExists(id)
-    localStorage.removeItem(documentMetadataKey(id))
-    localStorage.removeItem(documentContentKey(id))
+    newName
+
+  deleteDocument: (name) ->
+    assertDocumentExists(name)
+    localStorage.removeItem(documentMetadataKey(name))
+    localStorage.removeItem(documentContentKey(name))
     return
 
-  documentName: (id) ->
-    metadata = loadDocumentMetadata(id)
-    if metadata == null then throw "no such document: #{id}"
-    metadata.name
+  documentContent: (name) -> loadDocumentContent(name)
 
-  setDocumentName: (id, name) ->
-    updateDocumentMetadata id, (metadata) => (metadata.name = name)
+  setDocumentContent: (name, content) -> storeDocumentContent(name, content)
 
-  documentContent: (id) -> loadDocumentContent(id)
-
-  setDocumentContent: (id, content) -> storeDocumentContent(id, content)
-
-  loadedDocumentId: () ->
-    result = localStorage[LOADED_DOCUMENT_ID_KEY]
+  loadedDocumentName: () ->
+    result = localStorage[LOADED_DOCUMENT_NAME_KEY] || null
 
     # default to the last document created, or null
-    if !result && result != 0
-      result = null
-      forEachDocumentId (id) => (result = id)
+    if result == null
+      forEachDocumentName (name) => (result = name)
 
     result
 
-  setLoadedDocumentId: (id) ->
-    localStorage[LOADED_DOCUMENT_ID_KEY] = id
+  setLoadedDocumentName: (name) ->
+    localStorage[LOADED_DOCUMENT_NAME_KEY] = name
     return
 
 module.exports = DataStore

@@ -49,12 +49,13 @@ class Simulator
       @saveChangeTimeoutId =
           setTimeout (() => @saveDocumentIfDirty()), IDLE_SAVE_INTERVAL
 
-    @loadedDocumentId = @dataStore.loadedDocumentId()
-    if @loadedDocumentId == null
+    @loadedDocumentName = @dataStore.loadedDocumentName()
+    if @loadedDocumentName == null
+      console.log("loading default visualizers into datastore...")
       @editor.setActive(false)
       @loadDefaultVisualizers()
     else
-      @loadDocument(@loadedDocumentId)
+      @loadDocument(@loadedDocumentName)
 
     $("#run_button").click () => @runCode()
 
@@ -86,29 +87,27 @@ class Simulator
       url: "visualizers/#{defaultVisualizer}.coffee",
       async: false
     }).done (content) =>
-      id = @dataStore.newDocument()
-      @dataStore.setDocumentName(id, defaultVisualizer)
-      @dataStore.setDocumentContent(id, content)
-      @loadDocument(id)
+      name = @dataStore.newDocument(defaultVisualizer)
+      @dataStore.setDocumentContent(name, content)
+      @loadDocument(name)
 
-  loadDocument: (id) ->
-    name = @dataStore.documentName(id)
-    content = @dataStore.documentContent(id)
+  loadDocument: (name) ->
+    content = @dataStore.documentContent(name)
     $("#title_label").text(name)
     @editor.setContent(content)
     @editor.setActive(true)
-    @dataStore.setLoadedDocumentId(id)
-    @loadedDocumentId = id
+    @dataStore.setLoadedDocumentName(name)
+    @loadedDocumentName = name
     @isDirty = false
 
   saveDocument: () ->
-    if @loadedDocumentId == null then throw "no document loaded"
-    @dataStore.setDocumentContent(@loadedDocumentId, @editor.content())
+    if @loadedDocumentName == null then throw "no document loaded"
+    @dataStore.setDocumentContent(@loadedDocumentName, @editor.content())
     @isDirty = false
-#    console.log("Saved document #{@loadedDocumentId}")
+    console.log("Saved document #{@loadedDocumentName}")
 
   saveDocumentIfDirty: () ->
-    if @loadedDocumentId != null && @isDirty then @saveDocument()
+    if @loadedDocumentName != null && @isDirty then @saveDocument()
 
   runCode: () ->
     # save before running since it's possible the code will crash the app
