@@ -1,12 +1,19 @@
-$backgroundDark0: #080808;
-$backgroundDark1: #081f08;
-$backgroundMedium0: #556655;
-$backgroundLight0: #778877;
-$backgroundLight1: #99aa99;
-$backgroundLight2: #aabbaa;
-$backgroundLight3: #ccddcc;
+$backgroundMaster: #ccdacc;
 
-$viewportSpacing: 10px;
+@function my-darken($color, $amount) {
+  @return scale-color(
+      $color, $lightness: -1 * $amount, $saturation: -1.1 * $amount);
+}
+
+$backgroundDark0: my-darken($backgroundMaster, 90%);
+$backgroundDark1: my-darken($backgroundMaster, 80%);
+$backgroundMedium0: my-darken($backgroundMaster, 50%);
+$backgroundLight0: my-darken($backgroundMaster, 30%);
+$backgroundLight1: my-darken($backgroundMaster, 20%);
+$backgroundLight2: my-darken($backgroundMaster, 10%);
+$backgroundLight3: $backgroundMaster;
+
+$viewportSpacing: 4px;
 $actionBarHeight: 40px;
 $innerPadding: 6px;
 
@@ -36,7 +43,7 @@ div, textarea, span, a {
 
 .viewport {
   position: absolute;
-  border: 1px solid #384038;
+  border: 1px solid $backgroundDark1;
 
   &.piano {
     top: $viewportSpacing;
@@ -127,6 +134,7 @@ div, textarea, span, a {
     .dropdown {
       flex: 0 0 auto;
       color: $backgroundLight1;
+      padding-left: $innerPadding;
     }
   }
 
@@ -138,7 +146,8 @@ div, textarea, span, a {
     background-color: $backgroundLight0;
     color: $backgroundMedium0;
     font-weight: bold;
-    border-left: 1px solid #384038;
+    border-left: 1px solid $backgroundMedium0;
+    cursor: pointer;
 
     &.enabled {
       color: #111811;
