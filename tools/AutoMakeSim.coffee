@@ -4,11 +4,12 @@ fs = require("fs")
 dirsAndFilePatterns =
   ".": ["Makefile"]
   "src/sim": [/\.coffee$/]
+  "src/simws": [/\.coffee$/]
   "src/base": [/\.coffee$/]
   "src/sim/webgl": [/\.(coffee|vert|frag)$/, "compile_shaders.rb"]
   "src/visualizers": [/\.coffee$/]
 
-MAKE_CMD = ["make", "sim"]
+MAKE_CMD = ["make", "sim-force"]
 
 delayMs = 500
 
@@ -48,6 +49,7 @@ makeDirListener = (dir, filePatterns) ->
       markDirty()
 
 for dir, patterns of dirsAndFilePatterns
+  console.log "watching #{dir}"
   fs.watch(dir, makeDirListener(dir, patterns))
 
 remake()
