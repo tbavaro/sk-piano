@@ -3,7 +3,7 @@ fs = require("fs")
 
 dirsAndFilePatterns =
   ".": ["Makefile"]
-  "src/sim": [/\.coffee$/]
+  "src/sim": [/\.(coffee|scss)$/]
   "src/simws": [/\.coffee$/]
   "src/base": [/\.coffee$/]
   "src/sim/webgl": [/\.(coffee|vert|frag)$/, "compile_shaders.rb"]

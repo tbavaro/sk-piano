@@ -1,0 +1,206 @@
+$dropdownButtonWidth: 20px;
+$runButtonWidth: 70px;
+$uploadButtonWidth: 150px;
+
+$backgroundColor0: #080808;
+$backgroundColor1: #081f08;
+
+$viewportSpacing: 10px;
+$actionBarHeight: 40px;
+$innerPadding: 6px;
+
+@function fraction-of-full-minus-spacing($percent, $spaces) {
+  @return unquote(
+      "calc((100% - #{$spaces} * #{$viewportSpacing}) * #{$percent})");
+}
+
+body {
+  font-family: helvetica;
+  background-color: $backgroundColor0;
+  background-image: linear-gradient(
+        -45deg,
+      $backgroundColor0 20%, $backgroundColor1 30%,
+      $backgroundColor1 45%, $backgroundColor0 55%,
+      $backgroundColor0 70%, $backgroundColor1 80%,
+      $backgroundColor1);
+  background-size: 6px 6px;
+  margin: 0px;
+  color: white;
+  overflow: hidden;
+}
+
+div, textarea, span, a {
+  box-sizing: border-box;
+}
+
+.viewport {
+  position: absolute;
+  border: 1px solid #384038;
+
+  &.piano {
+    top: $viewportSpacing;
+    left: $viewportSpacing;
+    height: fraction-of-full-minus-spacing(0.9, 3);
+    width: fraction-of-full-minus-spacing(0.55, 3);
+
+    canvas {
+      border: none;
+      background-color: black;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &.piano-keys {
+    bottom: $viewportSpacing;
+    left: $viewportSpacing;
+    height: fraction-of-full-minus-spacing(0.1, 3);
+    width: fraction-of-full-minus-spacing(0.55, 3);
+    background-color: black;
+  }
+}
+
+.piano-key {
+  position: absolute;
+  top: 0px;
+  cursor: pointer;
+
+  &.white {
+    bottom: 0px;
+    background-color: #bbbbaa;
+    border-right: 1px solid #777766;
+
+    &:hover {
+      background-color: #aaaa99;
+    }
+  }
+
+  &.black {
+    height: 60%;
+    background-color: #222222;
+
+    &:hover {
+      background-color: #333333;
+    }
+  }
+
+  &.down, &.down:hover {
+    background-color: red;
+  }
+}
+
+.no-selection {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.actions.viewport {
+  top: $viewportSpacing;
+  right: $viewportSpacing;
+  width: fraction-of-full-minus-spacing(0.45, 3);
+  height: $actionBarHeight;
+  line-height: $actionBarHeight - 2px;
+  background-color: #556655;
+  vertical-align: middle;
+
+  .section {
+    position: absolute;
+    display: inline-block;
+    top: 0px;
+    bottom: 0px;
+    padding-left: $innerPadding + 2px;
+    padding-right: $innerPadding + 2px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #eeffee;
+    cursor: pointer;
+
+    &.title {
+      left: 0px;
+      right: $runButtonWidth + $uploadButtonWidth + $dropdownButtonWidth;
+    }
+
+    &.dropdown {
+      right: $runButtonWidth + $uploadButtonWidth;
+      width: $dropdownButtonWidth;
+      padding: 0px;
+    }
+  }
+
+  .button {
+    text-align: center;
+    background-color: #778877;
+    color: #556655;
+    font-weight: bold;
+    border-left: 1px solid #384038;
+    border-right: 1px solid #384038;
+
+    &.enabled {
+      color: #111811;
+
+      &:hover {
+        background-color: #99aa99;
+      }
+
+      &:active {
+        background-color: #aabbaa;
+      }
+    }
+
+    &#run_button {
+      right: $uploadButtonWidth - 2px;
+      width: $runButtonWidth;
+    }
+
+    &#upload_button {
+      right: -1px;
+      width: $uploadButtonWidth;
+    }
+  }
+}
+
+.code.viewport {
+  top: $viewportSpacing * 2 + $actionBarHeight;
+  right: $viewportSpacing;
+  bottom: $viewportSpacing;
+  width: fraction-of-full-minus-spacing(0.45, 3);
+}
+
+.editor {
+  background-color: #ccddcc;
+  color: black;
+  text-align: left;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}
+
+.CodeMirror {
+  font-family: "Bitstream Vera Sans Mono" Courier;
+  font-size: 12px;
+  width: 100%;
+  height: 100%;
+  padding: $innerPadding;
+  resize: none;
+  background-color: transparent;
+  border: none;
+  white-space: pre;
+  text-align: left;
+  overflow-x: scroll;
+  overflow-y: scroll;
+  white-space: nowrap;
+  outline: none;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+}
+
+.cm-matchhighlight {
+  background-color: rgba(0, 0, 0, 0.1);
+}
