@@ -1,9 +1,10 @@
-$dropdownButtonWidth: 20px;
-$runButtonWidth: 70px;
-$uploadButtonWidth: 150px;
-
-$backgroundColor0: #080808;
-$backgroundColor1: #081f08;
+$backgroundDark0: #080808;
+$backgroundDark1: #081f08;
+$backgroundMedium0: #556655;
+$backgroundLight0: #778877;
+$backgroundLight1: #99aa99;
+$backgroundLight2: #aabbaa;
+$backgroundLight3: #ccddcc;
 
 $viewportSpacing: 10px;
 $actionBarHeight: 40px;
@@ -16,13 +17,13 @@ $innerPadding: 6px;
 
 body {
   font-family: helvetica;
-  background-color: $backgroundColor0;
+  background-color: $backgroundDark0;
   background-image: linear-gradient(
         -45deg,
-      $backgroundColor0 20%, $backgroundColor1 30%,
-      $backgroundColor1 45%, $backgroundColor0 55%,
-      $backgroundColor0 70%, $backgroundColor1 80%,
-      $backgroundColor1);
+      $backgroundDark0 20%, $backgroundDark1 30%,
+      $backgroundDark1 45%, $backgroundDark0 55%,
+      $backgroundDark0 70%, $backgroundDark1 80%,
+      $backgroundDark1);
   background-size: 6px 6px;
   margin: 0px;
   color: white;
@@ -99,67 +100,56 @@ div, textarea, span, a {
 }
 
 .actions.viewport {
+  display: flex;
+  flex-direction: row;
   top: $viewportSpacing;
   right: $viewportSpacing;
   width: fraction-of-full-minus-spacing(0.45, 3);
   height: $actionBarHeight;
   line-height: $actionBarHeight - 2px;
-  background-color: #556655;
+  background-color: $backgroundMedium0;
   vertical-align: middle;
+  overflow: hidden;
 
-  .section {
-    position: absolute;
-    display: inline-block;
-    top: 0px;
-    bottom: 0px;
+  .title-group {
+    display: flex;
+    flex: 1 1 auto;
     padding-left: $innerPadding + 2px;
     padding-right: $innerPadding + 2px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    color: #eeffee;
-    cursor: pointer;
 
-    &.title {
-      left: 0px;
-      right: $runButtonWidth + $uploadButtonWidth + $dropdownButtonWidth;
+    .label {
+      flex: 1 1 auto;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
-    &.dropdown {
-      right: $runButtonWidth + $uploadButtonWidth;
-      width: $dropdownButtonWidth;
-      padding: 0px;
+    .dropdown {
+      flex: 0 0 auto;
+      color: $backgroundLight1;
     }
   }
 
   .button {
+    flex: 0 0 auto;
+    padding-left: $innerPadding;
+    padding-right: $innerPadding;
     text-align: center;
-    background-color: #778877;
-    color: #556655;
+    background-color: $backgroundLight0;
+    color: $backgroundMedium0;
     font-weight: bold;
     border-left: 1px solid #384038;
-    border-right: 1px solid #384038;
 
     &.enabled {
       color: #111811;
 
       &:hover {
-        background-color: #99aa99;
+        background-color: $backgroundLight1;
       }
 
       &:active {
-        background-color: #aabbaa;
+        background-color: $backgroundLight2;
       }
-    }
-
-    &#run_button {
-      right: $uploadButtonWidth - 2px;
-      width: $runButtonWidth;
-    }
-
-    &#upload_button {
-      right: -1px;
-      width: $uploadButtonWidth;
     }
   }
 }
@@ -172,7 +162,7 @@ div, textarea, span, a {
 }
 
 .editor {
-  background-color: #ccddcc;
+  background-color: $backgroundLight3;
   color: black;
   text-align: left;
   position: absolute;
