@@ -2,22 +2,14 @@ DataStore = require("sim/DataStore")
 PianoKeyboard = require("sim/PianoKeyboard")
 SimulatorCodeEditor = require("sim/SimulatorCodeEditor")
 SimulatorPiano = require("sim/SimulatorPiano")
-TwinkleVisualizer = require("visualizers/TwinkleVisualizer")
 ViewPort = require("sim/ViewPort")
+VisualizerCompiler = require("base/VisualizerCompiler")
 
 # after a change, if idle for this many ms then we will save the document
 IDLE_SAVE_INTERVAL = 2000
 
 KEY_R = 82
 KEY_S = 83
-
-compileModule = (code) ->
-  wrappedCode = [
-    "var module = { exports: null };",
-    CoffeeScript.compile(code),
-    "return module.exports;",
-  ].join("\n")
-  Function(wrappedCode)()
 
 class MyPianoKeyboard extends PianoKeyboard
   constructor: (piano) ->
@@ -114,6 +106,10 @@ class Simulator
     @saveDocumentIfDirty()
 
     code = @editor.content()
-    @piano.setVisualizerClass(compileModule(code))
+
+    visualizer =
+        VisualizerCompiler.instantiate(code, @piano.strip, @piano.pianoKeys)
+
+    @piano.setVisualizer(visualizer)
 
 module.exports = Simulator

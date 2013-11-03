@@ -1,6 +1,6 @@
 SwitchingVisualizer = require("base/SwitchingVisualizer")
 PianoKeys = require("base/PianoKeys")
-
+ServerVisualizerCompiler = require("beaglebone/ServerVisualizerCompiler")
 TwinkleVisualizer = require("visualizers/TwinkleVisualizer")
 
 class MasterVisualizer extends SwitchingVisualizer

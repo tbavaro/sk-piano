@@ -40,8 +40,7 @@ class SimulatorPiano extends Piano
     visualizer = new DelegatingVisualizer()
     super(strip, pianoKeys, visualizer)
 
-  setVisualizerClass: (visualizerClass) ->
-    visualizer = new visualizerClass(@strip, @pianoKeys)
+  setVisualizer: (visualizer) ->
     @visualizer.setDelegate(visualizer)
 
 module.exports = SimulatorPiano

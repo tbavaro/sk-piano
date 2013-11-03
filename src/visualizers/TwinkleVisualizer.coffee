@@ -1,10 +1,3 @@
-AmplitudeVisualizer = require("base/AmplitudeVisualizer")
-Colors = require("base/Colors")
-CompositeVisualizer = require("base/CompositeVisualizer")
-LogicalLightStrip = require("base/LogicalLightStrip")
-PianoKeys = require("base/PianoKeys")
-PianoLocations = require("base/PianoLocations")
-
 SPARKLE_RATE_BASE = 0.001
 
 # TODO make this FPS-independent
@@ -60,10 +53,12 @@ class TwinkleVisualizerHelper extends AmplitudeVisualizer
       if @highlightKeys
         saturation = Math.max(0, overallSaturation - @pixelSaturations[i])
         brightness =
-            Math.min(1, @pixelValues[i] * 0.3 + @pixelSaturations[i] * 0.7)
+          Math.min(1, @pixelValues[i] * 0.3 + @pixelSaturations[i] * 0.7)
       else
         saturation = overallSaturation
         brightness = Math.min(1, @pixelValues[i])
+
+
 
       @strip.setPixel(i, Colors.hsv(hue, saturation, brightness))
 
@@ -75,14 +70,12 @@ class TwinkleVisualizer extends CompositeVisualizer
       new TwinkleVisualizerHelper(strip, pianoKeys, false),
       new TwinkleVisualizerHelper(
         new LogicalLightStrip(strip, PianoLocations.top_front_row),
-        pianoKeys,
-        true),
+      pianoKeys,
+      true),
       new TwinkleVisualizerHelper(
         new LogicalLightStrip(strip, PianoLocations.directly_above_keys),
-        pianoKeys,
-        true)
+      pianoKeys,
+      true)
     ])
 
   toString: () -> "TwinkleVisualizer"
-
-module.exports = TwinkleVisualizer
