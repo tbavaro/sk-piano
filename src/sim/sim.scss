@@ -8,6 +8,7 @@ $backgroundMaster: #ccdacc;
 $backgroundDark0: my-darken($backgroundMaster, 90%);
 $backgroundDark1: my-darken($backgroundMaster, 80%);
 $backgroundMedium0: my-darken($backgroundMaster, 50%);
+$backgroundMedium1: my-darken($backgroundMaster, 45%);
 $backgroundLight0: my-darken($backgroundMaster, 30%);
 $backgroundLight1: my-darken($backgroundMaster, 20%);
 $backgroundLight2: my-darken($backgroundMaster, 10%);
@@ -19,7 +20,7 @@ $innerPadding: 6px;
 
 @function fraction-of-full-minus-spacing($percent, $spaces) {
   @return unquote(
-      "calc((100% - #{$spaces} * #{$viewportSpacing}) * #{$percent})");
+      "calc((100% - #{($spaces * $viewportSpacing)}) * #{$percent})");
 }
 
 body {
@@ -114,15 +115,20 @@ div, textarea, span, a {
   width: fraction-of-full-minus-spacing(0.45, 3);
   height: $actionBarHeight;
   line-height: $actionBarHeight - 2px;
-  background-color: $backgroundMedium0;
   vertical-align: middle;
   overflow: hidden;
 
   .title-group {
     display: flex;
     flex: 1 1 auto;
+    background-color: $backgroundMedium0;
     padding-left: $innerPadding + 2px;
     padding-right: $innerPadding + 2px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $backgroundMedium1;
+    }
 
     .label {
       flex: 1 1 auto;
