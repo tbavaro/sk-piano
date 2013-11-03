@@ -1,3 +1,4 @@
+connect = require("connect")
 express = require("express")
 path = require("path")
 ServerDatastore = require("sim/ServerDatastore")
@@ -24,6 +25,7 @@ class SimulatorWebServer
       else
         @datastore.getCodeForDocumentOrNull m[1], returnCodeOrNull
 
+    @server.use(connect.compress())
     @server.use(express.static(STATIC_DIR))
 
   listen: (port) ->
