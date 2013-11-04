@@ -6,6 +6,7 @@ dirsAndFilePatterns =
   "src/sim": [/\.(coffee|scss)$/]
   "src/simws": [/\.coffee$/]
   "src/base": [/\.coffee$/]
+  "src/lib": [/\.coffee$/]
   "src/sim/webgl": [/\.(coffee|vert|frag)$/, "compile_shaders.rb"]
   "src/visualizers": [/\.coffee$/]
 

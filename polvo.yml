@@ -8,6 +8,7 @@ boot: ./src/sim/Simulator
 
 alias:
   base: src/base
+  lib: src/lib
   sim: src/sim
   test: src/test
   visualizers: src/visualizers

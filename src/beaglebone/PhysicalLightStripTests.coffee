@@ -1,5 +1,5 @@
 PhysicalLightStrip = require("./PhysicalLightStrip")
-Colors = require("base/Colors")
+Colors = require("lib/Colors")
 TestUtils = require("test/TestUtils")
 assert = require("assert")
 

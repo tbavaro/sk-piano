@@ -1,5 +1,5 @@
 SwitchingVisualizer = require("base/SwitchingVisualizer")
-PianoKeys = require("base/PianoKeys")
+PianoKeys = require("lib/PianoKeys")
 ServerVisualizerCompiler = require("beaglebone/ServerVisualizerCompiler")
 TwinkleVisualizer = require("visualizers/TwinkleVisualizer")
 

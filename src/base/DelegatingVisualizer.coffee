@@ -1,4 +1,4 @@
-Visualizer = require("base/Visualizer")
+Visualizer = require("lib/Visualizer")
 
 class DelegatingVisualizer extends Visualizer
   constructor: () ->

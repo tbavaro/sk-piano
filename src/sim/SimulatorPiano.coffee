@@ -2,7 +2,7 @@ Piano = require("base/Piano")
 FrameBufferLightStrip = require("base/FrameBufferLightStrip")
 LedLocations = require("sim/LedLocations")
 DelegatingVisualizer = require("base/DelegatingVisualizer")
-PianoKeys = require("base/PianoKeys")
+PianoKeys = require("lib/PianoKeys")
 
 convertColor = (pianoColor) ->
   new THREE.Color(pianoColor * 2).convertLinearToGamma()

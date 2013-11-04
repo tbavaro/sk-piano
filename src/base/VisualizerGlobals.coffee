@@ -1,11 +1,12 @@
 INCLUDES =
-  AmplitudeVisualizer: require("base/AmplitudeVisualizer")
-  Colors: require("base/Colors")
-  CompositeVisualizer: require("base/CompositeVisualizer")
-  LogicalLightStrip: require("base/LogicalLightStrip")
-  PianoKeys: require("base/PianoKeys")
-  PianoLocations: require("base/PianoLocations")
-  Visualizer: require("base/Visualizer")
+  AmplitudeVisualizer: require("lib/AmplitudeVisualizer")
+  Colors: require("lib/Colors")
+  CompositeVisualizer: require("lib/CompositeVisualizer")
+  LightStrip: require("lib/LightStrip")
+  LogicalLightStrip: require("lib/LogicalLightStrip")
+  PianoKeys: require("lib/PianoKeys")
+  PianoLocations: require("lib/PianoLocations")
+  Visualizer: require("lib/Visualizer")
 
 if (typeof global) == "undefined" && (typeof window) != "undefined"
   `global = window`

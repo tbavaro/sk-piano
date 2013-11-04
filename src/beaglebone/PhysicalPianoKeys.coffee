@@ -1,4 +1,4 @@
-PianoKeys = require("base/PianoKeys")
+PianoKeys = require("lib/PianoKeys")
 TBBeagleBone = require("./TBBeagleBone")
 assert = require("assert")
 Sleep = require("sleep")
