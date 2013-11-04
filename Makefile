@@ -20,6 +20,8 @@ SIM_GENERATED_COFFEEDOC_ROOT=${SIM_WWW_ROOT}/docs
 
 COFFEEDOC_INPUTS_ROOT=src/lib
 
+SASS=./node_modules/node-sass/bin/node-sass
+
 .PHONY: all native clean clean-docs docs run sim sim-auto test sim-force
 
 all: native node_modules sim docs
@@ -52,7 +54,7 @@ ${SIM_GENERATED_JS}:
 	make sim-force
 
 ${SIM_GENERATED_CSS}: ${SIM_SCSS}
-	sass ${SIM_SCSS} ${SIM_GENERATED_CSS}
+	${SASS} ${SIM_SCSS} ${SIM_GENERATED_CSS}
 
 sim: node_modules ${ASSERT_STUB_SYMLINK_PATH} ${COMPILED_SHADERS_PATH} ${SIM_GENERATED_JS} ${SIM_GENERATED_CSS} docs
 

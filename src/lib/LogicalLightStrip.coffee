@@ -8,7 +8,7 @@ Colors = require("./Colors")
 #    frontRowStrip = new LogicalLightStrip(parentStrip, LEDRanges.TOP_FRONT_ROW)
 # @author tbavaro
 module.exports = class LogicalLightStrip extends LightStrip
-  # Constructs a @{LogicalLightStrip}.
+  # Constructs a {LogicalLightStrip}.
   # @param {LightStrip} parentStrip the parent {LightStrip} that we are mapping onto
   # @param {Array<Integer>} pixelMapping ordered array of parent {LightStrip} pixel indices
   # @return {LogicalLightStrip}
