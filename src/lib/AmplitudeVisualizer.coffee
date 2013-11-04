@@ -1,9 +1,12 @@
-Visualizer = require("lib/Visualizer")
-PianoKeys = require("lib/PianoKeys")
+Visualizer = require("./Visualizer")
+PianoKeys = require("./PianoKeys")
 
 class AmplitudeVisualizer extends Visualizer
-  constructor: (pianoKeys, noteIncrease, decreaseRate, maxValue) ->
-    @pianoKeys = pianoKeys
+  ###
+  A [Visualizer](#x) abstraction for visualizers
+  ###
+
+  constructor: (@pianoKeys, noteIncrease, decreaseRate, maxValue) ->
     @noteIncrease = noteIncrease
     @decreaseRate = decreaseRate
     @maxValue = maxValue

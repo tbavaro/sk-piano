@@ -1,17 +1,33 @@
-Visualizer = require("lib/Visualizer")
+Visualizer = require("./Visualizer")
 
 class CompositeVisualizer extends Visualizer
-  constructor: (delegates) ->
+  ###
+  A visualizer made up of other visualizers, all of which are rendered every
+  frame.  This is mostly useful for having several different visualizers (or
+  instances of the same visualizer) each responsible for rendering a different
+  region.
+  ###
+
+  constructor: (visualizers) ->
+    ###
+    Construct a `CompositeVisualizer` made up of the given visualizers.
+    ###
     super
-    @delegates = delegates
+    @visualizers = visualizers
 
   reset: () ->
+    ###
+    Resets the state for all sub-visualizers.
+    ###
     super
-    delegate.reset() for delegate in @delegates
+    visualizer.reset() for visualizer in @visualizers
     return
 
   render: (secondsSinceLastFrame) ->
-    delegate.render(secondsSinceLastFrame) for delegate in @delegates
+    ###
+    Renders each of the sub-visualizers.
+    ###
+    visualizer.render(secondsSinceLastFrame) for visualizer in @visualizers
     return
 
 module.exports = CompositeVisualizer

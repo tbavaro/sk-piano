@@ -6,7 +6,7 @@ TwinkleVisualizer = require("visualizers/TwinkleVisualizer")
 class MasterVisualizer extends SwitchingVisualizer
   constructor: (strip, pianoKeys) ->
     visualizerFunctors = [
-      () -> new TwinkleVisualizer(strip, pianoKeys)
+#      () -> new TwinkleVisualizer(strip, pianoKeys)
     ]
     super(pianoKeys, visualizerFunctors)
 

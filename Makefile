@@ -11,13 +11,18 @@ COMPILED_SHADERS_FILENAME=CompiledShaders.js
 COMPILED_SHADERS_ROOT=src/sim/webgl
 COMPILED_SHADERS_PATH=${COMPILED_SHADERS_ROOT}/${COMPILED_SHADERS_FILENAME}
 
-SIM_GENERATED_JS=sim_www/sim_generated.js
-SIM_GENERATED_CSS=sim_www/sim.css
+SIM_WWW_ROOT=sim_www
+
+SIM_GENERATED_JS=${SIM_WWW_ROOT}/sim_generated.js
+SIM_GENERATED_CSS=${SIM_WWW_ROOT}/sim.css
 SIM_SCSS=src/sim/sim.scss
+SIM_GENERATED_COFFEEDOC_ROOT=${SIM_WWW_ROOT}/docs
+
+COFFEEDOC_INPUTS_ROOT=src/lib
 
 .PHONY: all native clean run sim sim-auto test sim-force
 
-all: native node_modules sim
+all: native node_modules sim docs
 
 native:
 	( cd ${PIANO_NATIVE_ROOT} && node-gyp configure build )
@@ -26,6 +31,7 @@ clean:
 	rm -rf node_modules
 	rm -f ${SIM_GENERATED_JS}
 	rm -f ${COMPILED_SHADERS_PATH}
+	rm -rf ${SIM_GENERATED_COFFEEDOT_ROOT}/*
 	( cd ${PIANO_NATIVE_ROOT} && node-gyp clean )
 
 run: node_modules
@@ -62,3 +68,9 @@ test: node_modules
 
 node_modules:
 	npm install
+
+docs: node_modules
+	PWD=`pwd`
+	( cd ${COFFEEDOC_INPUTS_ROOT} && ${PWD}/node_modules/coffeedoc/bin/coffeedoc \
+	    --output ${PWD}/${SIM_GENERATED_COFFEEDOC_ROOT} \
+	    --hide-private . )

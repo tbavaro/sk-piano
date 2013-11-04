@@ -1,8 +1,8 @@
-bracket01 = (v) -> if v < 0 then 0 else (if v > 1 then 1 else v)
+_bracket01 = (v) -> if v < 0 then 0 else (if v > 1 then 1 else v)
 
-rgbUnchecked = (r, g, b) -> (g << 16) | (r << 8) | b
+_rgbUnchecked = (r, g, b) -> (g << 16) | (r << 8) | b
 
-hsvUnchecked = (h, s, v) ->
+_hsvUnchecked = (h, s, v) ->
   if s == 0
     # achromatic (grey)
     r = g = b = v
@@ -38,64 +38,46 @@ hsvUnchecked = (h, s, v) ->
         r = v
         g = p
         b = q
-  rgbUnchecked(r * 127, g * 127, b * 127)
+  _rgbUnchecked(r * 127, g * 127, b * 127)
 
-colorPart = (c, shift) -> (0x7f & (c >> shift))
+_colorPart = (c, shift) -> (0x7f & (c >> shift))
 
-redPart = (c) -> colorPart(c, 8)
-greenPart = (c) -> colorPart(c, 16)
-bluePart = (c) -> colorPart(c, 0)
+_redPart = (c) -> _colorPart(c, 8)
+_greenPart = (c) -> _colorPart(c, 16)
+_bluePart = (c) -> _colorPart(c, 0)
 
-Colors =
-  rgb:(r, g, b) ->
-    rgbUnchecked(
-      Math.floor(bracket01(r) * 127),
-      Math.floor(bracket01(g) * 127),
-      Math.floor(bracket01(b) * 127))
+class Colors
+  ###
+  Utility functions for generating color values.
 
-  hsv: (h, s, v) ->
-    hsvUnchecked(h % 360.0, bracket01(s), bracket01(v))
+  In addition to these functions, the constants `Colors.BLACK` and
+  `Colors.WHITE` are what you would expect.
+  ###
 
-  toHex: (c) ->
-    res = c.toString(16)
-    "000000".substr(0, if res.length < 6 then 6 - res.length else 0) + res
+  @rgb:(r, g, b) ->
+    ###
+    Generates a color value with the given red, green, and blue values, each
+    between 0 and 1.
+    ###
 
-  red: (c) -> redPart(c) / 127.0
-  green: (c) -> greenPart(c) / 127.0
-  blue: (c) -> bluePart(c) / 127.0
+    _rgbUnchecked(
+      Math.floor(_bracket01(r) * 127),
+      Math.floor(_bracket01(g) * 127),
+      Math.floor(_bracket01(b) * 127))
 
-  BLACK: 0
-  WHITE: 0x7f7f7f
+  @hsv: (h, s, v) ->
+    ###
+    Generates a color value with the given hue, saturation, and value values.
+    Hue is specified in degrees from 0 to 360, while saturation and value are
+    between 0 and 1.
+    ###
+    _hsvUnchecked(h % 360.0, _bracket01(s), _bracket01(v))
 
-#perfTest = () ->
-#  iterations = 100000
-#  n = iterations
-#  start_time = (new Date()).getTime()
-#  x = 0
-#  xr = 0
-#  xg = 0
-#  xb = 0
-#  while (n > 0)
-#    h = Math.random() * 360.0
-#    s = Math.random()
-#    v = Math.random()
-#    c = Colors.hsv(h, s, v)
-#    r = Colors.red(c)
-#    g = Colors.green(c)
-#    b = Colors.blue(c)
-#    x = c if (c > x)
-#    xr = r if (r > xr)
-#    xg = g if (g > xg)
-#    xb = b if (b > xb)
-#    n -= 1
-#  end_time = (new Date()).getTime()
-#  duration_ms = (end_time - start_time)
-#  console.log("total time: " + duration_ms + "ms")
-#  console.log(
-#    "time per iteration: " + (duration_ms / iterations).toFixed(6) + "ms")
-#  console.log(x, xr, xg, xb)
-#
-#perfTest()
-#console.log("rgb: " + Colors.toHex(Colors.rgb(0.5, 0, 0)))
+#  @red: (c) -> _redPart(c) / 127.0
+#  @green: (c) -> _greenPart(c) / 127.0
+#  @blue: (c) -> _bluePart(c) / 127.0
+
+  @BLACK: 0
+  @WHITE: 0x7f7f7f
 
 module.exports = Colors
