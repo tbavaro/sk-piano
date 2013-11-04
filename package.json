@@ -5,9 +5,9 @@
     "coffee-script": ">=1.6.3",
     "connect": "2.x",
     "express": "3.x",
+    "node-sass": "0.7.x",
     "nodeunit": ">=0.8.1",
     "polvo": ">=0.5.4",
-    "sass": "0.5.x",
     "sleep": ">=1.1.1",
     "sqlite3": "2.x"
   }
