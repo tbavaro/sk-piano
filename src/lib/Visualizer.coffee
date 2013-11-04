@@ -1,19 +1,11 @@
-class Visualizer
-  ###
-  Base class for all visualizers.
-  ###
-
+# Base class for all visualizers.
+# @author tbavaro
+module.exports = class Visualizer
+  # Resets all state for this visualizer.
   reset: () ->
-    ###
-    Resets all state for this visualizer.
-    ###
 
+  # Renders the next frame for this visualizer.
+  # @param {Float} secondsSinceLastFrame approximate number of seconds since the last frame was rendered; if this is the first frame, this will be 0.
+  # @abstract
   render: (secondsSinceLastFrame) ->
-    ###
-    Renders the next frame for this visualizer, the last frame having been
-    rendered approximately `secondsSinceLastFrame` seconds ago.  If this is the
-    first frame, `secondsSinceLastFrame` will be 0.
-    ###
     throw "abstract"
-
-module.exports = Visualizer

@@ -1,8 +1,11 @@
-_bracket01 = (v) -> if v < 0 then 0 else (if v > 1 then 1 else v)
+# @private
+bracket01 = (v) -> if v < 0 then 0 else (if v > 1 then 1 else v)
 
-_rgbUnchecked = (r, g, b) -> (g << 16) | (r << 8) | b
+# @private
+rgbUnchecked = (r, g, b) -> (g << 16) | (r << 8) | b
 
-_hsvUnchecked = (h, s, v) ->
+# @private
+hsvUnchecked = (h, s, v) ->
   if s == 0
     # achromatic (grey)
     r = g = b = v
@@ -38,46 +41,44 @@ _hsvUnchecked = (h, s, v) ->
         r = v
         g = p
         b = q
-  _rgbUnchecked(r * 127, g * 127, b * 127)
+  rgbUnchecked(r * 127, g * 127, b * 127)
 
-_colorPart = (c, shift) -> (0x7f & (c >> shift))
+#colorPart = (c, shift) -> (0x7f & (c >> shift))
 
-_redPart = (c) -> _colorPart(c, 8)
-_greenPart = (c) -> _colorPart(c, 16)
-_bluePart = (c) -> _colorPart(c, 0)
+#redPart = (c) -> colorPart(c, 8)
+#greenPart = (c) -> colorPart(c, 16)
+#bluePart = (c) -> colorPart(c, 0)
 
-class Colors
-  ###
-  Utility functions for generating color values.
+# Utility functions for generating and manipulating color values.
+# @author tbavaro
+module.exports = class Colors
+  # Generates a color value with the given red, green, and blue values.
+  # @param {float} red between 0 and 1
+  # @param {float} green between 0 and 1
+  # @param {float} blue between 0 and 1
+  # @return {Color}
+  @rgb:(red, green, blue) ->
+    rgbUnchecked(
+      Math.floor(bracket01(red) * 127),
+      Math.floor(bracket01(green) * 127),
+      Math.floor(bracket01(blue) * 127))
 
-  In addition to these functions, the constants `Colors.BLACK` and
-  `Colors.WHITE` are what you would expect.
-  ###
+  # Generates a color value with the given hue, saturation, and
+  # brightness values.
+  #
+  # @param {float} hue between 0 and 360
+  # @param {float} saturation between 0 and 1
+  # @param {float} brightness between 0 and 1
+  # @return {Color}
+  @hsb: (hue, saturation, brightness) ->
+    hsvUnchecked(hue % 360.0, bracket01(saturation), bracket01(brightness))
 
-  @rgb:(r, g, b) ->
-    ###
-    Generates a color value with the given red, green, and blue values, each
-    between 0 and 1.
-    ###
+#  @red: (c) -> redPart(c) / 127.0
+#  @green: (c) -> greenPart(c) / 127.0
+#  @blue: (c) -> bluePart(c) / 127.0
 
-    _rgbUnchecked(
-      Math.floor(_bracket01(r) * 127),
-      Math.floor(_bracket01(g) * 127),
-      Math.floor(_bracket01(b) * 127))
-
-  @hsv: (h, s, v) ->
-    ###
-    Generates a color value with the given hue, saturation, and value values.
-    Hue is specified in degrees from 0 to 360, while saturation and value are
-    between 0 and 1.
-    ###
-    _hsvUnchecked(h % 360.0, _bracket01(s), _bracket01(v))
-
-#  @red: (c) -> _redPart(c) / 127.0
-#  @green: (c) -> _greenPart(c) / 127.0
-#  @blue: (c) -> _bluePart(c) / 127.0
-
+  # @property {Color}
   @BLACK: 0
-  @WHITE: 0x7f7f7f
 
-module.exports = Colors
+  # @property {Color}
+  @WHITE: 0x7f7f7f

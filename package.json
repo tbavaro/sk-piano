@@ -1,8 +1,8 @@
 {
   "name": "piano",
   "dependencies": {
+    "codo": "1.x",
     "coffee-script": ">=1.6.3",
-    "coffeedoc": ">=0.3.0",
     "connect": "2.x",
     "express": "3.x",
     "nodeunit": ">=0.8.1",

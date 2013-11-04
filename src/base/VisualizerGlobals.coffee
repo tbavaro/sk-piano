@@ -5,7 +5,8 @@ INCLUDES =
   LightStrip: require("lib/LightStrip")
   LogicalLightStrip: require("lib/LogicalLightStrip")
   PianoKeys: require("lib/PianoKeys")
-  PianoLocations: require("lib/PianoLocations")
+  LEDLocations: require("lib/LEDLocations")
+  LEDRanges: require("lib/LEDRanges")
   Visualizer: require("lib/Visualizer")
 
 if (typeof global) == "undefined" && (typeof window) != "undefined"

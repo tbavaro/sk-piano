@@ -20,18 +20,17 @@ SIM_GENERATED_COFFEEDOC_ROOT=${SIM_WWW_ROOT}/docs
 
 COFFEEDOC_INPUTS_ROOT=src/lib
 
-.PHONY: all native clean run sim sim-auto test sim-force
+.PHONY: all native clean clean-docs docs run sim sim-auto test sim-force
 
 all: native node_modules sim docs
 
 native:
 	( cd ${PIANO_NATIVE_ROOT} && node-gyp configure build )
 
-clean:
+clean: clean-docs
 	rm -rf node_modules
 	rm -f ${SIM_GENERATED_JS}
 	rm -f ${COMPILED_SHADERS_PATH}
-	rm -rf ${SIM_GENERATED_COFFEEDOT_ROOT}/*
 	( cd ${PIANO_NATIVE_ROOT} && node-gyp clean )
 
 run: node_modules
@@ -46,7 +45,7 @@ ${ASSERT_STUB_SYMLINK_PATH}: node_modules ${ASSERT_STUB_REAL_PATH}
 ${COMPILED_SHADERS_PATH}: ${COMPILED_SHADERS_ROOT}/*.vert ${COMPILED_SHADERS_ROOT}/*.frag
 	( cd ${COMPILED_SHADERS_ROOT} && ./compile_shaders.rb > ${COMPILED_SHADERS_FILENAME} )
 
-sim-force: ${SIM_GENERATED_CSS}
+sim-force: ${SIM_GENERATED_CSS} sim
 	./node_modules/polvo/bin/polvo -r
 
 ${SIM_GENERATED_JS}:
@@ -55,7 +54,7 @@ ${SIM_GENERATED_JS}:
 ${SIM_GENERATED_CSS}: ${SIM_SCSS}
 	sass ${SIM_SCSS} ${SIM_GENERATED_CSS}
 
-sim: node_modules ${ASSERT_STUB_SYMLINK_PATH} ${COMPILED_SHADERS_PATH} ${SIM_GENERATED_JS} ${SIM_GENERATED_CSS}
+sim: node_modules ${ASSERT_STUB_SYMLINK_PATH} ${COMPILED_SHADERS_PATH} ${SIM_GENERATED_JS} ${SIM_GENERATED_CSS} docs
 
 sim-auto:
 	coffee tools/AutoMakeSim.coffee
@@ -69,8 +68,13 @@ test: node_modules
 node_modules:
 	npm install
 
+clean-docs:
+	rm -rf ${SIM_GENERATED_COFFEEDOC_ROOT}/*
+
 docs: node_modules
-	PWD=`pwd`
-	( cd ${COFFEEDOC_INPUTS_ROOT} && ${PWD}/node_modules/coffeedoc/bin/coffeedoc \
-	    --output ${PWD}/${SIM_GENERATED_COFFEEDOC_ROOT} \
-	    --hide-private . )
+	./node_modules/codo/bin/codo \
+	    --output-dir ${SIM_GENERATED_COFFEEDOC_ROOT} \
+	    --readme src/lib/home.md \
+	    --title "Piano API Documentation" \
+	    --list-undoc \
+	    ${COFFEEDOC_INPUTS_ROOT}

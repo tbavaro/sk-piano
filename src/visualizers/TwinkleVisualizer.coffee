@@ -58,9 +58,7 @@ class TwinkleVisualizerHelper extends AmplitudeVisualizer
         saturation = overallSaturation
         brightness = Math.min(1, @pixelValues[i])
 
-
-
-      @strip.setPixel(i, Colors.hsv(hue, saturation, brightness))
+      @strip.setPixel(i, Colors.hsb(hue, saturation, brightness))
 
     return
 
@@ -69,11 +67,11 @@ class TwinkleVisualizer extends CompositeVisualizer
     super([
       new TwinkleVisualizerHelper(strip, pianoKeys, false),
       new TwinkleVisualizerHelper(
-        new LogicalLightStrip(strip, PianoLocations.top_front_row),
+        new LogicalLightStrip(strip, LEDRanges.TOP_FRONT_ROW),
       pianoKeys,
       true),
       new TwinkleVisualizerHelper(
-        new LogicalLightStrip(strip, PianoLocations.directly_above_keys),
+        new LogicalLightStrip(strip, LEDRanges.DIRECTLY_ABOVE_KEYS),
       pianoKeys,
       true)
     ])
