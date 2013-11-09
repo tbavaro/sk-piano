@@ -12,13 +12,13 @@ module.exports = class AmplitudeVisualizer extends Visualizer
 
   # @param {PianoKeys} pianoKeys
   # @param {Float} noteIncrease amount to increase the value for every new key pressed since last frame
-  # @param {Float} decreaseRate the rate at which the value decreases every second
+  # @param {Float} decayRate the rate at which the value decreases every second
   # @param {Float} maxValue cap on the maximum value that can be achieved
   # @return {AmplitudeVisualizer}
-  constructor: (pianoKeys, noteIncrease, decreaseRate, maxValue) ->
+  constructor: (pianoKeys, noteIncrease, decayRate, maxValue) ->
     @pianoKeys = pianoKeys
     @noteIncrease = noteIncrease
-    @decreaseRate = decreaseRate
+    @decayRate = decayRate
     @maxValue = maxValue
     @value = 0
 
@@ -26,7 +26,7 @@ module.exports = class AmplitudeVisualizer extends Visualizer
   reset: () ->
     super
     @value = 0
-    @renderValue(@value)
+    @renderValue(@value, 0)
     return
 
   # Renders the next frame for this visualizer.
@@ -34,7 +34,7 @@ module.exports = class AmplitudeVisualizer extends Visualizer
   # @note {Visualizer}s derived from {AmplitudeVisualizer} should override the `renderValue` method instead.
   render: (secondsSinceLastFrame) ->
     # decay, but don't go below zero
-    @value = Math.max(0, @value - secondsSinceLastFrame * @decreaseRate)
+    @value = Math.max(0, @value - secondsSinceLastFrame * @decayRate)
 
     # increase for pressed keys, but don't go above maxValue
     @value = Math.min(
