@@ -5,7 +5,7 @@ DelegatingVisualizer = require("base/DelegatingVisualizer")
 PianoKeys = require("lib/PianoKeys")
 
 convertColor = (pianoColor) ->
-  new THREE.Color(pianoColor * 2).convertLinearToGamma()
+  new THREE.Color(Colors.toRGBValue(pianoColor)).convertLinearToGamma()
 
 class SimulatorLightStrip extends FrameBufferLightStrip
   constructor: (numPixels) ->

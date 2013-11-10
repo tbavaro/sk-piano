@@ -43,11 +43,11 @@ hsvUnchecked = (h, s, v) ->
         b = q
   rgbUnchecked(r * 127, g * 127, b * 127)
 
-#colorPart = (c, shift) -> (0x7f & (c >> shift))
+colorPart = (c, shift) -> (0x7f & (c >> shift))
 
-#redPart = (c) -> colorPart(c, 8)
-#greenPart = (c) -> colorPart(c, 16)
-#bluePart = (c) -> colorPart(c, 0)
+redPart = (c) -> colorPart(c, 8)
+greenPart = (c) -> colorPart(c, 16)
+bluePart = (c) -> colorPart(c, 0)
 
 # Utility functions for generating and manipulating color values.
 # @author tbavaro
@@ -76,6 +76,10 @@ module.exports = class Colors
 #  @red: (c) -> redPart(c) / 127.0
 #  @green: (c) -> greenPart(c) / 127.0
 #  @blue: (c) -> bluePart(c) / 127.0
+
+  # @private
+  @toRGBValue: (color) ->
+    redPart(color) * 0x20000 + greenPart(color) * 0x200 + bluePart(color) * 0x2
 
   # @property {Color}
   @BLACK: 0
