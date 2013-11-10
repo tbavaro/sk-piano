@@ -18,6 +18,11 @@ $viewportSpacing: 4px;
 $actionBarHeight: 40px;
 $innerPadding: 6px;
 
+// z-indices
+$dropdownZIndexBase: 10;
+$dropdownBackstopZIndex: $dropdownZIndexBase + 0;
+$dropdownZIndex: $dropdownZIndexBase + 1;
+
 @function fraction-of-full-minus-spacing($percent, $spaces) {
   @return unquote(
       "calc((100% - #{($spaces * $viewportSpacing)}) * #{$percent})");
@@ -118,7 +123,17 @@ div, textarea, span, a {
   vertical-align: middle;
   overflow: hidden;
 
+  .button {
+    flex: 0 0 auto;
+    text-align: center;
+    font-weight: bold;
+    border-left: 1px solid $backgroundMedium0;
+    padding-left: $innerPadding;
+    padding-right: $innerPadding;
+  }
+
   .title-group {
+    position: relative;
     display: flex;
     flex: 1 1 auto;
     background-color: $backgroundMedium0;
@@ -126,7 +141,7 @@ div, textarea, span, a {
     padding-right: $innerPadding + 2px;
     cursor: pointer;
 
-    &:hover {
+    &:hover, &.active {
       background-color: $backgroundMedium1;
     }
 
@@ -137,34 +152,10 @@ div, textarea, span, a {
       white-space: nowrap;
     }
 
-    .dropdown {
+    .dropdown-button {
       flex: 0 0 auto;
       color: $backgroundLight1;
       padding-left: $innerPadding;
-    }
-  }
-
-  .button {
-    flex: 0 0 auto;
-    padding-left: $innerPadding;
-    padding-right: $innerPadding;
-    text-align: center;
-    background-color: $backgroundLight0;
-    color: $backgroundMedium0;
-    font-weight: bold;
-    border-left: 1px solid $backgroundMedium0;
-    cursor: pointer;
-
-    &.enabled {
-      color: #111811;
-
-      &:hover {
-        background-color: $backgroundLight1;
-      }
-
-      &:active {
-        background-color: $backgroundLight2;
-      }
     }
   }
 }
@@ -198,8 +189,6 @@ div, textarea, span, a {
   border: none;
   white-space: pre;
   text-align: left;
-  overflow-x: scroll;
-  overflow-y: scroll;
   white-space: nowrap;
   outline: none;
   -webkit-overflow-scrolling: touch;
@@ -209,3 +198,69 @@ div, textarea, span, a {
 .cm-matchhighlight {
   background-color: rgba(0, 0, 0, 0.1);
 }
+
+.menu {
+  .button {
+    background-color: $backgroundLight0;
+    color: $backgroundMedium0;
+    cursor: pointer;
+
+    &.enabled {
+      color: #111811;
+
+      &:hover {
+        background-color: $backgroundLight1;
+      }
+
+      &:active {
+        background-color: $backgroundLight2;
+      }
+    }
+  }
+}
+
+.dropdown-backstop {
+  position: absolute;
+  background-color: transparent;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+
+  &:not(.active) {
+    display: none;
+  }
+}
+
+.dropdown-contents {
+  position: absolute;
+  z-index: $dropdownZIndex;
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+
+  &:not(.active) {
+    display: none;
+  }
+}
+
+.title-dropdown {
+  background-color: $backgroundLight0;
+  max-height: 500px;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+
+  .button {
+    padding: $innerPadding;
+
+    &.document.active {
+      font-weight: bold;
+    }
+  }
+
+  .separator {
+    display: block;
+    height: 1px;
+    background-color: $backgroundMedium1;
+  }
+}
+
+

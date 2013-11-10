@@ -20,12 +20,12 @@
 <body onload="onLoad()">
     <div id="piano_viewport" class="piano viewport"></div>
     <div id="piano_keys" class="piano-keys viewport"></div>
-    <div class="actions viewport no-selection">
-        <span class="title-group">
+    <div class="actions viewport no-selection menu">
+        <span id="title_bar" class="title-group">
             <span id="title_label" class="label">
                 TwinkleVisualizer
             </span>
-            <span id="dropdown_button" class="dropdown">
+            <span id="dropdown_button" class="dropdown-button">
                 &#x25be;
             </span>
         </span>
@@ -33,7 +33,7 @@
             Run
         </a>
         <a id="upload_button" class="button">
-            Upload to Piano
+            Run on Piano
         </a>
         <a id="help_button" class="button enabled"
            onclick="window.open('docs/src/lib/home.md.html', 'help').focus()">
@@ -45,5 +45,7 @@
             <textarea id="editor"></textarea>
         </div>
     </div>
+    <div id="dropdown_backstop" class="dropdown-backstop"></div>
+    <div id="dropdown_contents" class="dropdown-contents menu"></div>
 </body>
 </html>

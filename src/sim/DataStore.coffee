@@ -87,6 +87,9 @@ class DataStore
     storeDocumentContent(name, "")
     name
 
+  defaultDuplicateDocumentName: (name) ->
+    @_nextDocumentNameWithPrefix(name)
+
   duplicateDocument: (name, opt_newName) ->
     metadata = loadDocumentMetadata(name)
     content = @documentContent(name)
