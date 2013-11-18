@@ -1,11 +1,11 @@
 SwitchingVisualizer = require("base/SwitchingVisualizer")
 PianoKeys = require("lib/PianoKeys")
 VisualizerCompiler = require("beaglebone/ServerVisualizerCompiler")
-VisualizerLibrary = require("base/VisualizerLibrary")
+ServerVisualizerLibrary = require("base/ServerVisualizerLibrary")
 
 module.exports = class MasterVisualizer extends SwitchingVisualizer
   constructor: (strip, pianoKeys) ->
-    @library = VisualizerLibrary.activeVisualizers()
+    @library = ServerVisualizerLibrary.activeVisualizers()
     @strip = strip
     @pianoKeys = pianoKeys
     super(pianoKeys, @createVisualizerFunctors())

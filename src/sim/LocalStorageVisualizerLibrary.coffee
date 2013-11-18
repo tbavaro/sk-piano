@@ -1,3 +1,5 @@
+VisualizerLibrary = require("base/VisualizerLibrary")
+
 DATASTORE_VERSION = 2
 
 KEY_PREFIX = "v#{DATASTORE_VERSION}:"
@@ -67,8 +69,11 @@ storeDocumentContent = (name, content) ->
   localStorage[documentContentKey(name)] = content
   return
 
-class DataStore
-  documentNames: () ->
+module.exports = class LocalStorageVisualizerLibrary extends VisualizerLibrary
+  constructor: () ->
+    super
+
+  list: () ->
     result = []
     forEachDocumentName (name) => (result.push(name))
     result
@@ -80,7 +85,7 @@ class DataStore
       if !documentExists(name) then return name
       ++i
 
-  newDocument: (opt_name_prefix) ->
+  create: (opt_name_prefix) ->
     name = @_nextDocumentNameWithPrefix(opt_name_prefix || DEFAULT_DOCUMENT_NAME)
     console.log("new document: #{name}")
     storeDocumentMetadata(name, {})
@@ -90,9 +95,9 @@ class DataStore
   defaultDuplicateDocumentName: (name) ->
     @_nextDocumentNameWithPrefix(name)
 
-  duplicateDocument: (name, opt_newName) ->
+  duplicate: (name, opt_newName) ->
     metadata = loadDocumentMetadata(name)
-    content = @documentContent(name)
+    content = @read(name)
 
     newName = @_nextDocumentNameWithPrefix(opt_newName || name)
     storeDocumentMetadata(newName, metadata)
@@ -100,15 +105,15 @@ class DataStore
 
     newName
 
-  deleteDocument: (name) ->
+  remove: (name) ->
     assertDocumentExists(name)
     localStorage.removeItem(documentMetadataKey(name))
     localStorage.removeItem(documentContentKey(name))
     return
 
-  documentContent: (name) -> loadDocumentContent(name)
+  read: (name) -> loadDocumentContent(name)
 
-  setDocumentContent: (name, content) -> storeDocumentContent(name, content)
+  write: (name, content) -> storeDocumentContent(name, content)
 
   loadedDocumentName: () ->
     result = localStorage[LOADED_DOCUMENT_NAME_KEY] || null
@@ -123,11 +128,9 @@ class DataStore
     localStorage[LOADED_DOCUMENT_NAME_KEY] = name
     return
 
-  renameDocument: (oldName, desiredNewName) ->
+  rename: (oldName, desiredNewName) ->
     wasLoadedDocument = (@loadedDocumentName() == oldName)
-    newName = @duplicateDocument(oldName, desiredNewName)
-    @deleteDocument(oldName)
+    newName = @duplicate(oldName, desiredNewName)
+    @remove(oldName)
     if wasLoadedDocument then @setLoadedDocumentName(newName)
     newName
-
-module.exports = DataStore

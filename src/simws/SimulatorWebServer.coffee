@@ -1,15 +1,15 @@
 connect = require("connect")
 express = require("express")
 path = require("path")
-VisualizerLibrary = require("base/VisualizerLibrary")
+ServerVisualizerLibrary = require("base/ServerVisualizerLibrary")
 
 PORT = 8380
 STATIC_DIR = path.join(__dirname, "../../sim_www")
 
 class SimulatorWebServer
   constructor: () ->
-    @activeLibrary = VisualizerLibrary.activeVisualizers()
-    @tutorialLibrary = VisualizerLibrary.tutorialVisualizers()
+    @activeLibrary = ServerVisualizerLibrary.activeVisualizers()
+    @tutorialLibrary = ServerVisualizerLibrary.tutorialVisualizers()
     @server = express()
 
     @server.use "/visualizers", (req, res) =>

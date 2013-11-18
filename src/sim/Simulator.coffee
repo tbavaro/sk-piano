@@ -1,4 +1,4 @@
-DataStore = require("sim/DataStore")
+LocalStorageVisualizerLibrary = require("sim/LocalStorageVisualizerLibrary")
 PianoKeyboard = require("sim/PianoKeyboard")
 SimulatorCodeEditor = require("sim/SimulatorCodeEditor")
 SimulatorPiano = require("sim/SimulatorPiano")
@@ -87,7 +87,7 @@ class TitleBarDropdown extends Dropdown
     element.append(contentsElement)
 
     loadedDocumentName = @datastore.loadedDocumentName()
-    documentNames = @datastore.documentNames()
+    documentNames = @datastore.list()
     for name in documentNames
       isLoaded = (name == loadedDocumentName)
       contentsElement.append(@createEntryElement(name, isLoaded))
@@ -116,14 +116,14 @@ class Actions
     newName = @datastore.defaultDuplicateDocumentName(loadedDocumentName)
     newName = window.prompt("New document name", newName)
     if newName != null
-      newName = @datastore.duplicateDocument(loadedDocumentName, newName)
+      newName = @datastore.duplicate(loadedDocumentName, newName)
       @loadDocument(newName)
 
   renameDocument: () ->
     loadedDocumentName = @loadedDocumentName()
     newName = window.prompt("New document name", loadedDocumentName)
     if newName != null
-      newName = @datastore.renameDocument(loadedDocumentName, newName)
+      newName = @datastore.rename(loadedDocumentName, newName)
       @loadDocument(newName)
 
   deleteDocument: () ->
@@ -132,8 +132,8 @@ class Actions
       "This cannot be undone."
     ].join(" "))
     if ok
-      @datastore.deleteDocument(@loadedDocumentName())
-      @loadDocument(@datastore.documentNames()[0])
+      @datastore.remove(@loadedDocumentName())
+      @loadDocument(@datastore.list()[0])
 
   loadDocument: (name) ->
     @saveDocumentIfDirty()
@@ -155,7 +155,7 @@ class MyPianoKeyboard extends PianoKeyboard
 module.exports = class Simulator
   constructor: () ->
     @piano = new SimulatorPiano()
-    @dataStore = new DataStore()
+    @dataStore = new LocalStorageVisualizerLibrary()
     @editor = new SimulatorCodeEditor(document.getElementById("editor"))
     @viewPort = new ViewPort(document.getElementById("piano_viewport"), @piano.strip)
     @pianoKeyboard = new MyPianoKeyboard(@piano)
@@ -211,12 +211,12 @@ module.exports = class Simulator
       url: "visualizers/#{defaultVisualizer}.coffee",
       async: false
     }).done (content) =>
-      name = @dataStore.newDocument(defaultVisualizer)
-      @dataStore.setDocumentContent(name, content)
+      name = @dataStore.create(defaultVisualizer)
+      @dataStore.write(name, content)
       @loadDocument(name)
 
   loadDocument: (name) ->
-    content = @dataStore.documentContent(name)
+    content = @dataStore.read(name)
     $("#title_label").text(name)
     @editor.setContent(content)
     @editor.setActive(true)
@@ -226,7 +226,7 @@ module.exports = class Simulator
 
   saveDocument: () ->
     if @loadedDocumentName == null then throw "no document loaded"
-    @dataStore.setDocumentContent(@loadedDocumentName, @editor.content())
+    @dataStore.write(@loadedDocumentName, @editor.content())
     @isDirty = false
     console.log("Saved document #{@loadedDocumentName}")
 
