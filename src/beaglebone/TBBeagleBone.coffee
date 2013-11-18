@@ -84,16 +84,16 @@ class FakeGpioPin
     @id = id
 
   setMode: (mode) ->
-    console.log("Setting pin #{@id} to mode #{mode}")
+    #console.log("Setting pin #{@id} to mode #{mode}")
     return
 
   write: (value) ->
-    valueStr = (if value then "ON" else "OFF")
-    console.log("Writing pin #{@id} -> #{valueStr}")
+    #valueStr = (if value then "ON" else "OFF")
+    #console.log("Writing pin #{@id} -> #{valueStr}")
     return
 
   read: () ->
-    console.log("Reading pin #{@id}")
+    #console.log("Reading pin #{@id}")
     false
     
 HEADER_8_PIN_IDS = [

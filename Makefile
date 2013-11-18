@@ -38,7 +38,7 @@ clean: clean-docs
 run: node_modules
 	coffee src/beaglebone/RealPiano.coffee
 
-run-coffee: all
+run-coffee: node_modules
 	coffee
 
 ${ASSERT_STUB_SYMLINK_PATH}: node_modules ${ASSERT_STUB_REAL_PATH}
@@ -47,7 +47,7 @@ ${ASSERT_STUB_SYMLINK_PATH}: node_modules ${ASSERT_STUB_REAL_PATH}
 ${COMPILED_SHADERS_PATH}: ${COMPILED_SHADERS_ROOT}/*.vert ${COMPILED_SHADERS_ROOT}/*.frag
 	( cd ${COMPILED_SHADERS_ROOT} && ./compile_shaders.rb > ${COMPILED_SHADERS_FILENAME} )
 
-sim-force: ${SIM_GENERATED_CSS} sim
+sim-force: ${SIM_GENERATED_CSS}
 	./node_modules/polvo/bin/polvo -r
 
 ${SIM_GENERATED_JS}:

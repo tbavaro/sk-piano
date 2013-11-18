@@ -8,7 +8,6 @@ dirsAndFilePatterns =
   "src/base": [/\.coffee$/]
   "src/lib": [/\.coffee$/]
   "src/sim/webgl": [/\.(coffee|vert|frag)$/, "compile_shaders.rb"]
-  "src/visualizers": [/\.coffee$/]
 
 MAKE_CMD = ["make", "sim-force"]
 

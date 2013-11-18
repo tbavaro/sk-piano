@@ -8,7 +8,6 @@
     "node-sass": "0.7.x",
     "nodeunit": ">=0.8.1",
     "polvo": ">=0.5.4",
-    "sleep": ">=1.1.1",
-    "sqlite3": "2.x"
+    "sleep": ">=1.1.1"
   }
 }

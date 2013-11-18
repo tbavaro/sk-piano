@@ -8,7 +8,7 @@ Sleep = require("sleep")
 
 SPI_DEVICE = "/dev/spidev2.0"
 SPI_FREQUENCY_HZ = 4e6
-NUM_FRAMES_TO_RUN_SYNC = Piano.TARGET_FPS * 5
+NUM_FRAMES_TO_RUN_SYNC = Piano.TARGET_FPS * 3
 
 class RealPiano extends Piano
   constructor: () ->

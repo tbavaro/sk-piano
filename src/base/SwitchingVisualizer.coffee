@@ -9,9 +9,12 @@ SWITCH_KEY = 0
 class SwitchingVisualizer extends DelegatingVisualizer
   constructor: (pianoKeys, visualizerFunctors) ->
     super
+    @pianoKeys = pianoKeys
+    @setVisualizerFunctors(visualizerFunctors)
+
+  setVisualizerFunctors: (visualizerFunctors) ->
     assert(visualizerFunctors.length > 0)
     @visualizerFunctors = visualizerFunctors
-    @pianoKeys = pianoKeys
     @reset()
 
   reset: () ->

@@ -1,13 +1,25 @@
 SwitchingVisualizer = require("base/SwitchingVisualizer")
 PianoKeys = require("lib/PianoKeys")
-ServerVisualizerCompiler = require("beaglebone/ServerVisualizerCompiler")
-TwinkleVisualizer = require("visualizers/TwinkleVisualizer")
+VisualizerCompiler = require("beaglebone/ServerVisualizerCompiler")
+VisualizerLibrary = require("base/VisualizerLibrary")
 
-class MasterVisualizer extends SwitchingVisualizer
+module.exports = class MasterVisualizer extends SwitchingVisualizer
   constructor: (strip, pianoKeys) ->
-    visualizerFunctors = [
-#      () -> new TwinkleVisualizer(strip, pianoKeys)
-    ]
-    super(pianoKeys, visualizerFunctors)
+    @library = VisualizerLibrary.activeVisualizers()
+    @strip = strip
+    @pianoKeys = pianoKeys
+    super(pianoKeys, @createVisualizerFunctors())
+    @library.watch () => @reloadVisualizerFunctors()
 
-module.exports = MasterVisualizer
+  createVisualizerFunctors: () ->
+    visualizers = @library.list()
+    console.log "Loaded visualizers: #{visualizers}"
+    (() =>
+      code = @library.read(visualizer)
+      v = VisualizerCompiler.instantiate(code, @strip, @pianoKeys)
+      v.toString = () => visualizer
+      v
+    ) for visualizer in visualizers
+
+  reloadVisualizerFunctors: () ->
+    @setVisualizerFunctors(@createVisualizerFunctors())

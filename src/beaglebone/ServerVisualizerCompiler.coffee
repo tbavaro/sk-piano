@@ -4,6 +4,4 @@ VisualizerCompiler = require("base/VisualizerCompiler")
 # pull in the browser-compatible implementation
 global.CoffeeScript = require("coffee-script")
 
-class ServerVisualizerCompiler extends VisualizerCompiler
-
-module.exports = ServerVisualizerCompiler
+module.exports = VisualizerCompiler

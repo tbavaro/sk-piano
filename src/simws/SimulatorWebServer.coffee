@@ -1,29 +1,32 @@
 connect = require("connect")
 express = require("express")
 path = require("path")
-ServerDatastore = require("sim/ServerDatastore")
+VisualizerLibrary = require("base/VisualizerLibrary")
 
 PORT = 8380
 STATIC_DIR = path.join(__dirname, "../../sim_www")
 
 class SimulatorWebServer
   constructor: () ->
-    @datastore = new ServerDatastore()
+    @activeLibrary = VisualizerLibrary.activeVisualizers()
+    @tutorialLibrary = VisualizerLibrary.tutorialVisualizers()
     @server = express()
 
     @server.use "/visualizers", (req, res) =>
-      returnCodeOrNull = (code) =>
-        if code == null
-          res.send 404, "Not found"
-        else
-          res.set "Content-Type", "text/coffeescript"
-          res.send code
+      code = null
 
       m = req.path.match(/^\/(.*)\.coffee$/)
-      if m == null
-        returnCodeOrNull(null)
+      if m != null
+        name = m[1]
+        code = @tutorialLibrary.read(name)
+        if code == null
+          code = @activeLibrary.read(name)
+
+      if code == null
+        res.send 404, "Not found"
       else
-        @datastore.getCodeForDocumentOrNull m[1], returnCodeOrNull
+        res.set "Content-Type", "text/coffeescript"
+        res.send code
 
     @server.use(connect.compress())
     @server.use(express.static(STATIC_DIR))
