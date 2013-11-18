@@ -6,29 +6,28 @@ ServerVisualizerLibrary = require("base/ServerVisualizerLibrary")
 PORT = 8380
 STATIC_DIR = path.join(__dirname, "../../sim_www")
 
+dumpVisualizers = (library) =>
+  result = {}
+  result[name] = library.read(name) for name in library.list()
+  result
+
 class SimulatorWebServer
   constructor: () ->
     @activeLibrary = ServerVisualizerLibrary.activeVisualizers()
     @tutorialLibrary = ServerVisualizerLibrary.tutorialVisualizers()
     @server = express()
 
-    @server.use "/visualizers", (req, res) =>
-      code = null
-
-      m = req.path.match(/^\/(.*)\.coffee$/)
-      if m != null
-        name = m[1]
-        code = @tutorialLibrary.read(name)
-        if code == null
-          code = @activeLibrary.read(name)
-
-      if code == null
-        res.send 404, "Not found"
-      else
-        res.set "Content-Type", "text/coffeescript"
-        res.send code
-
     @server.use(connect.compress())
+
+    @server.get "/visualizers", (req, res) =>
+      content = {}
+
+      content.activeVisualizers = dumpVisualizers(@activeLibrary)
+      content.tutorialVisualizers = dumpVisualizers(@tutorialLibrary)
+
+      res.set "Content-Type", "application/json"
+      res.send JSON.stringify(content, null, 2)
+
     @server.use(express.static(STATIC_DIR))
 
   listen: (port) ->

@@ -48,7 +48,7 @@ ${COMPILED_SHADERS_PATH}: ${COMPILED_SHADERS_ROOT}/*.vert ${COMPILED_SHADERS_ROO
 	( cd ${COMPILED_SHADERS_ROOT} && ./compile_shaders.rb > ${COMPILED_SHADERS_FILENAME} )
 
 sim-force: ${SIM_GENERATED_CSS}
-	./node_modules/polvo/bin/polvo -r
+	./node_modules/polvo/bin/polvo -c # -r
 
 ${SIM_GENERATED_JS}:
 	make sim-force

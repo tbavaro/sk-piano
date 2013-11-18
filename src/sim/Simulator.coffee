@@ -1,3 +1,4 @@
+InMemoryVisualizerLibrary = require("sim/InMemoryVisualizerLibrary")
 LocalStorageVisualizerLibrary = require("sim/LocalStorageVisualizerLibrary")
 PianoKeyboard = require("sim/PianoKeyboard")
 SimulatorCodeEditor = require("sim/SimulatorCodeEditor")
@@ -51,9 +52,10 @@ class Dropdown
   fillContents: (element) -> return # defaults to empty
 
 class TitleBarDropdown extends Dropdown
-  constructor: (buttonElement, datastore, actions) ->
+  constructor: (buttonElement, simulator, actions) ->
     super(buttonElement)
-    @datastore = datastore
+    @simulator = simulator
+    @datastore = simulator.dataStore
     @actions = actions
 
   show: () ->
@@ -62,12 +64,12 @@ class TitleBarDropdown extends Dropdown
 
   createDiv: () -> $(document.createElement("div"))
 
-  createEntryElement: (name, isLoaded) ->
+  createEntryElement: (library, name, isLoaded) ->
     @createDiv()
         .addClass("button enabled document" + (if isLoaded then " active" else ""))
         .text(name)
         .click () =>
-          @actions.loadDocument(name)
+          @actions.loadDocument(library, name)
           @hide()
 
   createSeparatorElement: () ->
@@ -86,16 +88,26 @@ class TitleBarDropdown extends Dropdown
         $(document.createElement("div")).addClass("title-dropdown")
     element.append(contentsElement)
 
-    loadedDocumentName = @datastore.loadedDocumentName()
-    documentNames = @datastore.list()
-    for name in documentNames
-      isLoaded = (name == loadedDocumentName)
-      contentsElement.append(@createEntryElement(name, isLoaded))
+    loadedDocumentName = @simulator.loadedDocumentName
+    loadedDocumentLibrary = @simulator.loadedDocumentLibrary
+
+    libraries = [
+      @simulator.activeLibrary,
+      @simulator.tutorialLibrary,
+      @simulator.dataStore
+    ]
+
+    for library in libraries
+      for name in library.list()
+        isLoaded = (name == loadedDocumentName && library == loadedDocumentLibrary)
+        contentsElement.append(@createEntryElement(library, name, isLoaded))
+      contentsElement.append(@createSeparatorElement())
+
+    editable = @simulator.isDocumentEditable()
     contentsElement.append([
-      @createSeparatorElement()
-      @createActionElement "Delete...", (documentNames.length > 1), () => @actions.deleteDocument()
       @createActionElement "Duplicate...", true, () => @actions.duplicateDocument()
-      @createActionElement "Rename...", true, () => @actions.renameDocument()
+      @createActionElement "Rename...", editable, () => @actions.renameDocument()
+      @createActionElement "Delete...", editable && (@datastore.list().length > 1), () => @actions.deleteDocument()
 #      @createSeparatorElement()
 #      @createActionElement("Add to piano...", false, (() -> return))
     ])
@@ -109,22 +121,22 @@ class Actions
     @simulator.saveDocumentIfDirty()
 
   loadedDocumentName: () ->
-    @datastore.loadedDocumentName()
+    @simulator.loadedDocumentName
 
   duplicateDocument: () ->
     loadedDocumentName = @loadedDocumentName()
     newName = @datastore.defaultDuplicateDocumentName(loadedDocumentName)
     newName = window.prompt("New document name", newName)
     if newName != null
-      newName = @datastore.duplicate(loadedDocumentName, newName)
-      @loadDocument(newName)
+      @simulator.saveDocumentAs(newName)
+      @simulator.loadDocument(@datastore, newName)
 
   renameDocument: () ->
     loadedDocumentName = @loadedDocumentName()
     newName = window.prompt("New document name", loadedDocumentName)
     if newName != null
       newName = @datastore.rename(loadedDocumentName, newName)
-      @loadDocument(newName)
+      @loadDocument(@datastore, newName)
 
   deleteDocument: () ->
     ok = window.confirm([
@@ -133,11 +145,11 @@ class Actions
     ].join(" "))
     if ok
       @datastore.remove(@loadedDocumentName())
-      @loadDocument(@datastore.list()[0])
+      @loadDocument(@datastore, @datastore.list()[0])
 
-  loadDocument: (name) ->
+  loadDocument: (library, name) ->
     @saveDocumentIfDirty()
-    @simulator.loadDocument(name)
+    @simulator.loadDocument(library, name)
 
 class MyPianoKeyboard extends PianoKeyboard
   constructor: (piano) ->
@@ -152,9 +164,14 @@ class MyPianoKeyboard extends PianoKeyboard
     super(note)
     @piano.pianoKeys.keyStates[note] = false
 
+loadVisualizers = (library, map) ->
+  library.write(name, code) for name, code of map
+
 module.exports = class Simulator
   constructor: () ->
     @piano = new SimulatorPiano()
+    @activeLibrary = new InMemoryVisualizerLibrary()
+    @tutorialLibrary = new InMemoryVisualizerLibrary()
     @dataStore = new LocalStorageVisualizerLibrary()
     @editor = new SimulatorCodeEditor(document.getElementById("editor"))
     @viewPort = new ViewPort(document.getElementById("piano_viewport"), @piano.strip)
@@ -170,13 +187,13 @@ module.exports = class Simulator
       @saveChangeTimeoutId =
           setTimeout (() => @saveDocumentIfDirty()), IDLE_SAVE_INTERVAL
 
+    @loadServerVisualizers()
     @loadedDocumentName = @dataStore.loadedDocumentName()
     if @loadedDocumentName == null
-      console.log("loading default visualizers into datastore...")
-      @editor.setActive(false)
-      @loadDefaultVisualizers()
+      @loadedDocumentName = @activeLibrary.list()[0]
+      @loadDocument(@activeLibrary, @loadedDocumentName)
     else
-      @loadDocument(@loadedDocumentName)
+      @loadDocument(@dataStore, @loadedDocumentName)
 
     $("#run_button").click () => @runCode()
 
@@ -203,32 +220,40 @@ module.exports = class Simulator
         true
 
     @titleBarDropdown =
-      new TitleBarDropdown($("#title_bar"), @dataStore, @actions)
+      new TitleBarDropdown($("#title_bar"), this, @actions)
 
-  loadDefaultVisualizers: () ->
-    defaultVisualizer = "TwinkleVisualizer"
+  loadServerVisualizers: () ->
     $.ajax({
-      url: "visualizers/#{defaultVisualizer}.coffee",
+      url: "/visualizers",
       async: false
     }).done (content) =>
-      name = @dataStore.create(defaultVisualizer)
-      @dataStore.write(name, content)
-      @loadDocument(name)
+      loadVisualizers(@activeLibrary, content.activeVisualizers)
+      loadVisualizers(@tutorialLibrary, content.tutorialVisualizers)
 
-  loadDocument: (name) ->
-    content = @dataStore.read(name)
+  loadDocument: (library, name) ->
+    console.log("loading #{name} from #{library}")
+    content = library.read(name)
     $("#title_label").text(name)
     @editor.setContent(content)
-    @editor.setActive(true)
-    @dataStore.setLoadedDocumentName(name)
+    if library == @dataStore
+      @dataStore.setLoadedDocumentName(name)
     @loadedDocumentName = name
+    @loadedDocumentLibrary = library
+    @setEditorActive(@isDocumentEditable())
     @isDirty = false
+
+  isDocumentEditable: () ->
+    @loadedDocumentLibrary == @dataStore
 
   saveDocument: () ->
     if @loadedDocumentName == null then throw "no document loaded"
-    @dataStore.write(@loadedDocumentName, @editor.content())
+    @saveDocumentAs(@loadedDocumentName)
+
+  saveDocumentAs: (name) ->
+    console.log("Saving document #{name}")
+    @dataStore.write(name, @editor.content())
+    console.log("Saved document #{name}")
     @isDirty = false
-    console.log("Saved document #{@loadedDocumentName}")
 
   saveDocumentIfDirty: () ->
     if @loadedDocumentName != null && @isDirty then @saveDocument()
@@ -243,5 +268,9 @@ module.exports = class Simulator
         VisualizerCompiler.instantiate(code, @piano.strip, @piano.pianoKeys)
 
     @piano.setVisualizer(visualizer)
+
+  setEditorActive: (value) ->
+    $("#read_only_message").css("visibility", if value then "hidden" else "visible")
+    @editor.setActive(value)
 
   toggleTitleBar: () ->

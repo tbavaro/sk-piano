@@ -1,4 +1,5 @@
 VisualizerLibrary = require("base/VisualizerLibrary")
+assert = require("assert")
 
 KEY_PREFIX = "vis:"
 

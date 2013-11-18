@@ -165,6 +165,16 @@ div, textarea, span, a {
   right: $viewportSpacing;
   bottom: $viewportSpacing;
   width: fraction-of-full-minus-spacing(0.45, 3);
+
+  .read-only-message {
+    position: absolute;
+    bottom: $innerPadding;
+    right: $innerPadding;
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: $innerPadding;
+    font-size: 12px;
+    color: darkred;
+  }
 }
 
 .editor {

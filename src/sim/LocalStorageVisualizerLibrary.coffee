@@ -1,10 +1,9 @@
 VisualizerLibrary = require("base/VisualizerLibrary")
 
-DATASTORE_VERSION = 2
+DATASTORE_VERSION = 3
 
 KEY_PREFIX = "v#{DATASTORE_VERSION}:"
 
-DOCUMENT_METADATA_PREFIX = "#{KEY_PREFIX}docMeta:"
 DOCUMENT_CONTENT_PREFIX = "#{KEY_PREFIX}docContent:"
 LOADED_DOCUMENT_NAME_KEY = "#{KEY_PREFIX}loadedDocumentName"
 
@@ -13,6 +12,12 @@ DEFAULT_DOCUMENT_NAME = "New Visualizer"
 String.prototype.startsWith = String.prototype.startsWith || (value) ->
   this.indexOf(value) == 0
 
+forEachKey = (func) ->
+  for i in [0...localStorage.length] by 1
+    key = localStorage.key(i)
+    func(key)
+  return
+
 forEachEntry = (func) ->
   for i in [0...localStorage.length] by 1
     key = localStorage.key(i)
@@ -20,41 +25,18 @@ forEachEntry = (func) ->
     func(key, value)
   return
 
-forEachEntryWithPrefix = (prefix, func) ->
-  forEachEntry (key, value) =>
+forEachKeyWithPrefix = (prefix, func) ->
+  forEachKey (key) =>
     if key.startsWith(prefix)
       name = key.substring(prefix.length)
-      func(name, value)
+      func(name)
 
 forEachDocumentName = (func) ->
-  forEachEntryWithPrefix DOCUMENT_METADATA_PREFIX, (name) => func(name)
+  forEachKeyWithPrefix DOCUMENT_CONTENT_PREFIX, func
 
-forEachDocumentMetadata = (func) ->
-  forEachEntryWithPrefix DOCUMENT_METADATA_PREFIX, (name, value) =>
-    func(name, JSON.parse(value))
-
-documentMetadataKey = (name) => "#{DOCUMENT_METADATA_PREFIX}#{name}"
 documentContentKey = (name) => "#{DOCUMENT_CONTENT_PREFIX}#{name}"
 
-storeDocumentMetadata = (name, metadata) ->
-  key = documentMetadataKey(name)
-  localStorage[key] = JSON.stringify(metadata)
-  return
-
-loadDocumentMetadata = (name) ->
-  key = documentMetadataKey(name)
-  value = localStorage[key]
-  result = (if !value then null else JSON.parse(value))
-  result
-
-updateDocumentMetadata = (name, updateFunc) ->
-  metadata = loadDocumentMetadata(name)
-  if metadata == null then throw "document does not exist: #{name}"
-  updateFunc(metadata)
-  storeDocumentMetadata(name, metadata)
-  return
-
-documentExists = (name) -> (localStorage.getItem(documentMetadataKey(name)) != null)
+documentExists = (name) -> (localStorage.getItem(documentContentKey(name)) != null)
 
 assertDocumentExists = (name) ->
   if !(documentExists(name))
@@ -65,7 +47,6 @@ loadDocumentContent = (name) ->
   localStorage[documentContentKey(name)] || ""
 
 storeDocumentContent = (name, content) ->
-  assertDocumentExists(name)
   localStorage[documentContentKey(name)] = content
   return
 
@@ -88,7 +69,6 @@ module.exports = class LocalStorageVisualizerLibrary extends VisualizerLibrary
   create: (opt_name_prefix) ->
     name = @_nextDocumentNameWithPrefix(opt_name_prefix || DEFAULT_DOCUMENT_NAME)
     console.log("new document: #{name}")
-    storeDocumentMetadata(name, {})
     storeDocumentContent(name, "")
     name
 
@@ -96,18 +76,14 @@ module.exports = class LocalStorageVisualizerLibrary extends VisualizerLibrary
     @_nextDocumentNameWithPrefix(name)
 
   duplicate: (name, opt_newName) ->
-    metadata = loadDocumentMetadata(name)
     content = @read(name)
-
     newName = @_nextDocumentNameWithPrefix(opt_newName || name)
-    storeDocumentMetadata(newName, metadata)
     storeDocumentContent(newName, content)
 
     newName
 
   remove: (name) ->
     assertDocumentExists(name)
-    localStorage.removeItem(documentMetadataKey(name))
     localStorage.removeItem(documentContentKey(name))
     return
 
