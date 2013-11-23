@@ -26,7 +26,7 @@ class RealPiano extends Piano
     for _ in [0...(NUM_FRAMES_TO_RUN_SYNC - 1)] by 1
       delay = @runLoopOnce()
       if delay > 0
-        Sleep.usleep(delay * 1000)
+        Sleep.usleep(Math.floor(delay * 1000))
 
     # run 1 more frame but delay via setTimeout so we give node a chance to
     # do any extra tasks it needs to do
