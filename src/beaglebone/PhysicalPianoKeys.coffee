@@ -4,8 +4,14 @@ assert = require("assert")
 Sleep = require("sleep")
 
 PIN_HEADER = 8
-NOTE_PINS = [15, 13, 23, 21, 26, 24, 19, 17, 25, 18, 20, 22]
-OCTAVE_PINS = [12, 14, 16, 7, 9, 11, 10, 8]
+
+#old
+#NOTE_PINS = [15, 13, 23, 21, 26, 24, 19, 17, 25, 18, 20, 22]
+#OCTAVE_PINS = [12, 14, 16, 7, 9, 11, 10, 8]
+
+NOTE_PINS = [29, 30, 14, 16, 11, 12, 17, 18, 15, 27, 28, 13]
+OCTAVE_PINS = [41, 40, 39, 46, 45, 44, 42, 43]
+
 
 # We didn't take a lot of care to get the note wiring in the exact same order
 # for every octave, so we remap them here.

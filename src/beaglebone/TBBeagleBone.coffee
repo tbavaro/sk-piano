@@ -109,13 +109,25 @@ HEADER_8_PIN_IDS = [
     45,   44,   23,   26,   47,
 
   # 16:
-    46,   27,   65,   22,   63,
+    46,   27,   65,   22, null,
 
   # 21:
-    62,   37,   36,   33,   32,
+  null, null, null, null, null,
 
   # 26:
-    61
+  null,   86,   88,   87,   89,
+
+  # 31:
+  null, null, null, null, null,
+
+  # 36:
+  null, null, null,   76,   77,
+
+  # 41:
+    74,   75,   72,   73,   70,
+
+  # 46:
+    71
 ]
 
 if IS_BEAGLEBONE

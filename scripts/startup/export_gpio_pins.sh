@@ -1,7 +1,7 @@
 #!/bin/sh
 
-INPUT_PINS=(47 23 36 62 61 33 22 27 32 65 63 37)
-OUTPUT_PINS=(44 26 46 66 69 45 68 67)
+INPUT_PINS=(45 44 23 26 47 46 27 65 86 88 87 89)
+OUTPUT_PINS=(76 77 74 75 72 73 70 71)
 
 for pin in ${INPUT_PINS[@]}; do
   echo $pin > /sys/class/gpio/export
