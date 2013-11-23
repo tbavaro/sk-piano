@@ -14,12 +14,14 @@ module.exports = class MasterVisualizer extends SwitchingVisualizer
   createVisualizerFunctors: () ->
     visualizers = @library.list()
     console.log "Loaded visualizers: #{visualizers}"
-    (() =>
+    @makeVisualizerFunctor(visualizer) for visualizer in visualizers
+
+  makeVisualizerFunctor: (visualizer) ->
+    () =>
       code = @library.read(visualizer)
       v = VisualizerCompiler.instantiate(code, @strip, @pianoKeys)
       v.toString = () => visualizer
       v
-    ) for visualizer in visualizers
 
   reloadVisualizerFunctors: () ->
     @setVisualizerFunctors(@createVisualizerFunctors())
