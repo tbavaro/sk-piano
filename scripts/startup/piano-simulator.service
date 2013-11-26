@@ -4,7 +4,7 @@ After=syslog.target network.target
 
 [Service]
 Type=simple
-User=piano
+User=root
 ExecStart=/home/piano/git/sk-piano/scripts/startup/run_simulator.sh
 
 [Install]

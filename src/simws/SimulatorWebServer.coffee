@@ -3,7 +3,7 @@ express = require("express")
 path = require("path")
 ServerVisualizerLibrary = require("base/ServerVisualizerLibrary")
 
-PORT = 8380
+PORT = 80
 STATIC_DIR = path.join(__dirname, "../../sim_www")
 
 dumpVisualizers = (library) =>
