@@ -7,8 +7,9 @@ assert = require("assert")
 SWITCH_KEY = 0
 
 class SwitchingVisualizer extends DelegatingVisualizer
-  constructor: (pianoKeys, visualizerFunctors) ->
+  constructor: (strip, pianoKeys, visualizerFunctors) ->
     super
+    @strip = strip
     @pianoKeys = pianoKeys
     @setVisualizerFunctors(visualizerFunctors)
 
@@ -33,6 +34,7 @@ class SwitchingVisualizer extends DelegatingVisualizer
       "Switching to visualizer: ", visualizer, " (", duration, "ms)"
     ].join(""))
     @setDelegate(visualizer)
+    @strip.reset()
     return
 
   render: (secondsSinceLastFrame) ->

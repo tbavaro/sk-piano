@@ -8,7 +8,7 @@ module.exports = class MasterVisualizer extends SwitchingVisualizer
     @library = ServerVisualizerLibrary.activeVisualizers()
     @strip = strip
     @pianoKeys = pianoKeys
-    super(pianoKeys, @createVisualizerFunctors())
+    super(strip, pianoKeys, @createVisualizerFunctors())
     @library.watch () => @reloadVisualizerFunctors()
 
   createVisualizerFunctors: () ->

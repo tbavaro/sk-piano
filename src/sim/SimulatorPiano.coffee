@@ -41,6 +41,7 @@ class SimulatorPiano extends Piano
     super(strip, pianoKeys, visualizer)
 
   setVisualizer: (visualizer) ->
+    @strip.reset()
     @visualizer.setDelegate(visualizer)
 
 module.exports = SimulatorPiano
