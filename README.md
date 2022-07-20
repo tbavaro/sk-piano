@@ -1,2 +1,1 @@
-- https://designerfund.com/bridge/wp-content/uploads/2013/07/AW-piano-close1.jpg
-- http://piano.timba.me
+- https://piano.timba.me
